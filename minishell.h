@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 16:53:58 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/29 17:28:55 by smarty           ###   ########.fr       */
+/*   Updated: 2024/04/02 01:33:18 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef struct s_token
+{
+	char *order;
+	char *option;
+	char *arg;
+	int	type;
+
+}		t_token;
 
 typedef struct s_data
 {
@@ -33,5 +41,5 @@ void    pwd(t_data *data);
 void    line_to_token(t_data *data);
 char	*ft_strstr(char *str, char *to_find);
 char	**ft_split(char *str, char c);
-
+char	**ft_split2(char *str, char*operator);
 #endif
