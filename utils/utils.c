@@ -6,11 +6,11 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:09:22 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/28 14:31:51 by smarty           ###   ########.fr       */
+/*   Updated: 2024/04/04 21:08:47 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void    get_env(t_data *data, char **env)
 {
@@ -35,6 +35,7 @@ void    get_env(t_data *data, char **env)
 	}
 	data->env[i] = NULL;
 }
+
 
 int ft_strcmp(char *s1, char *s2)
 {
@@ -69,4 +70,81 @@ char	*ft_strstr(char *str, char *to_find)
 		return (0);
 	}
 	return (0);
+}
+char	*ft_strjoin(char *s1, char *s2)
+{
+	int		i;
+	int		j;
+	char	*str;
+
+	if (!s1)
+		return (s2);
+	if (!s2)
+		return (s1);
+	i = (ft_strlen(s1) + ft_strlen(s2));
+	j = 0;
+	str = malloc(i + 1);
+	if (!str)
+		return (NULL);
+	while (s1[j])
+	{
+		str[j] = s1[j];
+		j++;
+	}
+	i = 0;
+	while (s2[i])
+		str[j++] = s2[i++];
+	str[j] = 0;
+	return (str);
+}
+
+char	*find_var(char **env, char *var)
+{
+	char	*str;
+	int		i;
+	
+	var = ft_strjoin(var, "=");
+	i = 0;
+	
+	while (env[i])
+	{
+		if (ft_strstr(env[i], var))
+			break;
+		i++;
+	}
+	if (env[i] == NULL)
+		return (NULL);
+	
+	str = malloc(ft_strlen(env[i]) - ft_strlen(var) + 1);
+	str = ft_strstr(env[i], var);
+	free (var);
+	return (str);
+}
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+char	*ft_strdup(char *s)
+{
+	int		i;
+	char	*d;
+
+	i = 0;
+	d = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!d)
+		return (NULL);
+	while (s[i])
+	{
+		d[i] = s[i];
+		i++;
+	}
+	d[i] = 0;
+	return (d);
 }

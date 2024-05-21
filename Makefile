@@ -4,7 +4,7 @@ CC = cc
 
 CFLAGS = -lreadline
 
-SRCS = main.c utils.c split.c minishell.c pwd.c parsing.c
+SRCS = main/main.c utils/utils.c utils/split.c main/minishell.c pwd.c parsing/parsing.c parsing/quotes.c parsing/dollar.c
 
 OBJECTS = $(SRCS:.c=.o) 
 

@@ -6,11 +6,11 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:31:52 by smarty            #+#    #+#             */
-/*   Updated: 2024/04/02 01:10:47 by smarty           ###   ########.fr       */
+/*   Updated: 2024/04/04 21:08:44 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 int	count_word(char *s, char c)
 {
@@ -71,14 +71,14 @@ char	**ft_split(char *str, char c)
 	return (cpyword(ss, str, c));
 }
 
-int check_operator(char c, char *operator)
+int check_operator(char *str, int y, char *operator)
 {
 	int i;
 
 	i = -1;
 	while(operator[++i])
 	{
-		if (operator[i] == c)
+		if (operator[i] == str[y] && is_verif(str, y) == 0)
 			return (1);
 	}
 	return (0);
@@ -93,15 +93,15 @@ int	count_word2(char *str, char *operator)
 	nb = 0;
 	if (str[0] == 0)
 		return (0);
-	if (check_operator(str[i], operator) == 0)
+	if (check_operator(str, i, operator) == 0)
 		nb++;
 	while (str[i])
 	{
-		if (check_operator(str[i], operator) == 1 && check_operator(str[i + 1], operator) == 0 && str[i + 1])
+		if (check_operator(str, i, operator) == 1 && check_operator(str, (i + 1), operator) == 0 && str[i + 1])
 			nb += 2;
 		i++;
 	}
-	if (check_operator(str[i - 1], operator) == 1)
+	if (check_operator(str, (i - 1), operator) == 1)
 		nb--;
 	return (nb);
 }
@@ -112,11 +112,11 @@ char *copy_word(char *operator, char *str, int i)
 	char *split;
 
 	y = 0;
-	while (check_operator(str[i + y], operator) == 0 && str[i + y])
+	while (check_operator(str, (i + y), operator) == 0 && str[i + y])
 		y++;
 	split = (char *)malloc (sizeof(char) * (y + 1));
 	y = 0;
-   while (check_operator(str[i], operator) == 0 && str[i])
+   while (check_operator(str, i, operator) == 0 && str[i])
 	{
 		split[y] = str[i];
 		y++;
@@ -144,11 +144,11 @@ char **ft_split2(char *str, char*operator)
 	while (str[i])
 	{
 		y = 0;
-		while (check_operator(str[i + y], operator) == 0 && str[i + y])
+		while (check_operator(str, (i + y), operator) == 0 && str[i + y])
 			y++;
 		split[word] = (char *)malloc (sizeof(char) * (y + 1));
 		y = 0;
-   		while (check_operator(str[i], operator) == 0 && str[i])
+   		while (check_operator(str, i, operator) == 0 && str[i])
 		{
 			split[word][y] = str[i];
 			y++;
@@ -162,11 +162,11 @@ char **ft_split2(char *str, char*operator)
 			split[word] = NULL;
 			return (split);
 		}
-		while (check_operator(str[i + y], operator) == 1 && str[i])
+		while (check_operator(str, (i + y), operator) == 1 && str[i + y])
 			y++;
 		split[word] = (char *)malloc (sizeof(char) * (y + 1));
 		y = 0;
-		while (check_operator(str[i], operator) == 1 && str[i])
+		while (check_operator(str, i, operator) == 1 && str[i])
 		{
 			split[word][y] = str[i];
 			y++;

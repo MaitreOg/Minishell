@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/27 22:47:43 by smarty            #+#    #+#             */
-/*   Updated: 2024/03/28 16:28:59 by smarty           ###   ########.fr       */
+/*   Created: 2024/03/27 17:07:02 by smarty            #+#    #+#             */
+/*   Updated: 2024/04/04 21:08:25 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
-void    minishell(t_data *data)
+int	main(int ac, char **av, char **env)
 {
-	while (1)
-	{
-		data->line = readline("minishell :) ");
-		line_to_token(data);
-		if (ft_strcmp(data->line, "exit"))
-			return;
-	}
+	t_data	*data;
+	int	i = 0;
+	if (ac != 1 ||av[0][0] != '.')
+		return(printf("please enter valid argument\n"));
+	data = malloc(sizeof(t_data));
+	if (!data)
+		return (printf("alloc failes\n"));
+	get_env(data, env);
+	minishell(data);
+	//free_all()
 }
