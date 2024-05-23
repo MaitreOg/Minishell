@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 16:53:58 by smarty            #+#    #+#             */
-/*   Updated: 2024/04/04 20:40:59 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/23 18:10:47 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,26 @@
 # include <readline/history.h>
 #include <signal.h>
 
-//type 1 = commande   type 2 = redirection  type 3 = pipe  type 4 = file
-typedef struct s_token
+enum Type
 {
-	char *order;
-	int	type;
+	TYPE_ORDER,
+	TYPE_OPERATOR,
+	TYPE_FILE
+};
 
-}		t_token;
+typedef struct s_list
+{
+	char *content;
+	enum Type content_type;
+	struct s_list	*next;
+}		t_list;
 
 typedef struct s_data
 {
 	char **env;
 	char *line;
 	char ***tab;
+	t_list *line_lst;
 }		t_data;
 
 void    get_env(t_data *data, char **env);
@@ -51,6 +58,9 @@ char	*ft_strjoin(char *s1, char *s2);
 int 	is_verif_quotes(char *str, int i);
 char	*ft_strdup(char *s);
 char	*delete_quotes(char *str);
+void	token_to_lst(char **tab, t_data *data);
+t_list	*lst_add(t_list *lst, char *data);
+int		*ft_lstprint(t_list *lst);
 
 void ft_pwd();
 void echo(char *str, int arg);

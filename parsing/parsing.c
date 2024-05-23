@@ -6,21 +6,15 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:29:14 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/21 17:26:44 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/23 18:12:02 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-void    cut_order(char *string, t_token *token)
+
+/*void	add_type(t_list *lst)
 {
-	if (string[0] == '<' || string[0] == '>' || string[0] == '|')
-		token->type = 2;
-	else
-		token->type = 1;
-}
-void	add_type(t_token *token, int i)
-{
-	if (token[i].order[0] == '>>' || token[i].order[0] == '>')
+	if (token[i].order[0] == '<' || token[i].order[0] == '>')
 		token[i].type = 2;
 	else if (token[i].order[0] == '|')
 		token[i].type = 3;
@@ -28,59 +22,43 @@ void	add_type(t_token *token, int i)
 		token[i].type = 4;
 	else
 		token[i].type = 1;
-}
+}*/
 
-t_token	*convert_to_struct(char ***tab)
+void	token_to_lst(char **tab, t_data *data)
 {
-	int	i;
-	int	y;
-	int	z;
-	t_token *token;
+	int i;
+
+	i = -1;
+	if (data->line_lst)
+		free (data->line_lst);
+	data->line_lst = malloc(sizeof(t_list));
+	while(tab[++i])
+	{
+		data->line_lst = lst_add(data->line_lst, tab[i]);
+	}
+}
+void add_necessary(t_data *data)
+{
+	t_list *tmp;
 	
-	i = -1;
-	z = 0;
-	while(tab[++i])
+	tmp = data->line_lst;
+	while(tmp)
 	{
-		y = -1;
-		while(tab[i][++y])
-			z++;
+		tmp->content = delete_quotes(tmp->content);
+		tmp->content = replace_var(data, tmp->content);
+		tmp = tmp->next;
 	}
-	i = -1;
-	token = malloc(sizeof(t_token) * z);
-	z = 0;
-	while(tab[++i])
-	{
-		y = -1;
-		while(tab[i][++y])
-		{	
-			token[z].order = ft_strdup(tab[i][y]);
-			//cut_order(token[z].order, &token[z]);
-			add_type(token, z);
-			token[z].order = delete_quotes(token[z].order);
-			printf("z : %d\ttype : %d\tstring :%s\n", z, token[z].type, token[z].order);
-			z++;
-		}
-	}
-	return (token);
 }
 
 void    line_to_token(t_data *data)
 {
-	char **tab_pipe;
-	char ***tab_redirection;
+	char **tab;
 	int i;
-	int y;
-	int	z;
-	t_token *token;
 
-	i = 0;
-	tab_pipe = ft_split2(data->line, "|");
-	while(tab_pipe[i])
-		i++;
-	tab_redirection = malloc(sizeof(char **) *  (i + 1));
-	i = -1;
-	while(tab_pipe[++i])
-		tab_redirection[i] = ft_split2(tab_pipe[i], "><");
-	tab_redirection[i] = NULL;
-	token = convert_to_struct(tab_redirection);
+	tab = ft_split2(data->line, "|<>");
+	token_to_lst(tab, data);
+	if (data->line_lst->content == NULL)
+		printf("le debut de la liste est null\n");
+	add_necessary(data); //ajoute le type et supprime les quotes et remplace les $
+	ft_lstprint(data->line_lst);
 }
