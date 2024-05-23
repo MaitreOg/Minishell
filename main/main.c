@@ -12,8 +12,25 @@
 
 #include "../include/minishell.h"
 
+void	handler(int signum)
+{
+	(void)signum;
+	printf("ouais");
+
+	//todo new line
+}
+
+void quittt(int signum)
+{
+	(void) signum;
+	usleep(1);
+}
+
 int	main(int ac, char **av, char **env)
 {
+	ft_pwd();
+	signal(SIGINT, handler);
+	signal (SIGQUIT, quittt);
 	t_data	*data;
 	int	i = 0;
 	if (ac != 1 ||av[0][0] != '.')

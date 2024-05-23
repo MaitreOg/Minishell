@@ -15,8 +15,10 @@
 
 # include <stdlib.h>
 # include <stdio.h>
+# include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+#include <signal.h>
 
 //type 1 = commande   type 2 = redirection  type 3 = pipe  type 4 = file
 typedef struct s_token
@@ -49,4 +51,7 @@ char	*ft_strjoin(char *s1, char *s2);
 int 	is_verif_quotes(char *str, int i);
 char	*ft_strdup(char *s);
 char	*delete_quotes(char *str);
+
+void ft_pwd();
+
 #endif
