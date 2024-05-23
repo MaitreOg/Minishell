@@ -53,5 +53,7 @@ char	*ft_strdup(char *s);
 char	*delete_quotes(char *str);
 
 void ft_pwd();
+void echo(char *str, int arg);
+
 
 #endif
