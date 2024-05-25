@@ -19,6 +19,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 #include <signal.h>
+# include <stdarg.h>
+
 
 enum Type
 {
@@ -61,9 +63,11 @@ void	token_to_lst(char **tab, t_data *data);
 t_list	*lst_add(t_list *lst, char *data);
 int		*ft_lstprint(t_list *lst);
 
+//builtins
 void ft_pwd();
 void echo(char *str, int arg);
 void	ft_cd(char *str);
-
+void env(t_data *data);
+void unset(t_data *data, ...);
 
 #endif
