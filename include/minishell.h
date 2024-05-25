@@ -45,7 +45,6 @@ typedef struct s_data
 void    get_env(t_data *data, char **env);
 void    minishell(t_data *data);
 int		ft_strcmp(char *s1, char *s2);
-void    pwd(t_data *data);
 void    line_to_token(t_data *data);
 char	*ft_strstr(char *str, char *to_find);
 char	**ft_split(char *str, char c);
