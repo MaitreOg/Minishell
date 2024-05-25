@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 16:53:58 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/23 18:10:47 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/25 23:19:53 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,13 @@
 
 enum Type
 {
-	TYPE_ORDER,
-	TYPE_OPERATOR,
-	TYPE_FILE
+	TYPE_ORDER,     //0
+	TYPE_ROUT,      //1
+	TYPE_RIN,       //2
+	TYPE_ROUT_APP,  //3
+	TYPE_LIMITER, //4
+	TYPE_PIPE,      //5
+	TYPE_FILE       //6
 };
 
 typedef struct s_list
@@ -40,7 +44,6 @@ typedef struct s_data
 {
 	char **env;
 	char *line;
-	char ***tab;
 	t_list *line_lst;
 }		t_data;
 
@@ -62,12 +65,13 @@ char	*delete_quotes(char *str);
 void	token_to_lst(char **tab, t_data *data);
 t_list	*lst_add(t_list *lst, char *data);
 int		*ft_lstprint(t_list *lst);
+t_list	*lst_prev(t_list *lst, t_list *original);
 
 //builtins
-void ft_pwd();
-void echo(char *str, int arg);
+void	ft_pwd();
+void	echo(char *str, int arg);
 void	ft_cd(char *str);
-void env(t_data *data);
-void unset(t_data *data, ...);
+void	env(t_data *data);
+void	unset(t_data *data, ...);
 
 #endif

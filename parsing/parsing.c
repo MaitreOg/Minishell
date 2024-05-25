@@ -6,23 +6,32 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:29:14 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/23 18:12:02 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/25 23:15:20 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/*void	add_type(t_list *lst)
+void	add_type(t_list *lst, t_list *original)
 {
-	if (token[i].order[0] == '<' || token[i].order[0] == '>')
-		token[i].type = 2;
-	else if (token[i].order[0] == '|')
-		token[i].type = 3;
-	else if (i > 0 && token[i - 1].type == 2)
-		token[i].type = 4;
+	if (ft_strcmp("<", lst->content) == 1)
+		lst->content_type = TYPE_RIN;
+	else if (ft_strcmp("<<", lst->content) == 1)
+		lst->content_type = TYPE_LIMITER;
+	else if (ft_strcmp(">", lst->content) == 1)
+		lst->content_type = TYPE_ROUT;
+	else if (ft_strcmp(">>", lst->content) == 1)
+		lst->content_type = TYPE_ROUT_APP;
+	else if (ft_strcmp("|", lst->content) == 1)
+		lst->content_type = TYPE_PIPE;
+	else if (lst_prev(lst, original))
+	{
+		if (lst_prev(lst, original)->content_type == TYPE_ROUT || lst_prev(lst, original)->content_type == TYPE_ROUT_APP || lst_prev(lst, original)->content_type == TYPE_RIN)
+			lst->content_type = TYPE_FILE;
+	}
 	else
-		token[i].type = 1;
-}*/
+		lst->content_type = TYPE_ORDER;
+}
 
 void	token_to_lst(char **tab, t_data *data)
 {
@@ -46,6 +55,7 @@ void add_necessary(t_data *data)
 	{
 		tmp->content = delete_quotes(tmp->content);
 		tmp->content = replace_var(data, tmp->content);
+		add_type(tmp, data->line_lst);
 		tmp = tmp->next;
 	}
 }

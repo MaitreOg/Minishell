@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:06:47 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/23 18:06:58 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/25 23:18:29 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	*ft_lstprint(t_list *lst)
 		return 0;
 	while (tmp)
 	{
-		printf("%s   ", tmp->content);
+		printf("%s -> type = %d\n", tmp->content, tmp->content_type);
 		tmp = tmp->next;
 	}
 	printf("\n");
@@ -44,4 +44,16 @@ t_list	*lst_add(t_list *lst, char *data)
 		tmp = tmp->next;
 	tmp->next = node;
 	return (lst);
+}
+
+t_list	*lst_prev(t_list *lst, t_list *original)
+{
+    t_list *tmp;
+
+    tmp = original;
+    if (ft_strcmp(tmp->content, lst->content))
+        return NULL;
+    while (tmp->next != lst)
+        tmp = tmp->next;
+    return tmp;
 }
