@@ -23,8 +23,8 @@ void unset(t_data *data, ...)
 	va_list	arg;
 
 	va_start(arg, data);
-	while (arg)
+	while (va_arg(arg, char *))
 	{
-		printf("remove : %s", va_arg(arg, char *));
+		//todo unset the variable
 	}
 }
