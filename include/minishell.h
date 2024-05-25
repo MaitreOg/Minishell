@@ -64,6 +64,7 @@ int		*ft_lstprint(t_list *lst);
 
 void ft_pwd();
 void echo(char *str, int arg);
+void	ft_cd(char *str);
 
 
 #endif
