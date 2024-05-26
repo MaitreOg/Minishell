@@ -22,5 +22,7 @@ void    minishell(t_data *data)
 		line_to_token(data);
 		if (ft_strcmp(data->line, "exit"))
 			return;
+		free(data->line_lst);
+		data->line_lst = NULL;
 	}
 }
