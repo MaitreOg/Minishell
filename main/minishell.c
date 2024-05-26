@@ -14,15 +14,20 @@
 
 void    minishell(t_data *data)
 {
+	data->line_lst = NULL;
 	while (1)
 	{
+		data->line_lst = NULL;
 		data->line = readline("\033[0;35mminishell \033[0m ");
 		if (data->line)
+		{
 			add_history(data->line);
+		}
 		line_to_token(data);
 		if (ft_strcmp(data->line, "exit"))
+		{
 			return;
+		}
 		free(data->line_lst);
-		data->line_lst = NULL;
 	}
 }

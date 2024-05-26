@@ -38,11 +38,9 @@ void	token_to_lst(char **tab, t_data *data)
 	int i;
 
 	i = -1;
-	if (data->line_lst == NULL)
-	{
-//	free (data->line_lst);
-		data->line_lst = malloc(sizeof(t_list));
-	}
+	if (data->line_lst)
+		free (data->line_lst);
+	data->line_lst = malloc(sizeof(t_list));
 	while(tab[++i])
 	{
 		data->line_lst = lst_add(data->line_lst, tab[i]);
