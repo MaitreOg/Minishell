@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:29:14 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/25 23:15:20 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/29 17:12:27 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ void	token_to_lst(char **tab, t_data *data)
 	int i;
 
 	i = -1;
-	if (data->line_lst)
-		free (data->line_lst);
 	data->line_lst = malloc(sizeof(t_list));
 	while(tab[++i])
 	{
@@ -70,5 +68,5 @@ void    line_to_token(t_data *data)
 	if (data->line_lst->content == NULL)
 		printf("le debut de la liste est null\n");
 	add_necessary(data); //ajoute le type et supprime les quotes et remplace les $
-	ft_lstprint(data->line_lst);
+	//ft_lstprint(data->line_lst);
 }

@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 16:53:58 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/25 23:19:53 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/29 16:58:39 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <readline/history.h>
 #include <signal.h>
 # include <stdarg.h>
-
+#include <fcntl.h>
 
 enum Type
 {
@@ -66,6 +66,19 @@ void	token_to_lst(char **tab, t_data *data);
 t_list	*lst_add(t_list *lst, char *data);
 int		*ft_lstprint(t_list *lst);
 t_list	*lst_prev(t_list *lst, t_list *original);
+char	**find_path(char **env);
+void	free_cmd(char **cmd);
+void	free_path(char **path);
+void execute(t_data *data, t_list *lst);
+
+//execution
+void compute(t_data *data);
+
+//redirection && pipe
+void    redirect_output(t_data *data, t_list *lst, int append);
+void    redirect_input(t_data *data, t_list *lst);
+void    limiter(t_data *data, t_list *lst);
+void	pipes(t_list *cmd1, t_list *cmd2, t_data *data);
 
 //builtins
 void	ft_pwd();

@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:09:22 by smarty            #+#    #+#             */
-/*   Updated: 2024/04/04 21:08:47 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/29 12:47:57 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,4 +147,44 @@ char	*ft_strdup(char *s)
 	}
 	d[i] = 0;
 	return (d);
+}
+
+char	**find_path(char **env)
+{
+	char	*env_path;
+	char	**path;
+	int		i;
+
+	i = 0;
+	while (ft_strstr(env[i], "PATH=") == 0)
+		i++;
+	env_path = ft_strstr(env[i], "PATH=");
+	path = ft_split(env_path, ':');
+	return (path);
+}
+
+void	free_path(char **path)
+{
+	int	i;
+
+	i = 0;
+	while (path[i])
+	{
+		free(path[i]);
+		i++;
+	}
+	free(path);
+}
+
+void	free_cmd(char **cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		free(cmd[i]);
+		i++;
+	}
+	free(cmd);
 }
