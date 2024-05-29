@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:41:49 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/29 17:12:19 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/29 17:35:37 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,18 @@
 void    redirect_input(t_data *data, t_list *lst)
 {
     int fd;
-    fd = open(lst->next->next->content, O_WRONLY);
+    fd = open(lst->content, O_RDONLY);
 	if (fd == -1)
 	{
 		perror("open");
 		exit(EXIT_FAILURE);
 	}
-	dup2(STDIN_FILENO, fd);
+	if (dup2(fd, STDIN_FILENO) == -1)
+    {
+        perror("dup2");
+        close(fd);
+        exit(EXIT_FAILURE);
+    }
 	close(fd);
 }
 

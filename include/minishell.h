@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 16:53:58 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/29 16:58:39 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/29 17:28:46 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ enum Type
 	TYPE_ROUT,      //1
 	TYPE_RIN,       //2
 	TYPE_ROUT_APP,  //3
-	TYPE_LIMITER, //4
+	TYPE_LIMITER,   //4
 	TYPE_PIPE,      //5
 	TYPE_FILE       //6
 };
