@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:06:47 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/25 23:18:29 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/29 17:57:23 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,14 @@ t_list	*lst_prev(t_list *lst, t_list *original)
     while (tmp->next != lst)
         tmp = tmp->next;
     return tmp;
+}
+
+t_list *next_order(t_list *lst)
+{
+	t_list *tmp;
+
+	tmp = lst;
+	while (tmp && tmp->content_type != 0)
+		tmp = tmp->next;
+	return (tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:29:14 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/29 17:35:33 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/30 01:17:40 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ void	add_type(t_list *lst, t_list *original)
 {
 	if (ft_strcmp("<", lst->content) == 1)
 		lst->content_type = TYPE_RIN;
+	else if (ft_strcmp("|", lst->content) == 1)
+		lst->content_type = TYPE_PIPE;
 	else if (ft_strcmp("<<", lst->content) == 1)
 		lst->content_type = TYPE_LIMITER;
 	else if (ft_strcmp(">", lst->content) == 1)
 		lst->content_type = TYPE_ROUT;
 	else if (ft_strcmp(">>", lst->content) == 1)
 		lst->content_type = TYPE_ROUT_APP;
-	else if (ft_strcmp("|", lst->content) == 1)
-		lst->content_type = TYPE_PIPE;
 	else if (lst_prev(lst, original))
 	{
 		if (lst_prev(lst, original)->content_type == TYPE_ROUT || lst_prev(lst, original)->content_type == TYPE_ROUT_APP || lst_prev(lst, original)->content_type == TYPE_RIN)
@@ -65,8 +65,6 @@ void    line_to_token(t_data *data)
 
 	tab = ft_split2(data->line, "|<>");
 	token_to_lst(tab, data);
-	if (data->line_lst->content == NULL)
-		printf("le debut de la liste est null\n");
 	add_necessary(data); //ajoute le type et supprime les quotes et remplace les $
 	//ft_lstprint(data->line_lst);
 }

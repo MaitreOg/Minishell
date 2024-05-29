@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 16:53:58 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/29 17:28:46 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/30 01:18:29 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 #include <signal.h>
 # include <stdarg.h>
 #include <fcntl.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 enum Type
 {
@@ -42,6 +44,8 @@ typedef struct s_list
 
 typedef struct s_data
 {
+	int o;
+	int execute;
 	char **env;
 	char *line;
 	t_list *line_lst;
@@ -66,19 +70,21 @@ void	token_to_lst(char **tab, t_data *data);
 t_list	*lst_add(t_list *lst, char *data);
 int		*ft_lstprint(t_list *lst);
 t_list	*lst_prev(t_list *lst, t_list *original);
+t_list	*next_order(t_list *lst);
 char	**find_path(char **env);
 void	free_cmd(char **cmd);
 void	free_path(char **path);
-void execute(t_data *data, t_list *lst);
 
 //execution
 void compute(t_data *data);
+void fork_order(t_data *data, t_list *lst);
+void 	execute(t_data *data, t_list *lst);
 
 //redirection && pipe
 void    redirect_output(t_data *data, t_list *lst, int append);
 void    redirect_input(t_data *data, t_list *lst);
 void    limiter(t_data *data, t_list *lst);
-void	pipes(t_list *cmd1, t_list *cmd2, t_data *data);
+void	pipes(t_data *data, t_list *order);
 
 //builtins
 void	ft_pwd();

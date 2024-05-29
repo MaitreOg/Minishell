@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:41:59 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/29 17:12:13 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/29 20:14:16 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,32 @@ void execute(t_data *data, t_list *lst)
 				free_path(path);
 				free_cmd(cmd);
 				perror("error cmd");
+				exit(EXIT_FAILURE);
 			}
 			break ;
 		}
 		free(path[i]);
 		i++;
+	}
+}
+
+void fork_order(t_data *data, t_list *lst)
+{
+
+	pid_t pid = fork();
+
+	if (pid == -1)
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+	else if (pid == 0)
+	{
+		execute(data, lst);
+	}
+	else
+	{
+        int status;
+        waitpid(pid, &status, 0);
 	}
 }
