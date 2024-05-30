@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:59:45 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/30 01:58:04 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/30 16:11:04 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void link_io(t_data *data,t_list *order, t_list *tmp)
     else if (tmp->content_type == TYPE_RIN)
         redirect_input(data, tmp->next);
 	else if (tmp->content_type == TYPE_LIMITER)
-        limiter(data, tmp->next);
+        limiter(data, tmp->next, order);
 }
 
 void compute_operator(t_data *data, t_list *lst)
@@ -58,10 +58,7 @@ void compute(t_data *data)
             data->execute = 0;
             compute_operator(data, lst);
             if (data->execute == 0)
-            {
                 fork_order(data, lst);
-
-            }
             data->o = 0;
             if (dup2(stdout_backup, STDOUT_FILENO) == -1)
             {

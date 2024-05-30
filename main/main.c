@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:07:02 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/29 19:01:15 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/30 16:17:32 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	handler(int signum)
 {
 	(void)signum;
-	printf("ouais");
 
 	//todo new line
 }

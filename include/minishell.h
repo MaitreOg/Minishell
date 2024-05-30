@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 16:53:58 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/30 12:12:20 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/30 16:12:23 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include "../utils/get_next_line/get_next_line.h"
 
 enum Type
 {
@@ -74,16 +75,16 @@ t_list	*next_order(t_list *lst);
 char	**find_path(char **env);
 void	free_cmd(char **cmd);
 void	free_path(char **path);
-void delete_space(t_list *lst);
+void	delete_space(t_list *lst);
 //execution
-void compute(t_data *data);
-void fork_order(t_data *data, t_list *lst);
+void	compute(t_data *data);
+void	fork_order(t_data *data, t_list *lst);
 void 	execute(t_data *data, t_list *lst);
 
 //redirection && pipe
 void    redirect_output(t_data *data, t_list *lst, int append);
 void    redirect_input(t_data *data, t_list *lst);
-void    limiter(t_data *data, t_list *lst);
+void    limiter(t_data *data, t_list *lst, t_list *order);
 void	pipes(t_data *data, t_list *order);
 
 //builtins
