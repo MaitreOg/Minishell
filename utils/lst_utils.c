@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:06:47 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/29 17:57:23 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/30 12:46:54 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,34 @@ t_list *next_order(t_list *lst)
 	while (tmp && tmp->content_type != 0)
 		tmp = tmp->next;
 	return (tmp);
+}
+
+void delete_space(t_list *lst)
+{
+	char *tmp;
+	int	i;
+	int y;
+
+	i = 0;
+	y = 0;
+	while(lst->content[i] && lst->content[i] == ' ')
+		i++;
+	tmp = ft_strdup(&lst->content[i]);
+	while(lst->content[i])
+	{
+		if (lst->content[i] == ' ')
+			y++;
+		else
+			y = 0;
+		i++;
+	}
+	free(lst->content);
+	lst->content = malloc(ft_strlen(tmp) - y + 1);
+	i = 0;
+	while(i < ft_strlen(tmp) - y)
+	{
+		lst->content[i] = tmp[i];
+		i++;
+	}
+	lst->content[i] = 0;
 }

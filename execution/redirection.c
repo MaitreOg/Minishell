@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:41:49 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/30 02:16:54 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/30 12:50:57 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void    redirect_input(t_data *data, t_list *lst)
 	if (fd == -1)
 	{
 		perror("open");
+		printf("test\n");
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd, STDIN_FILENO) == -1)
@@ -42,7 +43,7 @@ void    redirect_output(t_data *data, t_list *lst, int append)
 	int flags;
 
 	data->o = 1;
-	flags = O_RDWR| O_CREAT | (append ? O_APPEND : O_TRUNC);
+	flags = O_RDWR | O_CREAT | (append ? O_APPEND : O_TRUNC);
     fd = open(lst->content, flags, 0644);
 	if (fd == -1)
 	{

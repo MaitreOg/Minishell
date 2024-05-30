@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:29:14 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/30 01:17:40 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/30 12:37:09 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void add_necessary(t_data *data)
 		tmp->content = delete_quotes(tmp->content);
 		tmp->content = replace_var(data, tmp->content);
 		add_type(tmp, data->line_lst);
+		delete_space(tmp);
 		tmp = tmp->next;
 	}
 }

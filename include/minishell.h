@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 16:53:58 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/30 01:18:29 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/30 12:12:20 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_list	*next_order(t_list *lst);
 char	**find_path(char **env);
 void	free_cmd(char **cmd);
 void	free_path(char **path);
-
+void delete_space(t_list *lst);
 //execution
 void compute(t_data *data);
 void fork_order(t_data *data, t_list *lst);

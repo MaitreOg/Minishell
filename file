@@ -2,15 +2,4 @@ Makefile
 builtins
 execution
 file
-file1
 include
-main
-minishell
-parsing
-utils
-
-
-
-
-
-d
