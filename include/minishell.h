@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 16:53:58 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/30 16:12:23 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/31 01:16:31 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include "../utils/get_next_line/get_next_line.h"
+
+int g_exit_status;
+int	g_sigint;
 
 enum Type
 {
@@ -84,7 +87,7 @@ void 	execute(t_data *data, t_list *lst);
 //redirection && pipe
 void    redirect_output(t_data *data, t_list *lst, int append);
 void    redirect_input(t_data *data, t_list *lst);
-void    limiter(t_data *data, t_list *lst, t_list *order);
+void    limiter(t_data *data, t_list *lst);
 void	pipes(t_data *data, t_list *order);
 
 //builtins

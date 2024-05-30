@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:41:49 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/30 17:29:50 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/31 01:18:38 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,26 +44,30 @@ void	create_file_doc(t_list *lst, int *fd)
 	while (line)
 	{
 		if (ft_strcmp(limiter, line))
-		{
-			free(limiter);
-			free(line);
-			close(fd[1]);
-			return ;
-		}
+			break ;
 		write(fd[1], line, ft_strlen(line));
 		free(line);
 		write(2, "here_doc> ", 10);
 		line = get_next_line(STDIN_FILENO);
 	}
+	close(fd[1]);
+	get_next_line(-1);
+	free(limiter);
+	free(line);
+	exit(g_exit_status);
 }
 
-void    limiter(t_data *data, t_list *lst, t_list *order)
+void    limiter(t_data *data, t_list *lst)
 {
 	pid_t	childpid;
 	int		fd[2];
+	int status;
 
 	if (pipe(fd) == -1)
+	{
+		perror("limiter");
 		exit(EXIT_FAILURE);
+	}
 	childpid = fork();
 	if (childpid == -1)
 	{
@@ -76,9 +80,11 @@ void    limiter(t_data *data, t_list *lst, t_list *order)
 	}
 	else
 	{
-		dup2(fd[0], 0);
+		dup2(fd[0], STDIN_FILENO);
 		close(fd[1]);
-		waitpid(childpid, NULL, 0);
+		close(fd[0]);
+		waitpid(childpid, &status, 0);
+        g_exit_status = WEXITSTATUS(status);
 	}
 }
 
