@@ -1,20 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/31 21:24:35 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/31 22:50:42 by smarty           ###   ########.fr       */
+/*   Created: 2024/05/31 22:25:36 by smarty            #+#    #+#             */
+/*   Updated: 2024/06/01 01:00:59 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void perror_process(t_data *data, char *error)
+void free_tab(char **tab)
 {
-    perror(error);
-    free_all(data);
-    data->in_progress = 0;
+    int i;
+
+    i = -1;
+    while(tab[++i])
+        free(tab[i]);
+    free(tab);
+}
+
+void    free_lst(t_list *lst)
+{
+    t_list	*tmp;
+
+	while (lst)
+	{
+		tmp = lst->next;
+		free(lst->content);
+		free (lst);
+		lst = tmp;
+	}
+}
+
+void free_all(t_data *data)
+{
+    if (data->env)
+        free_tab(data->env);
+    if (data->line)
+        free(data->line);
+    if (data->line_lst)
+        free_lst(data->line_lst);
 }

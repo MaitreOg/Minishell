@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:59:45 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/31 21:52:17 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/01 00:53:10 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,7 @@ void compute(t_data *data)
             compute_operator(data, lst);
             data->o = 0;
             if (data->execute == 0 && data->in_progress == 1)
-            {
                 fork_order(data, lst);
-            }
             dup2(stdout_backup, STDOUT_FILENO);
             if (data->execute == 0)
                 dup2(stdin_backup, STDIN_FILENO);

@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 16:53:58 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/31 21:43:36 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/01 01:10:21 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,16 @@ typedef struct s_data
 
 
 
-void    minishell(t_data *data);
+void    minishell(t_data *data, char **env);
 
 
 //free && error
 void	free_cmd(char **cmd);
 void	free_path(char **path);
+void	free_all(t_data *data);
 void	perror_process(t_data *data, char *error);
+void	free_tab(char **tab);
+
 
 
 //lst utils
@@ -91,7 +94,7 @@ int		ft_strlen(char *str);
 int		ft_strcmp(char *s1, char *s2);
 void	delete_space(t_list *lst);
 char	*ft_strstr(char *str, char *to_find);
-char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strjoin(char *s1, char *s2, int z, int y);
 char	*ft_strdup(char *s);
 char	**ft_split(char *str, char c);
 char	**ft_split2(char *str, char*operator);

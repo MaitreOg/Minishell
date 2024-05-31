@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:09:22 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/30 12:02:00 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/01 01:11:03 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*ft_strstr(char *str, char *to_find)
 	}
 	return (0);
 }
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2, int z, int y)
 {
 	int		i;
 	int		j;
@@ -82,20 +82,21 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s2)
 		return (s1);
 	i = (ft_strlen(s1) + ft_strlen(s2));
-	j = 0;
+	j = -1;
 	str = malloc(i + 1);
 	if (!str)
 		return (NULL);
-	while (s1[j])
-	{
+	while (s1[++j])
 		str[j] = s1[j];
-		j++;
-	}
 	i = 0;
 	while (s2[i])
 		str[j++] = s2[i++];
 	str[j] = 0;
 	return (str);
+	if (z == 1)
+		free (s1);
+	if (y == 1)
+		free (s2);
 }
 
 char	*find_var(char **env, char *var)
@@ -103,7 +104,7 @@ char	*find_var(char **env, char *var)
 	char	*str;
 	int		i;
 	
-	var = ft_strjoin(var, "=");
+	var = ft_strjoin(var, "=", 1, 0);
 	i = 0;
 	
 	while (env[i])

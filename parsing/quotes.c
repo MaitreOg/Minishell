@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:23:51 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/31 21:51:53 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/01 01:07:25 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*delete_quotes(char *str)
 			str[i] = 0;
 			line = ft_strdup(str);
 			line2 = ft_strdup(&str[i + 1]);
-			line = ft_strjoin(line, line2);
+			line = ft_strjoin(line, line2, 1, 0);
 			free(str);
 			str = ft_strdup(line);
 			free (line);

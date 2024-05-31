@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:41:49 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/31 22:17:17 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/01 01:05:46 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	create_file_doc(t_list *lst, int *fd)
 
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[0]);
-	limiter = ft_strjoin(lst->content, "\n");
+	limiter = ft_strjoin(lst->content, "\n", 0, 0);
 	write(2, "> ", 2);
 	line = get_next_line(STDIN_FILENO);
 	while (line)

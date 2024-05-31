@@ -7,7 +7,7 @@ LDFLAGS = -lreadline
 
 SRCS =	main/main.c main/minishell.c \
 		utils/utils.c utils/split.c utils/lst_utils.c \
-		utils/get_next_line/get_next_line.c \
+		utils/get_next_line/get_next_line.c utils/free.c \
 		utils/get_next_line/get_next_line_utils.c utils/error.c \
 		parsing/parsing.c parsing/quotes.c parsing/dollar.c \
 		builtins/pwd.c builtins/echo.c  builtins/cd.c builtins/export.c \

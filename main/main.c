@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:07:02 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/31 21:51:00 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/01 00:57:29 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	main(int ac, char **av, char **env)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (printf("alloc fail\n"));
-	get_env(data, env);
-	minishell(data);
+	minishell(data, env);
 	//free_all()
 }

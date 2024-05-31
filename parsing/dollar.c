@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 20:16:31 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/23 18:09:22 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/01 01:06:23 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,10 @@ char *replace_var(t_data *data, char *str)
 				i++;
 			while (str[i + y] != ' ' && str[i + y])
 				y++;
-			var = ft_strjoin(var, &str[i + y]);
+			var = ft_strjoin(var, &str[i + y], 1, 0);
 			str[i] = 0;
-			str = ft_strjoin(str, var);
+			str = ft_strjoin(str, var, 1, 1);
 		}
 	}
 	return (str);
 }
-
