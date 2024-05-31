@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:59:45 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/31 01:15:47 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/31 17:27:46 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,26 @@ void link_io(t_data *data,t_list *order, t_list *tmp)
         data->execute = 1;
         pipes(data, order);
     }
-	if (tmp->content_type == TYPE_ROUT)
+    else if (tmp->content_type == TYPE_LIMITER)
+        limiter(data, tmp->next);
+	else if (tmp->content_type == TYPE_ROUT)
         redirect_output(data, tmp->next, 0);
 	else if (tmp->content_type == TYPE_ROUT_APP)
         redirect_output(data, tmp->next, 1);
     else if (tmp->content_type == TYPE_RIN)
         redirect_input(data, tmp->next);
-	else if (tmp->content_type == TYPE_LIMITER)
-        limiter(data, tmp->next);
 }
 
 void compute_operator(t_data *data, t_list *lst)
 {
     t_list *tmp;
     t_list *order;
-    
+    int status;
+    pid_t childpid;
+
     order = lst;
     tmp = lst->next;
+    
     while (tmp && tmp->content_type != 0)
     {
         if (tmp->content_type > 0 && tmp->content_type < 6)
@@ -55,24 +58,28 @@ void compute(t_data *data)
     lst = data->line_lst;
     while (lst)
     {
+        data->fdo = stdout_backup;
         if(lst->content_type == 0)
         {
             data->execute = 0;
             compute_operator(data, lst);
-            if (data->execute == 0)
-                fork_order(data, lst);
             data->o = 0;
+            if (data->execute == 0)
+            {
+                fork_order(data, lst);
+            }
             if (dup2(stdout_backup, STDOUT_FILENO) == -1)
             {
                 perror("dup2");
                 exit(EXIT_FAILURE);
             }
             if (data->execute == 0)
-                dup2(stdout_backup, STDOUT_FILENO);
+                dup2(stdin_backup, STDIN_FILENO);
         }
         lst = lst->next;
     }
     close(stdout_backup);
+    close(stdin_backup);
 }
 /*
 void compute(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:29:14 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/30 12:37:09 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/31 18:21:34 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	add_type(t_list *lst, t_list *original)
 		lst->content_type = TYPE_ROUT_APP;
 	else if (lst_prev(lst, original))
 	{
-		if (lst_prev(lst, original)->content_type == TYPE_ROUT || lst_prev(lst, original)->content_type == TYPE_ROUT_APP || lst_prev(lst, original)->content_type == TYPE_RIN)
+		if (lst_prev(lst, original)->content_type == TYPE_ROUT || lst_prev(lst, original)->content_type == TYPE_ROUT_APP || lst_prev(lst, original)->content_type == TYPE_RIN || lst_prev(lst, original)->content_type == TYPE_LIMITER)
 			lst->content_type = TYPE_FILE;
 	}
 	else

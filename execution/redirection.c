@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:41:49 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/31 01:18:38 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/31 18:29:53 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,43 @@ void    limiter(t_data *data, t_list *lst)
 	}
 	else
 	{
-		dup2(fd[0], STDIN_FILENO);
 		close(fd[1]);
-		close(fd[0]);
 		waitpid(childpid, &status, 0);
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
         g_exit_status = WEXITSTATUS(status);
 	}
 }
+
+/*void    limiter(t_data *data, t_list *lst)
+{
+	char	*line;
+	char	*limiter;
+	int		fd;
+
+    fd = open("tmp_heredoc_limiter", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	dup2(fd, STDOUT_FILENO);
+	limiter = ft_strjoin(lst->content, "\n");
+	while (1)
+	{
+		write(2, "here_doc> ", 10);
+		line = get_next_line(STDIN_FILENO);
+		if (ft_strcmp(limiter, line))
+			break ;
+		write(fd, line, ft_strlen(line));
+		free(line);
+	}
+	free(lst->content);
+	close(fd);
+	free(limiter);
+	free(line);
+	get_next_line(-1);
+	lst->content = ft_strdup("tmp_heredoc_limiter");
+	redirect_input(data, lst);
+	dup2(data->fdo ,STDOUT_FILENO);
+	return ;
+	//exit(g_exit_status);
+}*/
 
 void    redirect_output(t_data *data, t_list *lst, int append)
 {

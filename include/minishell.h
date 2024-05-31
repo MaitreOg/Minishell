@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 16:53:58 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/31 01:16:31 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/31 17:21:00 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_list
 typedef struct s_data
 {
 	int o;
+	int fdo;
 	int execute;
 	char **env;
 	char *line;
@@ -85,6 +86,7 @@ void	fork_order(t_data *data, t_list *lst);
 void 	execute(t_data *data, t_list *lst);
 
 //redirection && pipe
+void compute_operator(t_data *data, t_list *lst);
 void    redirect_output(t_data *data, t_list *lst, int append);
 void    redirect_input(t_data *data, t_list *lst);
 void    limiter(t_data *data, t_list *lst);
