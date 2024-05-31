@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 16:53:58 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/31 17:21:00 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/31 21:43:36 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 
 int g_exit_status;
 int	g_sigint;
+
 
 enum Type
 {
@@ -50,47 +51,67 @@ typedef struct s_data
 {
 	int o;
 	int fdo;
+	int in_progress;
 	int execute;
 	char **env;
 	char *line;
 	t_list *line_lst;
 }		t_data;
 
-void    get_env(t_data *data, char **env);
+
+
 void    minishell(t_data *data);
-int		ft_strcmp(char *s1, char *s2);
-void    line_to_token(t_data *data);
-char	*ft_strstr(char *str, char *to_find);
-char	**ft_split(char *str, char c);
-char	**ft_split2(char *str, char*operator);
-int 	is_verif(char *str, int i);
-char	*find_var(char **env, char *var);
-int		ft_strlen(char *str);
-char 	*replace_var(t_data *data, char *str);
-char	*ft_strjoin(char *s1, char *s2);
-int 	is_verif_quotes(char *str, int i);
-char	*ft_strdup(char *s);
-char	*delete_quotes(char *str);
-void	token_to_lst(char **tab, t_data *data);
-t_list	*lst_add(t_list *lst, char *data);
-int		*ft_lstprint(t_list *lst);
-t_list	*lst_prev(t_list *lst, t_list *original);
-t_list	*next_order(t_list *lst);
-char	**find_path(char **env);
+
+
+//free && error
 void	free_cmd(char **cmd);
 void	free_path(char **path);
+void	perror_process(t_data *data, char *error);
+
+
+//lst utils
+t_list	*lst_prev(t_list *lst, t_list *original);
+t_list	*lst_add(t_list *lst, char *data);
+t_list	*next_order(t_list *lst);
+int		*ft_lstprint(t_list *lst);
+
+
+//parsing
+char	*find_var(char **env, char *var);
+int 	is_verif_quotes(char *str, int i);
+char 	*replace_var(t_data *data, char *str);
+char	*delete_quotes(char *str);
+void	token_to_lst(char **tab, t_data *data);
+void    line_to_token(t_data *data);
+char	**find_path(char **env);
+
+
+//utils
+int		ft_strlen(char *str);
+int		ft_strcmp(char *s1, char *s2);
 void	delete_space(t_list *lst);
+char	*ft_strstr(char *str, char *to_find);
+char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strdup(char *s);
+char	**ft_split(char *str, char c);
+char	**ft_split2(char *str, char*operator);
+void    get_env(t_data *data, char **env);
+int 	is_verif(char *str, int i);
+
+
 //execution
 void	compute(t_data *data);
 void	fork_order(t_data *data, t_list *lst);
 void 	execute(t_data *data, t_list *lst);
 
+
 //redirection && pipe
-void compute_operator(t_data *data, t_list *lst);
+void 	compute_operator(t_data *data, t_list *lst);
 void    redirect_output(t_data *data, t_list *lst, int append);
 void    redirect_input(t_data *data, t_list *lst);
 void    limiter(t_data *data, t_list *lst);
 void	pipes(t_data *data, t_list *order);
+
 
 //builtins
 void	ft_pwd();

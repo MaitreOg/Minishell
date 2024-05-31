@@ -6,28 +6,26 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:41:49 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/31 18:29:53 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/31 22:17:17 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-//probleme a regler : - rev < file > file    !ne fonctione pas! 
 void    redirect_input(t_data *data, t_list *lst)
 {
     int fd;
     fd = open(lst->content, O_RDONLY);
 	if (fd == -1)
 	{
-		perror("open");
-		printf("test\n");
-		exit(EXIT_FAILURE);
+		perror_process(data, "open");
+		return ;
 	}
 	if (dup2(fd, STDIN_FILENO) == -1)
     {
-        perror("dup2");
+        perror_process(data, "dup2");
         close(fd);
-        exit(EXIT_FAILURE);
+        return ;
     }
 	close(fd);
 }
@@ -39,7 +37,7 @@ void	create_file_doc(t_list *lst, int *fd)
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[0]);
 	limiter = ft_strjoin(lst->content, "\n");
-	write(2, "here_doc> ", 10);
+	write(2, "> ", 2);
 	line = get_next_line(STDIN_FILENO);
 	while (line)
 	{
@@ -47,7 +45,7 @@ void	create_file_doc(t_list *lst, int *fd)
 			break ;
 		write(fd[1], line, ft_strlen(line));
 		free(line);
-		write(2, "here_doc> ", 10);
+		write(2, "> ", 2);
 		line = get_next_line(STDIN_FILENO);
 	}
 	close(fd[1]);
@@ -65,14 +63,14 @@ void    limiter(t_data *data, t_list *lst)
 
 	if (pipe(fd) == -1)
 	{
-		perror("limiter");
-		exit(EXIT_FAILURE);
+		perror_process(data, "limiter");
+		return ;
 	}
 	childpid = fork();
 	if (childpid == -1)
 	{
-		perror("fork");
-		exit(EXIT_FAILURE);
+		perror_process(data, "fork");
+		return ;
 	}
 	if (childpid == 0)
 	{
@@ -88,36 +86,6 @@ void    limiter(t_data *data, t_list *lst)
 	}
 }
 
-/*void    limiter(t_data *data, t_list *lst)
-{
-	char	*line;
-	char	*limiter;
-	int		fd;
-
-    fd = open("tmp_heredoc_limiter", O_RDWR | O_CREAT | O_TRUNC, 0644);
-	dup2(fd, STDOUT_FILENO);
-	limiter = ft_strjoin(lst->content, "\n");
-	while (1)
-	{
-		write(2, "here_doc> ", 10);
-		line = get_next_line(STDIN_FILENO);
-		if (ft_strcmp(limiter, line))
-			break ;
-		write(fd, line, ft_strlen(line));
-		free(line);
-	}
-	free(lst->content);
-	close(fd);
-	free(limiter);
-	free(line);
-	get_next_line(-1);
-	lst->content = ft_strdup("tmp_heredoc_limiter");
-	redirect_input(data, lst);
-	dup2(data->fdo ,STDOUT_FILENO);
-	return ;
-	//exit(g_exit_status);
-}*/
-
 void    redirect_output(t_data *data, t_list *lst, int append)
 {
     int fd;
@@ -128,14 +96,14 @@ void    redirect_output(t_data *data, t_list *lst, int append)
     fd = open(lst->content, flags, 0644);
 	if (fd == -1)
 	{
-		perror("open");
-		exit(EXIT_FAILURE);
+		perror_process(data, "open");
+		return ;
 	}
     if (dup2(fd, STDOUT_FILENO) == -1)
     {
-        perror("dup2");
+        perror_process(data, "dup2");
         close(fd);
-        exit(EXIT_FAILURE);
+        return ;
     }
 	close(fd);
 }

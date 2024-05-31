@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:47:43 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/30 22:22:52 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/31 21:37:54 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ void    minishell(t_data *data)
 	int stdin_backup;
 
 	data->line_lst = NULL;
+	stdin_backup = dup(STDIN_FILENO);
+	stdout_backup = dup(STDOUT_FILENO);
 	while (1)
 	{
-		stdin_backup = dup(STDIN_FILENO);
-		stdout_backup = dup(STDOUT_FILENO);
+		data->in_progress = 1;
 		data->line_lst = NULL;
 		data->o = 0;
 		data->line = readline("\033[0;35mminishell \033[0m ");
@@ -30,23 +31,11 @@ void    minishell(t_data *data)
 			add_history(data->line);
 			line_to_token(data);
 			if (ft_strcmp(data->line, "exit"))
-			{
 				return;
-			}
 			compute(data);
 			free(data->line_lst);
-			if (dup2(stdout_backup, STDOUT_FILENO) == -1)
-			{
-        		perror("dup2");
-        		close(stdout_backup);
-        		exit(EXIT_FAILURE);
-			}
-			if (dup2(stdin_backup, STDIN_FILENO) == -1)
-			{
-        		perror("dup2");
-        		close(stdout_backup);
-        		exit(EXIT_FAILURE);
-			}
+			dup2(stdout_backup, STDOUT_FILENO);
+			dup2(stdin_backup, STDIN_FILENO);
 		}
 	}
 }

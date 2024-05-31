@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:23:51 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/23 18:08:12 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/31 21:51:53 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,12 @@ int is_verif_quotes(char *str, int i)
 char	*delete_quotes(char *str)
 {
 	int	i;
-	int	y;
 	char	*line;
 	char	*line2;
 
 	i = 0;
 	while (str[i])
 	{
-		y = 0;
 		while (str[i] != '\'' && str[i] != '"' && str[i] )
 			i++;
 		if (str[i] == '\'' || str[i] == '"')

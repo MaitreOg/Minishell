@@ -6,13 +6,12 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:41:59 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/31 18:22:58 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/31 22:17:09 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-//coupure apres l exec a determiner pourquoi?
 void execute(t_data *data, t_list *lst)
 {
 	int		i;
@@ -32,8 +31,8 @@ void execute(t_data *data, t_list *lst)
 			{
 				free_path(path);
 				free_cmd(cmd);
-				perror("error cmd");
-				exit(EXIT_FAILURE);
+				perror_process(data, "error cmd");
+				return ;
 			}
 			break ;
 		}
@@ -51,8 +50,8 @@ void fork_order(t_data *data, t_list *lst)
 
 	if (pid == -1)
 	{
-		perror("fork");
-		exit(EXIT_FAILURE);
+		perror_process(data, "fork");
+		return ;
 	}
 	else if (pid == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:59:45 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/31 17:27:46 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/31 21:52:17 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,11 @@ void compute_operator(t_data *data, t_list *lst)
 {
     t_list *tmp;
     t_list *order;
-    int status;
-    pid_t childpid;
 
     order = lst;
     tmp = lst->next;
     
-    while (tmp && tmp->content_type != 0)
+    while (tmp && tmp->content_type != 0 && data->in_progress == 1)
     {
         if (tmp->content_type > 0 && tmp->content_type < 6)
             link_io(data, order, tmp);
@@ -56,7 +54,7 @@ void compute(t_data *data)
 	stdout_backup = dup(STDOUT_FILENO);
 	stdin_backup = dup(STDIN_FILENO);
     lst = data->line_lst;
-    while (lst)
+    while (lst && data->in_progress == 1)
     {
         data->fdo = stdout_backup;
         if(lst->content_type == 0)
@@ -64,15 +62,11 @@ void compute(t_data *data)
             data->execute = 0;
             compute_operator(data, lst);
             data->o = 0;
-            if (data->execute == 0)
+            if (data->execute == 0 && data->in_progress == 1)
             {
                 fork_order(data, lst);
             }
-            if (dup2(stdout_backup, STDOUT_FILENO) == -1)
-            {
-                perror("dup2");
-                exit(EXIT_FAILURE);
-            }
+            dup2(stdout_backup, STDOUT_FILENO);
             if (data->execute == 0)
                 dup2(stdin_backup, STDIN_FILENO);
         }
@@ -81,24 +75,3 @@ void compute(t_data *data)
     close(stdout_backup);
     close(stdin_backup);
 }
-/*
-void compute(t_data *data)
-{
-    t_list *lst;
-    
-    lst = data->line_lst;
-    while (lst)
-    {
-        if(lst->next->content_type == 5)
-        {
-            //pipes(lst_prev_order(lst, data->line_lst), lst->next->next, data);
-        }
-        else
-        {
-            if (lst->next && lst->next->content_type >= 1 && lst->next->content_type <= 4)
-                compute_operator(data, lst);
-            compute_commande(data, lst);
-        }
-        lst = lst->next;
-    }
-}*/

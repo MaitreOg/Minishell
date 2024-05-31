@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:29:14 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/31 18:21:34 by smarty           ###   ########.fr       */
+/*   Updated: 2024/05/31 22:17:54 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,8 @@ void add_necessary(t_data *data)
 void    line_to_token(t_data *data)
 {
 	char **tab;
-	int i;
 
 	tab = ft_split2(data->line, "|<>");
 	token_to_lst(tab, data);
-	add_necessary(data); //ajoute le type et supprime les quotes et remplace les $
-	//ft_lstprint(data->line_lst);
+	add_necessary(data);         //ajoute le type et supprime les quotes et remplace les $
 }
