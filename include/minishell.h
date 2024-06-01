@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 16:53:58 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/01 01:10:21 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/01 22:41:57 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,6 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include "../utils/get_next_line/get_next_line.h"
-
-int g_exit_status;
-int	g_sigint;
-
 
 enum Type
 {
@@ -69,6 +65,8 @@ void	free_path(char **path);
 void	free_all(t_data *data);
 void	perror_process(t_data *data, char *error);
 void	free_tab(char **tab);
+void	redirect_error(t_data *data, char *error, t_list *lst);
+void	order_not_found(t_data *data, char *order);
 
 
 

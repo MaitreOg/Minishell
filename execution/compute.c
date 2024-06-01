@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:59:45 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/01 00:53:10 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/01 22:44:11 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,13 @@ void link_io(t_data *data,t_list *order, t_list *tmp)
     {
         data->execute = 1;
         pipes(data, order);
+        return ;
     }
+	if (tmp->next == NULL || (tmp->next->content_type > 0 && tmp->next->content_type < 6))
+	{
+		redirect_error(data, "unexpected token ", tmp);
+		return;
+	}
     else if (tmp->content_type == TYPE_LIMITER)
         limiter(data, tmp->next);
 	else if (tmp->content_type == TYPE_ROUT)
@@ -54,7 +60,10 @@ void compute(t_data *data)
 	stdout_backup = dup(STDOUT_FILENO);
 	stdin_backup = dup(STDIN_FILENO);
     lst = data->line_lst;
-    while (lst && data->in_progress == 1)
+    if (lst->content_type > 0 && lst->content_type < 5 && (lst->next == NULL || (lst->next->content_type > 0 && lst->next->content_type < 6)))
+		redirect_error(data, "unexpected token ", lst);
+    if (lst->content_type == 5)
+		redirect_error(data, "unexpected token ", lst);while (lst && data->in_progress == 1)
     {
         data->fdo = stdout_backup;
         if(lst->content_type == 0)

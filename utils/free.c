@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 22:25:36 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/01 01:00:59 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/01 21:38:45 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,11 @@ void    free_lst(t_list *lst)
 
 void free_all(t_data *data)
 {
-    if (data->env)
-        free_tab(data->env);
-    if (data->line)
-        free(data->line);
+    //if (data->env)
+    //    free_tab(data->env);
+    //if (data->line)
+    //    free(data->line);
     if (data->line_lst)
-        free_lst(data->line_lst);
+        return ;
+    //free_lst(data->line_lst);
 }

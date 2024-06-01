@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:41:49 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/01 01:05:46 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/01 23:01:49 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void    redirect_input(t_data *data, t_list *lst)
     fd = open(lst->content, O_RDONLY);
 	if (fd == -1)
 	{
-		perror_process(data, "open");
+		perror_process(data, lst->content);
 		return ;
 	}
 	if (dup2(fd, STDIN_FILENO) == -1)
@@ -52,7 +52,7 @@ void	create_file_doc(t_list *lst, int *fd)
 	get_next_line(-1);
 	free(limiter);
 	free(line);
-	exit(g_exit_status);
+	exit(1);
 }
 
 void    limiter(t_data *data, t_list *lst)
@@ -62,10 +62,7 @@ void    limiter(t_data *data, t_list *lst)
 	int status;
 
 	if (pipe(fd) == -1)
-	{
-		perror_process(data, "limiter");
-		return ;
-	}
+		return(perror_process(data, "pipe"));
 	childpid = fork();
 	if (childpid == -1)
 	{
@@ -82,7 +79,6 @@ void    limiter(t_data *data, t_list *lst)
 		waitpid(childpid, &status, 0);
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
-        g_exit_status = WEXITSTATUS(status);
 	}
 }
 
@@ -93,10 +89,10 @@ void    redirect_output(t_data *data, t_list *lst, int append)
 
 	data->o = 1;
 	flags = O_RDWR | O_CREAT | (append ? O_APPEND : O_TRUNC);
-    fd = open(lst->content, flags, 0644);
+	fd = open(lst->content, flags, 0644);
 	if (fd == -1)
 	{
-		perror_process(data, "open");
+		perror_process(data, lst->content);
 		return ;
 	}
     if (dup2(fd, STDOUT_FILENO) == -1)

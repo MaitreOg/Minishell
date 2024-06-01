@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:31:52 by smarty            #+#    #+#             */
-/*   Updated: 2024/04/04 21:08:44 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/01 22:05:26 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,16 +93,14 @@ int	count_word2(char *str, char *operator)
 	nb = 0;
 	if (str[0] == 0)
 		return (0);
-	if (check_operator(str, i, operator) == 0)
-		nb++;
 	while (str[i])
 	{
-		if (check_operator(str, i, operator) == 1 && check_operator(str, (i + 1), operator) == 0 && str[i + 1])
-			nb += 2;
+		if (check_operator(str, i, operator) == 1 && ((check_operator(str, (i + 1), operator) == 0 && str[i + 1]) || str[i + 1] == 0))
+			nb += 1;
+		if (check_operator(str, i, operator) == 0 && ((check_operator(str, (i + 1), operator) == 1 && str[i + 1]) || str[i + 1] == 0))
+			nb += 1;
 		i++;
 	}
-	if (check_operator(str, (i - 1), operator) == 1)
-		nb--;
 	return (nb);
 }
 
@@ -146,16 +144,19 @@ char **ft_split2(char *str, char*operator)
 		y = 0;
 		while (check_operator(str, (i + y), operator) == 0 && str[i + y])
 			y++;
-		split[word] = (char *)malloc (sizeof(char) * (y + 1));
-		y = 0;
-   		while (check_operator(str, i, operator) == 0 && str[i])
+		if (y > 0)
 		{
-			split[word][y] = str[i];
-			y++;
-			i++;
+			split[word] = (char *)malloc (sizeof(char) * (y + 1));
+			y = 0;
+   			while (check_operator(str, i, operator) == 0 && str[i])
+			{
+				split[word][y] = str[i];
+				y++;
+				i++;
+			}
+			split[word][y] = '\0'; 
+			word++;
 		}
-		split[word][y] = '\0'; 
-		word++;
 		y = 0;
 		if (str[i] == 0)
 		{
