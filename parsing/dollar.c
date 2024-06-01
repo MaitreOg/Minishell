@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 20:16:31 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/01 01:06:23 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/01 23:23:28 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,7 @@ char *replace_var(t_data *data, char *str)
 			y = 0;
 			i++;
 			while(str[i] != ' ' && str[i])
-			{
-				var[y] = str[i];
-				y++; 
-				i++;
-			}
+				var[y++] = str[i++];
 			var[y] = 0;
 			var = find_var(data->env, var);
 			i = 0;

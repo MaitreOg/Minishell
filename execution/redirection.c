@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:41:49 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/01 23:01:49 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/01 23:15:04 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,7 @@ void    limiter(t_data *data, t_list *lst)
 		return ;
 	}
 	if (childpid == 0)
-	{
 		create_file_doc(lst, fd);
-	}
 	else
 	{
 		close(fd[1]);

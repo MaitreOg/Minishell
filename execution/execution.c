@@ -6,11 +6,18 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:41:59 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/01 22:32:19 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/01 23:20:28 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void free_exec(char **path, char **cmd, t_data *data)
+{
+	free_path(path);
+	free_cmd(cmd);
+	perror_process(data, "error cmd");
+}
 
 void execute(t_data *data, t_list *lst)
 {
@@ -28,12 +35,7 @@ void execute(t_data *data, t_list *lst)
 		if (access(path[i], F_OK | X_OK) == 0)
 		{
 			if (execve(path[i], cmd, data->env) == -1)
-			{
-				free_path(path);
-				free_cmd(cmd);
-				perror_process(data, "error cmd");
-				return ;
-			}
+				return (free_exec(path, cmd, data));
 			break ;
 		}
 		free(path[i]);

@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:54:37 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/30 01:33:30 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/01 23:22:15 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ void	pipes(t_data *data, t_list *order)
 		exit(EXIT_FAILURE);
 	childpid = fork();
 	if (childpid == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
+		return (perror_process(data, "fork"));
 	if (childpid == 0)
 	{
         close(fd[0]);

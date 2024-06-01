@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:06:47 by smarty            #+#    #+#             */
-/*   Updated: 2024/05/30 16:12:37 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/01 23:28:10 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,8 @@ void delete_space(t_list *lst)
 	}
 	free(lst->content);
 	lst->content = malloc(ft_strlen(tmp) - y + 1);
-	i = 0;
-	while(i < ft_strlen(tmp) - y)
-	{
+	i = -1;
+	while(++i < ft_strlen(tmp) - y)
 		lst->content[i] = tmp[i];
-		i++;
-	}
 	lst->content[i] = 0;
 }

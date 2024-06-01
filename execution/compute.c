@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:59:45 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/01 22:44:11 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/01 23:20:51 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,13 @@ void compute_operator(t_data *data, t_list *lst)
         tmp = tmp->next;
     }
 }
-
+void backup_fd(t_data *data, int fdi, int fdo)
+{
+    dup2(fdo, STDOUT_FILENO);
+    if (data->execute == 0)
+        dup2(fdi, STDIN_FILENO);
+    data->o = 0;
+}
 void compute(t_data *data)
 {
     t_list *lst;
@@ -70,12 +76,9 @@ void compute(t_data *data)
         {
             data->execute = 0;
             compute_operator(data, lst);
-            data->o = 0;
             if (data->execute == 0 && data->in_progress == 1)
                 fork_order(data, lst);
-            dup2(stdout_backup, STDOUT_FILENO);
-            if (data->execute == 0)
-                dup2(stdin_backup, STDIN_FILENO);
+            backup_fd(data, stdin_backup, stdout_backup);
         }
         lst = lst->next;
     }
