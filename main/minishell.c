@@ -23,6 +23,7 @@ void    minishell(t_data *data, char **env)
 	while (1)
 	{
 		get_env(data, env);
+		ft_env(data);
 		data->in_progress = 1;
 		data->line_lst = NULL;
 		data->o = 0;

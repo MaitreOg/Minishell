@@ -15,6 +15,7 @@
 void	handler(int signum)
 {
 	(void)signum;
+//	rl_on_new_line();
 	//todo new line
 }
 
@@ -26,6 +27,9 @@ void quittt(int signum)
 
 int	main(int ac, char **av, char **env)
 {
+	ft_pwd();
+	ft_cd("/home/noto/Documents/42/Minishell/main");
+	ft_pwd();
 	signal(SIGINT, handler);
 	signal (SIGQUIT, quittt);
 	t_data	*data;

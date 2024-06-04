@@ -69,7 +69,8 @@ void compute(t_data *data)
     if (lst->content_type > 0 && lst->content_type < 5 && (lst->next == NULL || (lst->next->content_type > 0 && lst->next->content_type < 6)))
 		redirect_error(data, "unexpected token ", lst);
     if (lst->content_type == 5)
-		redirect_error(data, "unexpected token ", lst);while (lst && data->in_progress == 1)
+		redirect_error(data, "unexpected token ", lst);
+	while (lst && data->in_progress == 1)
     {
         data->fdo = stdout_backup;
         if(lst->content_type == 0)

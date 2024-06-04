@@ -12,12 +12,11 @@
 
 #include "../include/minishell.h"
 
-//TODO TESTER ENV()
 /**
  * print the env
  * @param data the struct for get the emv variable
  */
-void env(t_data *data)
+void ft_env(t_data *data)
 {
 	printf("%s", *data->env);
 }

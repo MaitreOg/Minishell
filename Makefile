@@ -2,7 +2,8 @@ NAME = minishell
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g
+#CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS =
 LDFLAGS = -lreadline
 
 SRCS =	main/main.c main/minishell.c \

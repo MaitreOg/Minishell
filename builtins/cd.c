@@ -20,5 +20,4 @@ void	ft_cd(char *str)
 {
 	if (chdir(str) == -1)
 		printf("cd: %s: No such file or directory\n", str);
-
 }

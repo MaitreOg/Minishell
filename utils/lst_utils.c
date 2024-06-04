@@ -68,6 +68,7 @@ t_list *next_order(t_list *lst)
 	return (tmp);
 }
 
+//todo : delete space in the begining and the end of the string
 void delete_space(t_list *lst)
 {
 	char *tmp;

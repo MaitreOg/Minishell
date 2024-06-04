@@ -17,9 +17,9 @@ void free_tab(char **tab)
     int i;
 
     i = -1;
-    while(tab[++i])
-        free(tab[i]);
-    free(tab);
+//    while(tab[++i])
+//        free(tab[i]);
+//    free(tab);
 }
 
 void    free_lst(t_list *lst)
@@ -37,10 +37,10 @@ void    free_lst(t_list *lst)
 
 void free_all(t_data *data)
 {
-    if (data->env)
-        free_tab(data->env);
-    if (data->line)
-        free(data->line);
-    if (data->line_lst)
-        free_lst(data->line_lst);
+//    if (data->env)
+//        free_tab(data->env);
+//    if (data->line)
+//        free(data->line);
+//    if (data->line_lst)
+//        free_lst(data->line_lst);
 }
