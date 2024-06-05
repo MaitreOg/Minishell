@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:07:02 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/01 00:57:29 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/05 04:26:47 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ void quittt(int signum)
 
 int	main(int ac, char **av, char **env)
 {
-	ft_pwd();
-	ft_cd("/home/noto/Documents/42/Minishell/main");
-	ft_pwd();
 	signal(SIGINT, handler);
 	signal (SIGQUIT, quittt);
 	t_data	*data;

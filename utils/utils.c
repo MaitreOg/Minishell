@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:09:22 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/01 23:28:30 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/05 04:25:01 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,19 @@ int ft_strcmp(char *s1, char *s2)
 
 	i = -1;
 	while(s2[++i])
+	{
+		if (s1[i] != s2[i])
+			return (0);
+	}
+	return (1);
+}
+
+int ft_strmcmp(char *s1, char *s2, int y)
+{
+	int	i;
+
+	i = -1;
+	while(s2[++i] && i < y)
 	{
 		if (s1[i] != s2[i])
 			return (0);

@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:41:59 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/01 23:20:28 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/05 04:29:43 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,56 @@ void execute(t_data *data, t_list *lst)
 		order_not_found(data, cmd[0]);
 	exit(1);
 }
+int	check_built_in(t_data *data, t_list *lst)
+{
+	if (ft_strmcmp(lst->content, "echo", 4) == 1)
+	{
+		echo(&lst->content[5], 0);
+		return 1;
+	}
+	else if (ft_strmcmp(lst->content, "echo -n", 7) == 1)
+	{
+		echo(&lst->content[8], 1);
+		return 1;
+	}
+	else if (ft_strmcmp(lst->content, "cd", 2) == 1)
+	{
+		ft_cd(&lst->content[3]);
+		return 1;
+	}
+	else if (ft_strcmp(lst->content, "pwd") == 1)
+	{
+		ft_pwd();
+		return 1;
+	}
+	else if (ft_strmcmp(lst->content, "export", 6) == 1)
+	{
+		//export();
+		return 1;
+	}
+	else if (ft_strmcmp(lst->content, "unset", 5) == 1)
+	{
+		//ft_unset(data, );
+		return 1;
+	}
+	else if (ft_strcmp(lst->content, "env") == 1)
+	{
+		ft_env(data);
+		return 1;
+	}
+	else if (ft_strcmp(lst->content, "exit") == 1)
+	{
+		//ft_exit();
+		return 1;
+	}
+	return 0;
+}
+
 
 void fork_order(t_data *data, t_list *lst)
 {
-
+	if (check_built_in(data, lst) == 1)
+		return ;
 	pid_t pid = fork();
 	int status;
 

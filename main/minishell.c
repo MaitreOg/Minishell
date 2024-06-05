@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:47:43 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/01 23:23:03 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/05 04:26:12 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void    minishell(t_data *data, char **env)
 	while (1)
 	{
 		get_env(data, env);
-		ft_env(data);
 		data->in_progress = 1;
 		data->line_lst = NULL;
 		data->o = 0;
