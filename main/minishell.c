@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:47:43 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/08 22:09:36 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/08 22:20:13 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ void    minishell(t_data *data, char **env)
 			add_history(data->line);
 			line_to_token(data);
 			if (ft_strcmp(data->line, "exit"))
+			{
+				clear_history();
 				return (free_all(data));
+			}
 			compute(data);
 			dup2(stdout_backup, STDOUT_FILENO);
 			dup2(stdin_backup, STDIN_FILENO);
