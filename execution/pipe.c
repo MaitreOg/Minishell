@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 12:54:37 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/01 23:22:15 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/08 21:45:26 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ void	pipes(t_data *data, t_list *order)
 {
 	pid_t	childpid;
 	int		fd[2];
+	int 	status;
+	int		i;
 
+	i = 0;
 	if (pipe(fd) == -1)
 		exit(EXIT_FAILURE);
 	childpid = fork();
@@ -35,6 +38,10 @@ void	pipes(t_data *data, t_list *order)
         close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
         close(fd[0]);
-		waitpid(childpid, NULL, 0);
+		while(data->childpid[i] != -2)
+			i++;
+		data->childpid[i] = childpid;
+		//waitpid(childpid, &status, 0);
+		data->return_value = WEXITSTATUS(status);
 	}
 }

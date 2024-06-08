@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 16:53:58 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/05 04:25:11 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/08 22:09:31 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include "../utils/get_next_line/get_next_line.h"
+
 
 enum Type
 {
@@ -47,6 +48,8 @@ typedef struct s_data
 {
 	int o;
 	int fdo;
+	pid_t	*childpid;
+	int return_value;
 	int in_progress;
 	int execute;
 	char **env;
@@ -100,6 +103,7 @@ char	**ft_split2(char *str, char*operator);
 void    get_env(t_data *data, char **env);
 int 	is_verif(char *str, int i);
 int		ft_strmcmp(char *s1, char *s2, int y);
+void	alloc_pid(t_data *data);
 
 
 //execution

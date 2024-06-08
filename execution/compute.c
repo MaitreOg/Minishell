@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:59:45 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/01 23:20:51 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/08 21:41:20 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void compute(t_data *data)
     
 	stdout_backup = dup(STDOUT_FILENO);
 	stdin_backup = dup(STDIN_FILENO);
+    alloc_pid(data);
     lst = data->line_lst;
     if (lst->content_type > 0 && lst->content_type < 5 && (lst->next == NULL || (lst->next->content_type > 0 && lst->next->content_type < 6)))
 		redirect_error(data, "unexpected token ", lst);
@@ -81,8 +82,12 @@ void compute(t_data *data)
                 fork_order(data, lst);
             backup_fd(data, stdin_backup, stdout_backup);
         }
+        //printf("$? = %d\n", data->return_value);
         lst = lst->next;
     }
+    int i = -1;
+    while (data->childpid[++i])
+        waitpid(data->childpid[i], NULL, 0);
     close(stdout_backup);
     close(stdin_backup);
 }

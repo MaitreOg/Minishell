@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:41:59 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/05 04:29:43 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/08 21:56:34 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,11 @@ void execute(t_data *data, t_list *lst)
 		i++;
 	}
 	if (path[i] == NULL)
+	{
 		order_not_found(data, cmd[0]);
-	exit(1);
+		exit(EXIT_FAILURE);
+	}
+	exit(0);
 }
 int	check_built_in(t_data *data, t_list *lst)
 {
@@ -97,7 +100,9 @@ void fork_order(t_data *data, t_list *lst)
 		return ;
 	pid_t pid = fork();
 	int status;
+	int i;
 
+	i = 0;
 	if (pid == -1)
 	{
 		perror_process(data, "fork");
@@ -109,6 +114,10 @@ void fork_order(t_data *data, t_list *lst)
 	}
 	else
 	{
-        waitpid(pid, &status, 0);
+		while(data->childpid[i] != -2)
+			i++;
+		data->childpid[1] = pid;
+        //waitpid(pid, &status, 0);
+		data->return_value = WEXITSTATUS(status);
 	}
 }

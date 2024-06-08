@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:09:22 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/05 04:25:01 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/08 22:13:11 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,4 +201,31 @@ void	free_cmd(char **cmd)
 		i++;
 	}
 	free(cmd);
+}
+int nb_order(t_data *data)
+{
+	t_list *tmp;
+	int i;
+
+	i = 0;
+	tmp = data->line_lst;
+	while(tmp)
+	{
+		if (tmp->content_type == TYPE_ORDER)
+			i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
+
+void alloc_pid(t_data *data)
+{
+	int	i;
+	int	nb;
+
+	i = -1;
+	nb = nb_order(data);
+	data->childpid = malloc(sizeof(pid_t) * nb);
+	while (++i < nb)
+		data->childpid[i] = -2;
 }

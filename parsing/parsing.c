@@ -6,13 +6,13 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:29:14 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/01 22:05:38 by smarty           ###   ########.fr       */
+/*   Updated: 2024/06/08 22:09:49 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	add_type(t_list *lst, t_list *original)
+void	add_type(t_data *data, t_list *lst, t_list *original)
 {
 	if (ft_strcmp("<", lst->content) == 1)
 		lst->content_type = TYPE_RIN;
@@ -53,7 +53,7 @@ void add_necessary(t_data *data)
 	{
 		tmp->content = delete_quotes(tmp->content);
 		tmp->content = replace_var(data, tmp->content);
-		add_type(tmp, data->line_lst);
+		add_type(data, tmp, data->line_lst);
 		delete_space(tmp);
 		tmp = tmp->next;
 	}
