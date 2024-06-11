@@ -68,30 +68,13 @@ t_list *next_order(t_list *lst)
 	return (tmp);
 }
 
-//todo : delete space in the begining and the end of the string
+//todo : delete space in the begining of the string
 void delete_space(t_list *lst)
 {
-	char *tmp;
-	int	i;
-	int y;
+	int i;
 
 	i = 0;
-	y = 0;
-	while(lst->content[i] && lst->content[i] == ' ')
+	while (lst->content[i] == ' ')
 		i++;
-	tmp = ft_strdup(&lst->content[i]);
-	while(lst->content[i])
-	{
-		if (lst->content[i] == ' ')
-			y++;
-		else
-			y = 0;
-		i++;
-	}
-	free(lst->content);
-	lst->content = malloc(ft_strlen(tmp) - y + 1);
-	i = -1;
-	while(++i < ft_strlen(tmp) - y)
-		lst->content[i] = tmp[i];
-	lst->content[i] = 0;
+	lst->content = ft_strdup(&lst->content[i]);
 }

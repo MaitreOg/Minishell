@@ -14,7 +14,7 @@ SRCS =	main/main.c main/minishell.c \
 		builtins/pwd.c builtins/echo.c  builtins/cd.c builtins/export.c \
 		builtins/unset.c builtins/env.c \
 		execution/execution.c execution/redirection.c execution/compute.c \
-		execution/pipe.c
+		execution/pipe.c builtins/utils_builtins.c
 
 OBJECTS = $(SRCS:.c=.o) 
 

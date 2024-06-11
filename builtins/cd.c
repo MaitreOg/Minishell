@@ -15,9 +15,21 @@
 /**
  * just an cd
  * @param str the path to go
+ * @return 0 success \n -1 error
  */
-void	ft_cd(char *str)
+int	ft_cd(t_data *data, char *str)
 {
+	char *pwd;
+
+	pwd = getcwd(NULL, 0);
 	if (chdir(str) == -1)
+	{
 		printf("cd: %s: No such file or directory\n", str);
+		free(pwd);
+		return (-1);
+	}
+	edit_env(data, "PWD=", getcwd(NULL, 0));
+	edit_env(data, "OLDPWD=", pwd);
+	free(pwd);
+	return (0);
 }
