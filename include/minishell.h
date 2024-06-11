@@ -71,7 +71,7 @@ void	perror_process(t_data *data, char *error);
 void	free_tab(char **tab);
 void	redirect_error(t_data *data, char *error, t_list *lst);
 void	order_not_found(t_data *data, char *order);
-
+void free_compute(t_data *data);
 
 
 //lst utils

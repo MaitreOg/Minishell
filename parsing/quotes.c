@@ -87,8 +87,14 @@ char	*delete_quotes(char *str)
 			free(str);
 			str = ft_strdup(line);
 			free (line);
+			line = NULL;
 			free (line2);
+			line2 = NULL;
 		}
 	}
+	if (line != NULL)
+		free(line);
+	if (line2 != NULL)
+		free(line2);
 	return (str);
 }

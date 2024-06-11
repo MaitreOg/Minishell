@@ -28,8 +28,8 @@ int	ft_cd(t_data *data, char *str)
 		free(pwd);
 		return (-1);
 	}
-	edit_env(data, "PWD=", getcwd(NULL, 0));
-	edit_env(data, "OLDPWD=", pwd);
-	free(pwd);
+//	edit_env(data, "PWD=", getcwd(NULL, 0));
+//	edit_env(data, "OLDPWD=", pwd);
+//	free(pwd);
 	return (0);
 }

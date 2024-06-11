@@ -35,6 +35,15 @@ void    free_lst(t_list *lst)
 	}
 }
 
+void free_compute(t_data *data)
+{
+	if (data->line)
+		free(data->line);
+	if (data->line_lst)
+		free_lst(data->line_lst);
+	free(data->childpid);
+}
+
 void free_all(t_data *data)
 {
     if (data->env)

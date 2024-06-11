@@ -44,7 +44,7 @@ int edit_env(t_data *data, char *name, char *value)
 		if (ft_strncmp(data->env[i], name, y) == 0)
 		{
 			free(data->env[i]);
-			data->env[i] = ft_strjoin(name, value);
+			data->env[i] = ft_strjoin(name, value,0,0);
 			return (1);
 		}
 		i++;

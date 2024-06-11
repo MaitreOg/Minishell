@@ -105,11 +105,17 @@ char	*ft_strjoin(char *s1, char *s2, int z, int y)
 	while (s2[i])
 		str[j++] = s2[i++];
 	str[j] = 0;
-	return (str);
 	if (z == 1)
+	{
 		free (s1);
+		s1 = NULL;
+	}
 	if (y == 1)
+	{
 		free (s2);
+		s2 = NULL;
+	}
+	return (str);
 }
 
 char	*find_var(char **env, char *var)
