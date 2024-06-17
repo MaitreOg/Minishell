@@ -16,7 +16,9 @@ void free_tab(char **tab)
 {
     int i;
 
-    i = -1;
+    if (!tab)
+		return ;
+	i = -1;
     while(tab[++i])
     	free(tab[i]);
     free(tab);
@@ -30,27 +32,59 @@ void    free_lst(t_list *lst)
 	{
 		tmp = lst->next;
 		free(lst->content);
+		lst->content = NULL;
 		free (lst);
 		lst = tmp;
 	}
+	lst = NULL;
+}
+
+void ft_lstclear(t_list **lst, void (*del)(void*))
+{
+	t_list *tmp;
+
+	while(lst)
+	{
+		tmp = (*lst)->next;
+		del((*lst)->content);
+		free(*lst);
+		*lst = tmp;
+	}
+	*lst = NULL;
 }
 
 void free_compute(t_data *data)
 {
 	if (data->line)
+	{
 		free(data->line);
+		data->line = NULL;
+	}
 	if (data->line_lst)
+	{
 		free_lst(data->line_lst);
-	free(data->childpid);
+	}
+	if (data->childpid)
+	{
+		free(data->childpid);
+		data->childpid = NULL;
+	}
 }
 
 void free_all(t_data *data)
 {
-    if (data->env)
-        free_tab(data->env);
     if (data->line)
-        free(data->line);
-    if (data->line_lst)
-      free_lst(data->line_lst);
-	free(data->childpid);
+	{
+		free(data->line);
+		data->line = NULL;
+	}
+	if (data->line_lst)
+	{
+		free_lst(data->line_lst);
+	}
+	if (data->childpid)
+	{
+		free(data->childpid);
+		data->childpid = NULL;
+	}
 }

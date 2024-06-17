@@ -106,15 +106,9 @@ char	*ft_strjoin(char *s1, char *s2, int z, int y)
 		str[j++] = s2[i++];
 	str[j] = 0;
 	if (z == 1)
-	{
 		free (s1);
-		s1 = NULL;
-	}
 	if (y == 1)
-	{
 		free (s2);
-		s2 = NULL;
-	}
 	return (str);
 }
 
@@ -134,8 +128,6 @@ char	*find_var(char **env, char *var)
 	}
 	if (env[i] == NULL)
 		return (NULL);
-	
-	str = malloc(ft_strlen(env[i]) - ft_strlen(var) + 1);
 	str = ft_strstr(env[i], var);
 	free (var);
 	return (str);
@@ -152,6 +144,25 @@ int	ft_strlen(char *str)
 }
 
 char	*ft_strdup(char *s)
+{
+	int		i;
+	char	*d;
+
+	i = 0;
+	d = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!d)
+		return (NULL);
+	while (s[i])
+	{
+		d[i] = s[i];
+		i++;
+	}
+	d[i] = 0;
+	free(s);
+	return (d);
+}
+
+char	*ft_strdup_v2(char *s)
 {
 	int		i;
 	char	*d;
@@ -217,7 +228,8 @@ int nb_order(t_data *data)
 	tmp = data->line_lst;
 	while(tmp)
 	{
-		if (tmp->content_type == TYPE_ORDER)
+		//printf("content = %s   type = %d\n", tmp->content, tmp->content_type);
+		if (tmp && tmp->content_type == TYPE_ORDER)
 			i++;
 		tmp = tmp->next;
 	}
@@ -231,7 +243,9 @@ void alloc_pid(t_data *data)
 
 	i = -1;
 	nb = nb_order(data);
-	data->childpid = malloc(sizeof(pid_t) * nb);
+	data->childpid = malloc(sizeof(int) * nb);
+	if (data->childpid == NULL)
+		exit(EXIT_FAILURE);
 	while (++i < nb)
 		data->childpid[i] = -2;
 }

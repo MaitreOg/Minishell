@@ -14,32 +14,47 @@
 
 char *replace_var(t_data *data, char *str)
 {
-	int i;
-	int y;
-	char   *var;
+	int		i;
+	int		y;
+	char	*var;
 
 	i = -1;
 	while(str[++i])
 	{
 		y = 1;
+		if (str[i] == '$' && str[i + 1] == '?' && str[i + 2] != ' '  && is_verif_quotes(str, i + 2) == 0 && str[i + 2] != '"' && str[i + 2] != '\'')
+
 		if (str[i] == '$')
 		{
-			while(str[i + y] != ' ' && str[i + y])
+			while(str[i + y] != ' '  && is_verif_quotes(str, i + y) == 0 && str[i + y] != '"' && str[i + y] != '\'' && str[i + y])
 				y++;
 			var = malloc (y + 1);
 			y = 0;
 			i++;
-			while(str[i] != ' ' && str[i])
+			while(str[i] != ' ' && is_verif_quotes(str, i) == 0 && str[i] != '"' && str[i] != '\'' && str[i])
 				var[y++] = str[i++];
 			var[y] = 0;
-			var = find_var(data->env, var);
-			i = 0;
-			y = 0;
-			while (str[i] != '$')
+			if (ft_strcmp("?", var) == 1)
+			{
+				i = 0;
+				while (str[i] != '$')
 				i++;
-			while (str[i + y] != ' ' && str[i + y])
-				y++;
-			var = ft_strjoin(var, &str[i + y], 1, 0);
+				var = ft_itoa(data->return_value);
+				var = ft_strjoin(var, &str[i + 2], 1, 0);
+			}
+			else
+			{
+				var = find_var(data->env, var);
+				if (var == NULL)
+					return (str);
+				i = 0;
+				y = 0;
+				while (str[i] != '$')
+				i++;
+				while (str[i + y] != ' ' && is_verif_quotes(str, i + y) == 0 && str[i + y] != '"' && str[i + y] != '\'' && str[i + y])
+					y++;
+				var = ft_strjoin(var, &str[i + y], 0, 0);
+			}
 			str[i] = 0;
 			str = ft_strjoin(str, var, 1, 1);
 		}

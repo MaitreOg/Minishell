@@ -54,6 +54,7 @@ typedef struct s_data
 	int execute;
 	char **env;
 	char *line;
+	int stdin;
 	t_list *line_lst;
 	int 	ret;
 }		t_data;
@@ -71,7 +72,7 @@ void	perror_process(t_data *data, char *error);
 void	free_tab(char **tab);
 void	redirect_error(t_data *data, char *error, t_list *lst);
 void	order_not_found(t_data *data, char *order);
-void free_compute(t_data *data);
+void 	free_compute(t_data *data);
 
 
 //lst utils
@@ -83,6 +84,7 @@ int		*ft_lstprint(t_list *lst);
 
 //parsing
 char	*find_var(char **env, char *var);
+int		is_verif_double(char *str, int i);
 int 	is_verif_quotes(char *str, int i);
 char 	*replace_var(t_data *data, char *str);
 char	*delete_quotes(char *str);
@@ -104,7 +106,9 @@ void    get_env(t_data *data, char **env);
 int 	is_verif(char *str, int i);
 int		ft_strmcmp(char *s1, char *s2, int y);
 void	alloc_pid(t_data *data);
-
+int 	nb_order(t_data *data);
+char	*ft_strdup_v2(char *s);
+char	*ft_itoa(int n);
 
 //execution
 void	compute(t_data *data);
@@ -123,18 +127,18 @@ void	pipes(t_data *data, t_list *order);
 //builtins
 void	ft_pwd();
 void	echo(char *str, int arg);
-int	ft_cd(t_data *data, char *str);
+int		ft_cd(char *str);
 void	ft_env(t_data *data);
 void	unset(t_data *data, ...);
-int find_env(t_data *data, char *name);
-int edit_env(t_data *data, char *name, char *value);
-int ft_isalpha(int c);
-int ft_isalnum(int c);
-int valid_env_name(char *name);
-int valid_env_name_export(char *name);
+int 	find_env(t_data *data, char *name);
+int 	edit_env(t_data *data, char *name, char *value);
+int 	ft_isalpha(int c);
+int 	ft_isalnum(int c);
+int 	valid_env_name(char *name);
+int 	valid_env_name_export(char *name);
 char 	*value_env(char *str);
-char **ft_realloc_tab(char **tab, char *str);
-int ft_ispresent(char *str, char c);
-int get_env_index(t_data *data, char *name);
-int ft_strncmp(const char *s1, const char *s2, size_t n);
+char 	**ft_realloc_tab(char **tab, char *str);
+int 	ft_ispresent(char *str, char c);
+int 	get_env_index(t_data *data, char *name);
+int 	ft_strncmp(const char *s1, const char *s2, size_t n);
 #endif

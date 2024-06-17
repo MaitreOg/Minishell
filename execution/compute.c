@@ -43,11 +43,12 @@ void compute_operator(t_data *data, t_list *lst)
 	order = lst;
 	tmp = lst->next;
     
-	while (tmp && tmp->content_type != 0 && data->in_progress == 1)
+	while (data->in_progress == 1 && tmp && tmp->content_type != TYPE_ORDER)
 	{
-		if (tmp->content_type > 0 && tmp->content_type < 6)
+		if (tmp->content_type != TYPE_FILE)
 			link_io(data, order, tmp);
-		tmp = tmp->next;
+		if (data->in_progress == 1)
+			tmp = tmp->next;
 	}
 }
 void backup_fd(t_data *data, int fdi, int fdo)
@@ -62,7 +63,9 @@ void compute(t_data *data)
 	t_list *lst;
 	int stdout_backup;
 	int stdin_backup;
-    
+	int 	i;
+
+	i = -1;
 	stdout_backup = dup(STDOUT_FILENO);
 	stdin_backup = dup(STDIN_FILENO);
 	alloc_pid(data);
@@ -74,7 +77,7 @@ void compute(t_data *data)
 	while (lst && data->in_progress == 1)
 	{
 		data->fdo = stdout_backup;
-		if(lst->content_type == 0)
+		if(lst->content_type == TYPE_ORDER)
 		{
 			data->execute = 0;
 			compute_operator(data, lst);
@@ -83,12 +86,15 @@ void compute(t_data *data)
 			backup_fd(data, stdin_backup, stdout_backup);
 		}
 		//printf("$? = %d\n", data->return_value);
-		lst = lst->next;
+		if (data->in_progress == 1)
+			lst = lst->next;
 	}
-	int i = -1;
-	while (data->childpid[++i])
-		waitpid(data->childpid[i], NULL, 0);
 	close(stdout_backup);
 	close(stdin_backup);
-	free_compute(data);
+	if (data->in_progress == 1)
+	{
+		while (++i < nb_order(data))
+			waitpid(data->childpid[i], NULL, 0);
+		free_all(data);
+	}
 }

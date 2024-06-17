@@ -30,6 +30,7 @@ void redirect_error(t_data *data, char *error, t_list *lst)
     else
         result = ft_strjoin(result, lst->next->content, 1, 0);
     printf("%s\n", result);
+    free (result);
     free_all(data);
     data->in_progress = 0;
 }
@@ -39,6 +40,7 @@ void order_not_found(t_data *data, char *order)
     result = ft_strjoin("minishell: ", order, 0, 0);
     result = ft_strjoin(result, ": command not found", 1, 0);
     printf("%s\n", result);
+    free (result);
     free_all(data);
     data->in_progress = 0;
 }

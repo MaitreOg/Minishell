@@ -30,6 +30,7 @@ void execute(t_data *data, t_list *lst)
 	i = 0;
 	while (path[i])
 	{
+		printf("path[i] = %s\n", path[i]);
 		path[i] = ft_strjoin(path[i], "/", 1, 0);
 		path[i] = ft_strjoin(path[i], cmd[0], 1, 0);
 		if (access(path[i], F_OK | X_OK) == 0)
@@ -46,7 +47,7 @@ void execute(t_data *data, t_list *lst)
 		order_not_found(data, cmd[0]);
 		exit(EXIT_FAILURE);
 	}
-	exit(0);
+	exit (0);
 }
 int	check_built_in(t_data *data, t_list *lst)
 {
@@ -62,7 +63,7 @@ int	check_built_in(t_data *data, t_list *lst)
 	}
 	else if (ft_strmcmp(lst->content, "cd", 2) == 1)
 	{
-		ft_cd(data, &lst->content[3]);
+		ft_cd(&lst->content[3]);
 		return 1;
 	}
 	else if (ft_strcmp(lst->content, "pwd") == 1)
@@ -116,8 +117,7 @@ void fork_order(t_data *data, t_list *lst)
 	{
 		while(data->childpid[i] != -2)
 			i++;
-		data->childpid[1] = pid;
-        //waitpid(pid, &status, 0);
+		data->childpid[i] = pid;
 		data->return_value = WEXITSTATUS(status);
 	}
 }

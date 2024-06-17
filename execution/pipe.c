@@ -41,7 +41,6 @@ void	pipes(t_data *data, t_list *order)
 		while(data->childpid[i] != -2)
 			i++;
 		data->childpid[i] = childpid;
-		//waitpid(childpid, &status, 0);
 		data->return_value = WEXITSTATUS(status);
 	}
 }

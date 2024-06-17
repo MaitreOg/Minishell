@@ -101,6 +101,11 @@ char	*get_next_line(int fd)
 		stash = malloc(1);
 		*stash = '\0';
 	}
+	if (fd == -1)
+	{
+		free(stash);
+		return (NULL);
+	}
 	if (fd < 0 && BUFFER_SIZE <= 0)
 		return (NULL);
 	stash = read_function(fd, stash);

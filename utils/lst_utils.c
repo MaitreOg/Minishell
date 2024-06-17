@@ -37,7 +37,7 @@ t_list	*lst_add(t_list *lst, char *data)
 		return (NULL);
 	node->content = ft_strdup(data);
 	node->next = NULL;
-	if (!lst->content)
+	if (!lst)
 		return (node);
 	tmp = lst;
 	while (tmp->next)

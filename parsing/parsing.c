@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-void	add_type(t_data *data, t_list *lst, t_list *original)
+void	add_type(t_list *lst, t_list *original)
 {
 	if (ft_strcmp("<", lst->content) == 1)
 		lst->content_type = TYPE_RIN;
@@ -24,11 +24,8 @@ void	add_type(t_data *data, t_list *lst, t_list *original)
 		lst->content_type = TYPE_ROUT;
 	else if (ft_strcmp(">>", lst->content) == 1)
 		lst->content_type = TYPE_ROUT_APP;
-	else if (lst_prev(lst, original))
-	{
-		if (lst_prev(lst, original)->content_type == TYPE_ROUT || lst_prev(lst, original)->content_type == TYPE_ROUT_APP || lst_prev(lst, original)->content_type == TYPE_RIN || lst_prev(lst, original)->content_type == TYPE_LIMITER)
-			lst->content_type = TYPE_FILE;
-	}
+	else if (lst_prev(lst, original) && (lst_prev(lst, original)->content_type == TYPE_ROUT || lst_prev(lst, original)->content_type == TYPE_ROUT_APP || lst_prev(lst, original)->content_type == TYPE_RIN || lst_prev(lst, original)->content_type == TYPE_LIMITER))
+		lst->content_type = TYPE_FILE;
 	else
 		lst->content_type = TYPE_ORDER;
 }
@@ -38,7 +35,7 @@ void	token_to_lst(char **tab, t_data *data)
 	int i;
 
 	i = -1;
-	data->line_lst = malloc(sizeof(t_list));
+	data->line_lst = NULL;
 	while(tab[++i])
 	{
 		data->line_lst = lst_add(data->line_lst, tab[i]);
@@ -51,9 +48,9 @@ void add_necessary(t_data *data)
 	tmp = data->line_lst;
 	while(tmp)
 	{
-		tmp->content = delete_quotes(tmp->content);
+		add_type(tmp, data->line_lst);
 		tmp->content = replace_var(data, tmp->content);
-		add_type(data, tmp, data->line_lst);
+		tmp->content = delete_quotes(tmp->content);
 		delete_space(tmp);
 		tmp = tmp->next;
 	}
@@ -65,6 +62,6 @@ void    line_to_token(t_data *data)
 
 	tab = ft_split2(data->line, "|<>");
 	token_to_lst(tab, data);
-	free_tab(tab);
+	free(tab);
 	add_necessary(data);
 }

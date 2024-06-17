@@ -18,21 +18,27 @@ void    minishell(t_data *data, char **env)
 	int stdin_backup;
 
 	data->line_lst = NULL;
+	data->stdin = dup(STDIN_FILENO);
 	stdin_backup = dup(STDIN_FILENO);
 	stdout_backup = dup(STDOUT_FILENO);
 	get_env(data, env);
+	data->childpid = NULL;
 	while (1)
 	{
 		data->in_progress = 1;
 		data->line_lst = NULL;
 		data->o = 0;
 		data->line = readline("\033[0;35mminishell \033[0m ");
+		if (ft_strcmp(data->line, "exit"))
+		{
+			free_tab(data->env);
+			free(data->line);
+			return ;
+		}
 		if (data->line[0])
 		{
 			add_history(data->line);
 			line_to_token(data);
-			if (ft_strcmp(data->line, "exit"))
-				return (free_all(data));
 			compute(data);
 			dup2(stdout_backup, STDOUT_FILENO);
 			dup2(stdin_backup, STDIN_FILENO);

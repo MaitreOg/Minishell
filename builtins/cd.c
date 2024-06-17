@@ -17,7 +17,7 @@
  * @param str the path to go
  * @return 0 success \n -1 error
  */
-int	ft_cd(t_data *data, char *str)
+int	ft_cd(char *str)
 {
 	char *pwd;
 

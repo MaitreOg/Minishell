@@ -29,6 +29,7 @@ void    redirect_input(t_data *data, t_list *lst)
     }
 	close(fd);
 }
+
 void	create_file_doc(t_list *lst, int *fd)
 {
 	char	*line;
@@ -49,9 +50,9 @@ void	create_file_doc(t_list *lst, int *fd)
 		line = get_next_line(STDIN_FILENO);
 	}
 	close(fd[1]);
-	get_next_line(-1);
 	free(limiter);
 	free(line);
+	get_next_line(-1);
 	exit(1);
 }
 
@@ -61,6 +62,7 @@ void    limiter(t_data *data, t_list *lst)
 	int		fd[2];
 	int status;
 
+	dup2(data->stdin, STDIN_FILENO);
 	if (pipe(fd) == -1)
 		return(perror_process(data, "pipe"));
 	childpid = fork();

@@ -36,5 +36,5 @@ int	main(int ac, char **av, char **env)
 	if (!data)
 		return (printf("alloc fail\n"));
 	minishell(data, env);
-	//free_all()
+	free(data);
 }
