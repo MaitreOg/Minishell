@@ -30,7 +30,6 @@ void execute(t_data *data, t_list *lst)
 	i = 0;
 	while (path[i])
 	{
-		printf("path[i] = %s\n", path[i]);
 		path[i] = ft_strjoin(path[i], "/", 1, 0);
 		path[i] = ft_strjoin(path[i], cmd[0], 1, 0);
 		if (access(path[i], F_OK | X_OK) == 0)
