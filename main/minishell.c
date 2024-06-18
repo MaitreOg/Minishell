@@ -35,7 +35,9 @@ void    minishell(t_data *data, char **env)
 			free(data->line);
 			return ;
 		}
-		if (data->line[0] && is_only_space(data->line) == 0)
+		if (is_only_space(data->line) == 1)
+			free(data->line);
+		else if (data->line[0] && is_only_space(data->line) == 0)
 		{
 			add_history(data->line);
 			line_to_token(data);
@@ -43,7 +45,6 @@ void    minishell(t_data *data, char **env)
 			dup2(stdout_backup, STDOUT_FILENO);
 			dup2(stdin_backup, STDIN_FILENO);
 		}
-		if (is_only_space(data->line) == 1)
-			free(data->line);
+
 	}
 }
