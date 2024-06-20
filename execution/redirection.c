@@ -36,7 +36,6 @@ void	create_file_doc(t_list *lst, int *fd)
 	char	*limiter;
 
 	dup2(fd[1], STDOUT_FILENO);
-	close(fd[0]);
 	limiter = ft_strjoin(lst->content, "\n", 0, 0);
 	write(2, "> ", 2);
 	line = get_next_line(STDIN_FILENO);
@@ -53,15 +52,16 @@ void	create_file_doc(t_list *lst, int *fd)
 	free(limiter);
 	free(line);
 	get_next_line(-1);
-	exit(1);
+	exit(0);
 }
 
 void    limiter(t_data *data, t_list *lst)
 {
 	pid_t	childpid;
 	int		fd[2];
-	int status;
+	int		backup;
 
+	backup = dup(STDOUT_FILENO);
 	dup2(data->stdin, STDIN_FILENO);
 	if (pipe(fd) == -1)
 		return(perror_process(data, "pipe"));
@@ -72,11 +72,15 @@ void    limiter(t_data *data, t_list *lst)
 		return ;
 	}
 	if (childpid == 0)
+	{
+		close(fd[0]);
 		create_file_doc(lst, fd);
+	}
 	else
 	{
 		close(fd[1]);
-		waitpid(childpid, &status, 0);
+		waitpid(childpid, NULL, 0);
+		dup2(backup, STDOUT_FILENO);
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
 	}

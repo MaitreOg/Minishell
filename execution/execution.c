@@ -36,14 +36,16 @@ void execute(t_data *data, t_list *lst)
 		{
 			if (execve(path[i], cmd, data->env) == -1)
 				return (free_exec(path, cmd, data));
-			break ;
+			exit (0);
 		}
 		free(path[i]);
 		i++;
 	}
 	if (path[i] == NULL)
 	{
+		free(path);
 		order_not_found(data, cmd[0]);
+		free_tab(cmd);
 		exit(EXIT_FAILURE);
 	}
 	exit (0);
