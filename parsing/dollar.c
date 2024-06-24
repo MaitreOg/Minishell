@@ -39,6 +39,7 @@ char *replace_var(t_data *data, char *str)
 				i = 0;
 				while (str[i] != '$')
 				i++;
+				free (var);
 				var = ft_itoa(data->return_value);
 				var = ft_strjoin(var, &str[i + 2], 1, 0);
 			}
