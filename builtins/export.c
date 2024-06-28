@@ -16,17 +16,7 @@ int export_env(t_data *data, char *str)
 {
 	int i;
 	char *value;
-
-	// Check if the variable is already in the env
-	// If it is, we update it
-	// If it is not, we add it
-	// If the variable is not valid, we return -1
-	// If the variable is valid, we return 0
-	// If the variable is already in the env, we return 1
-
-	//go to the end of the env
-	//add the new variable
-
+	printf("bonjour export");
 	if (!valid_env_name_export(str))
 	{
 		printf("export: `%s': not a valid identifier\n", str);
@@ -38,6 +28,7 @@ int export_env(t_data *data, char *str)
 	{
 		if (ft_strncmp(data->env[i], str, ft_strlen(str)) == 0)
 		{
+			printf("export: `%s': already in the env\n", str);
 			edit_env(data, str, value);
 			return (1);
 		}

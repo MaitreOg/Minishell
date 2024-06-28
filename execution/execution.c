@@ -63,7 +63,7 @@ int	check_built_in(t_data *data, t_list *lst)
 	}
 	else if (ft_strmcmp(lst->content, "cd", 2) == 1)
 	{
-		ft_cd(&lst->content[3]);
+		ft_cd(data, &lst->content[3]);
 		return 1;
 	}
 	else if (ft_strcmp(lst->content, "pwd") == 1)
@@ -73,7 +73,7 @@ int	check_built_in(t_data *data, t_list *lst)
 	}
 	else if (ft_strmcmp(lst->content, "export", 6) == 1)
 	{
-		//export();
+//		export_env();
 		return 1;
 	}
 	else if (ft_strmcmp(lst->content, "unset", 5) == 1)

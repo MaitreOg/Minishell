@@ -17,7 +17,7 @@
  * @param str the path to go
  * @return 0 success \n -1 error
  */
-int	ft_cd(char *str)
+int	ft_cd(t_data *data, char *str)
 {
 	char *pwd;
 
@@ -28,8 +28,8 @@ int	ft_cd(char *str)
 		free(pwd);
 		return (-1);
 	}
-//	edit_env(data, "PWD=", getcwd(NULL, 0));
-//	edit_env(data, "OLDPWD=", pwd);
-//	free(pwd);
+	edit_env(data, "PWD=", getcwd(NULL, 0));
+	edit_env(data, "OLDPWD=", pwd);
+	free(pwd);
 	return (0);
 }

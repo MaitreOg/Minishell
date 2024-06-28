@@ -127,7 +127,7 @@ void	pipes(t_data *data, t_list *order);
 //builtins
 void	ft_pwd();
 void	echo(char *str, int arg);
-int		ft_cd(char *str);
+int	ft_cd(t_data *data, char *str);
 void	ft_env(t_data *data);
 void	unset(t_data *data, ...);
 int 	find_env(t_data *data, char *name);
@@ -141,4 +141,6 @@ char 	**ft_realloc_tab(char **tab, char *str);
 int 	ft_ispresent(char *str, char c);
 int 	get_env_index(t_data *data, char *name);
 int 	ft_strncmp(const char *s1, const char *s2, size_t n);
+int export_env(t_data *data, char *str);
+
 #endif

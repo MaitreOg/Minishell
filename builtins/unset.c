@@ -19,6 +19,7 @@
  */
 void ft_unset(t_data *data, char **args)
 {
+	printf("ouais");
 
 	int i;
 	int index;
