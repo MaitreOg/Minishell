@@ -61,9 +61,10 @@ void backup_fd(t_data *data, int fdi, int fdo)
 void compute(t_data *data)
 {
 	t_list *lst;
-	int stdout_backup;
-	int stdin_backup;
+	int 	stdout_backup;
+	int 	stdin_backup;
 	int 	i;
+	int 	status;
 
 	i = -1;
 	stdout_backup = dup(STDOUT_FILENO);
@@ -85,7 +86,6 @@ void compute(t_data *data)
 				fork_order(data, lst);
 			backup_fd(data, stdin_backup, stdout_backup);
 		}
-		//printf("$? = %d\n", data->return_value);
 		if (data->in_progress == 1)
 			lst = lst->next;
 	}
@@ -94,7 +94,8 @@ void compute(t_data *data)
 	if (data->in_progress == 1)
 	{
 		while (++i < nb_order(data))
-			waitpid(data->childpid[i], NULL, 0);
+			waitpid(data->childpid[i], &status, 0);
+		data->return_value = WEXITSTATUS(status);
 		free_all(data);
 	}
 }

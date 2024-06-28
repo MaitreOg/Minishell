@@ -249,3 +249,17 @@ void alloc_pid(t_data *data)
 	while (++i < nb)
 		data->childpid[i] = -2;
 }
+
+int is_only_space(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}

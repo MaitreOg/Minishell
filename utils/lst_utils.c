@@ -72,9 +72,22 @@ t_list *next_order(t_list *lst)
 void delete_space(t_list *lst)
 {
 	int i;
+	int	y;
 
 	i = 0;
 	while (lst->content[i] == ' ')
 		i++;
 	lst->content = ft_strdup(&lst->content[i]);
+	i = 0;
+	y = 0;
+	while (lst->content[i])
+	{
+		if (lst->content[i] == ' ')
+			y++;
+		else
+			y = 0;
+		i++;
+	}
+	lst->content[i - y] = 0;
+	lst->content = ft_strdup(lst->content);
 }
