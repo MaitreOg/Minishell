@@ -22,8 +22,6 @@ char *replace_var(t_data *data, char *str)
 	while(str[++i])
 	{
 		y = 1;
-		if (str[i] == '$' && str[i + 1] == '?' && str[i + 2] != ' '  && is_verif_quotes(str, i + 2) == 0 && str[i + 2] != '"' && str[i + 2] != '\'')
-
 		if (str[i] == '$')
 		{
 			while(str[i + y] != ' '  && is_verif_quotes(str, i + y) == 0 && str[i + y] != '"' && str[i + y] != '\'' && str[i + y])

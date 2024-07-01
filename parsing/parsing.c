@@ -50,7 +50,6 @@ void add_necessary(t_data *data)
 	{
 		add_type(tmp, data->line_lst);
 		tmp->content = replace_var(data, tmp->content);
-		tmp->content = delete_quotes(tmp->content);
 		delete_space(tmp);
 		tmp = tmp->next;
 	}

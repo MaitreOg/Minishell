@@ -102,6 +102,7 @@ char	*ft_strjoin(char *s1, char *s2, int z, int y);
 char	*ft_strdup(char *s);
 char	**ft_split(char *str, char c);
 char	**ft_split2(char *str, char*operator);
+char	**ft_split_arg(char *str, char c);
 void    get_env(t_data *data, char **env);
 int 	is_verif(char *str, int i);
 int		ft_strmcmp(char *s1, char *s2, int y);

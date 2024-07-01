@@ -25,7 +25,7 @@ void execute(t_data *data, t_list *lst)
 	char	**cmd;
 	char	**path;
 
-	cmd = ft_split(lst->content, ' ');
+	cmd = ft_split_arg(lst->content, ' ');
 	path = find_path(data->env);
 	i = 0;
 	while (path[i])
@@ -52,33 +52,39 @@ void execute(t_data *data, t_list *lst)
 }
 int	check_built_in(t_data *data, t_list *lst)
 {
-	if (ft_strmcmp(lst->content, "echo", 4) == 1)
+	if (ft_strmcmp(lst->content, "echo -n", 7) == 1)
 	{
-		echo(&lst->content[5], 0);
+		lst->content = delete_quotes(lst->content);
+		echo(&lst->content[8], 1);
 		return 1;
 	}
-	else if (ft_strmcmp(lst->content, "echo -n", 7) == 1)
+	else if (ft_strmcmp(lst->content, "echo", 4) == 1)
 	{
-		echo(&lst->content[8], 1);
+		lst->content = delete_quotes(lst->content);
+		echo(&lst->content[5], 0);
 		return 1;
 	}
 	else if (ft_strmcmp(lst->content, "cd", 2) == 1)
 	{
+		lst->content = delete_quotes(lst->content);
 		ft_cd(data, &lst->content[3]);
 		return 1;
 	}
 	else if (ft_strcmp(lst->content, "pwd") == 1)
 	{
+		lst->content = delete_quotes(lst->content);
 		ft_pwd();
 		return 1;
 	}
 	else if (ft_strmcmp(lst->content, "export", 6) == 1)
 	{
+		lst->content = delete_quotes(lst->content);
 //		export_env();
 		return 1;
 	}
 	else if (ft_strmcmp(lst->content, "unset", 5) == 1)
 	{
+		lst->content = delete_quotes(lst->content);
 		//ft_unset(data, );
 		return 1;
 	}
@@ -89,6 +95,7 @@ int	check_built_in(t_data *data, t_list *lst)
 	}
 	else if (ft_strcmp(lst->content, "exit") == 1)
 	{
+		lst->content = delete_quotes(lst->content);
 		//ft_exit();
 		return 1;
 	}
