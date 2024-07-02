@@ -19,7 +19,7 @@
  */
 int	echo(char *str, int arg)
 {
-	if (c >= 32 && c <= 126)
+	if (!str)
 	{
 		if (arg == 0)
 			printf("%s\n", str);
