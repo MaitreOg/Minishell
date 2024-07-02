@@ -22,14 +22,17 @@ void	handler(int signum)
 void quittt(int signum)
 {
 	(void) signum;
-	usleep(1);
+
+//	free_tab(data->env);
+//	free(data->line);
+	return ;
 }
 
 int	main(int ac, char **av, char **env)
 {
-	signal(SIGINT, handler);
-	signal (SIGQUIT, quittt);
 	t_data	*data;
+	signal(SIGINT, handler);
+	signal(SIGQUIT, quittt);
 	if (ac != 1 ||av[0][0] != '.')
 		return(printf("please enter valid argument\n"));
 	data = malloc(sizeof(t_data));

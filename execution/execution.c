@@ -72,13 +72,13 @@ int check_built_in_2(t_data *data, t_list *lst)
 	if (ft_strmcmp(lst->content, "export", 6) == 1)
 	{
 		lst->content = delete_quotes(lst->content);
-		//export_env();
+		export_env(data, &lst->content[7]);
 		return (1);
 	}
 	else if (ft_strmcmp(lst->content, "unset", 5) == 1)
 	{
 		lst->content = delete_quotes(lst->content);
-		//ft_unset(data, );
+		export_env(data, &lst->content[6]);
 		return (1);
 	}
 	else if (ft_strcmp(lst->content, "env") == 1)
@@ -89,7 +89,7 @@ int check_built_in_2(t_data *data, t_list *lst)
 	else if (ft_strcmp(lst->content, "exit") == 1)
 	{
 		lst->content = delete_quotes(lst->content);
-		//ft_exit();
+		ft_exit(data);
 		return (1);
 	}
 	return (0);
