@@ -12,21 +12,22 @@
 
 #include "../include/minishell.h"
 
-void    redirect_input(t_data *data, t_list *lst)
+void	redirect_input(t_data *data, t_list *lst)
 {
-    int fd;
-    fd = open(lst->content, O_RDONLY);
+	int	fd;
+
+	fd = open(lst->content, O_RDONLY);
 	if (fd == -1)
 	{
 		perror_process(data, lst->content);
 		return ;
 	}
 	if (dup2(fd, STDIN_FILENO) == -1)
-    {
-        perror_process(data, "dup2");
-        close(fd);
-        return ;
-    }
+	{
+		perror_process(data, "dup2");
+		close(fd);
+		return ;
+	}
 	close(fd);
 }
 
@@ -56,7 +57,7 @@ void	create_file_doc(t_list *lst, int *fd)
 	exit(0);
 }
 
-void    limiter(t_data *data, t_list *lst)
+void	limiter(t_data *data, t_list *lst)
 {
 	pid_t	childpid;
 	int		fd[2];
@@ -65,7 +66,7 @@ void    limiter(t_data *data, t_list *lst)
 	backup = dup(STDOUT_FILENO);
 	dup2(data->stdin, STDIN_FILENO);
 	if (pipe(fd) == -1)
-		return(perror_process(data, "pipe"));
+		return (perror_process(data, "pipe"));
 	childpid = fork();
 	if (childpid == -1)
 	{
@@ -84,10 +85,10 @@ void    limiter(t_data *data, t_list *lst)
 	}
 }
 
-void    redirect_output(t_data *data, t_list *lst, int append)
+void	redirect_output(t_data *data, t_list *lst, int append)
 {
-    int fd;
-	int flags;
+	int	fd;
+	int	flags;
 
 	data->o = 1;
 	flags = O_RDWR | O_CREAT | (append ? O_APPEND : O_TRUNC);
@@ -97,11 +98,11 @@ void    redirect_output(t_data *data, t_list *lst, int append)
 		perror_process(data, lst->content);
 		return ;
 	}
-    if (dup2(fd, STDOUT_FILENO) == -1)
-    {
-        perror_process(data, "dup2");
-        close(fd);
-        return ;
-    }
+	if (dup2(fd, STDOUT_FILENO) == -1)
+	{
+		perror_process(data, "dup2");
+		close(fd);
+		return ;
+	}
 	close(fd);
 }

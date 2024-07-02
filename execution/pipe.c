@@ -11,19 +11,20 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
 void	child_pipes(int fd[2], t_data *data)
 {
-    close(fd[0]);
-    if (data->o == 0)
-	    dup2(fd[1], STDOUT_FILENO);
-    close(fd[1]);
+	close(fd[0]);
+	if (data->o == 0)
+		dup2(fd[1], STDOUT_FILENO);
+	close(fd[1]);
 }
 
 void	pipes(t_data *data, t_list *order, int i)
 {
 	pid_t	childpid;
 	int		fd[2];
-	int 	status;
+	int		status;
 
 	if (pipe(fd) == -1)
 		exit(EXIT_FAILURE);
@@ -37,10 +38,10 @@ void	pipes(t_data *data, t_list *order, int i)
 	}
 	else
 	{
-        close(fd[1]);
+		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
-        close(fd[0]);
-		while(data->childpid[i] != -2)
+		close(fd[0]);
+		while (data->childpid[i] != -2)
 			i++;
 		data->childpid[i] = childpid;
 		data->return_value = WEXITSTATUS(status);

@@ -12,37 +12,36 @@
 
 #include "../include/minishell.h"
 
-void    get_env(t_data *data, char **env)
+void	get_env(t_data *data, char **env)
 {
-	int i;
-	int y;
+	int	i;
+	int	y;
 
 	i = 0;
-	while(env[i])
+	while (env[i])
 		i++;
 	data->env = malloc(sizeof(char *) * (i + 1));
 	i = -1;
-	while(env[++i])
+	while (env[++i])
 	{
 		y = 0;
-		while(env[i][y])
+		while (env[i][y])
 			y++;
 		data->env[i] = malloc(y + 1);
 		y = -1;
-		while(env[i][++y])
+		while (env[i][++y])
 			data->env[i][y] = env[i][y];
 		data->env[i][y] = 0;
 	}
 	data->env[i] = NULL;
 }
 
-
-int ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
 
 	i = -1;
-	while(s2[++i])
+	while (s2[++i])
 	{
 		if (s1[i] != s2[i])
 			return (0);
@@ -50,12 +49,12 @@ int ft_strcmp(char *s1, char *s2)
 	return (1);
 }
 
-int ft_strmcmp(char *s1, char *s2, int y)
+int	ft_strmcmp(char *s1, char *s2, int y)
 {
 	int	i;
 
 	i = -1;
-	while(s2[++i] && i < y)
+	while (s2[++i] && i < y)
 	{
 		if (s1[i] != s2[i])
 			return (0);
@@ -84,6 +83,7 @@ char	*ft_strstr(char *str, char *to_find)
 	}
 	return (0);
 }
+
 char	*ft_strjoin(char *s1, char *s2, int z, int y)
 {
 	int		i;
@@ -116,14 +116,13 @@ char	*find_var(char **env, char *var)
 {
 	char	*str;
 	int		i;
-	
+
 	var = ft_strjoin(var, "=", 1, 0);
 	i = 0;
-	
 	while (env[i])
 	{
 		if (ft_strstr(env[i], var))
-			break;
+			break ;
 		i++;
 	}
 	if (env[i] == NULL)
@@ -204,7 +203,7 @@ void	free_path(char **path)
 		free(path[i]);
 		i++;
 	}
-	free(path);
+	free (path);
 }
 
 void	free_cmd(char **cmd)
@@ -217,18 +216,18 @@ void	free_cmd(char **cmd)
 		free(cmd[i]);
 		i++;
 	}
-	free(cmd);
+	free (cmd);
 }
-int nb_order(t_data *data)
+
+int	nb_order(t_data *data)
 {
-	t_list *tmp;
-	int i;
+	t_list	*tmp;
+	int		i;
 
 	i = 0;
 	tmp = data->line_lst;
-	while(tmp)
+	while (tmp)
 	{
-		//printf("content = %s   type = %d\n", tmp->content, tmp->content_type);
 		if (tmp && tmp->content_type == TYPE_ORDER)
 			i++;
 		tmp = tmp->next;
@@ -236,7 +235,7 @@ int nb_order(t_data *data)
 	return (i);
 }
 
-void alloc_pid(t_data *data)
+void	alloc_pid(t_data *data)
 {
 	int	i;
 	int	nb;
@@ -250,7 +249,7 @@ void alloc_pid(t_data *data)
 		data->childpid[i] = -2;
 }
 
-int is_only_space(char *str)
+int	is_only_space(char *str)
 {
 	int	i;
 

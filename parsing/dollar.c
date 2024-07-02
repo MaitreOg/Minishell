@@ -12,20 +12,20 @@
 
 #include "../include/minishell.h"
 
-char *is_interogation(t_data *data, char *str, char *var)
+char	*is_interogation(t_data *data, char *str, char *var)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '$')
-	i++;
+		i++;
 	free (var);
 	var = ft_itoa(data->return_value);
 	var = ft_strjoin(var, &str[i + 2], 1, 0);
 	return (str);
 }
 
-char *is_var(t_data *data, char *str, char *var)
+char	*is_var(t_data *data, char *str, char *var)
 {
 	int	i;
 	int	y;
@@ -37,7 +37,8 @@ char *is_var(t_data *data, char *str, char *var)
 	y = 0;
 	while (str[i] != '$')
 		i++;
-	while (str[i + y] != ' ' && is_verif_quotes(str, i + y) == 0 && str[i + y] != '"' && str[i + y] != '\'' && str[i + y])
+	while (str[i + y] != ' ' && is_verif_quotes(str, i + y) == 0
+		&& str[i + y] != '"' && str[i + y] != '\'' && str[i + y])
 		y++;
 	var = ft_strjoin(var, &str[i + y], 0, 0);
 	str[i] = 0;
@@ -45,24 +46,24 @@ char *is_var(t_data *data, char *str, char *var)
 	return (str);
 }
 
-char *replace_var(t_data *data, char *str)
+char	*replace_var(t_data *data, char *str)
 {
 	int		i;
 	int		y;
 	char	*var;
 
 	i = -1;
-	while(str[++i])
+	while (str[++i])
 	{
 		y = 1;
 		if (str[i] == '$' && is_verif_quotes(str, i + y) == 0)
 		{
-			while(str[i + y] != ' '  && is_verif_quotes(str, i + y) == 0 && str[i + y] != '"' && str[i + y] != '\'' && str[i + y])
+			while (str[i + y] != ' ' && is_verif_quotes(str, i + y) == 0 && str[i + y] != '"' && str[i + y] != '\'' && str[i + y])
 				y++;
 			var = malloc (y + 1);
 			y = 0;
 			i++;
-			while(str[i] != ' ' && is_verif_quotes(str, i) == 0 && str[i] != '"' && str[i] != '\'' && str[i])
+			while (str[i] != ' ' && is_verif_quotes(str, i) == 0 && str[i] != '"' && str[i] != '\'' && str[i])
 				var[y++] = str[i++];
 			var[y] = 0;
 			if (ft_strcmp("?", var) == 1)
