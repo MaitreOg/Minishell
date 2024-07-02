@@ -19,7 +19,7 @@
  */
 int	echo(char *str, int arg)
 {
-	if (!str)
+	if (str)
 	{
 		if (arg == 0)
 			printf("%s\n", str);
