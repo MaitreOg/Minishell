@@ -19,7 +19,7 @@
  */
 int	ft_cd(t_data *data, char *str)
 {
-	char *pwd;
+	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
 	if (chdir(str) == -1)

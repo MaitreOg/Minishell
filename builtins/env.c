@@ -16,9 +16,9 @@
  * print the env
  * @param data the struct for get the emv variable
  */
-void ft_env(t_data *data)
+void	ft_env(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (data->env[i])

@@ -12,11 +12,11 @@
 
 #include "../include/minishell.h"
 
-int export_env(t_data *data, char *str)
+int	export_env(t_data *data, char *str)
 {
-	int i;
-	char *value;
-	printf("bonjour export");
+	char	*value;
+	int		i;
+
 	if (!valid_env_name_export(str))
 	{
 		printf("export: `%s': not a valid identifier\n", str);

@@ -15,14 +15,14 @@
 /**
  * pwd
  */
-void    ft_pwd()
+void	ft_pwd(void)
 {
-	char *pwd;
+	char	*pwd;
 
 	pwd = NULL;
 	if (getcwd(NULL, 0) == NULL)
 	{
-		printf("zboub");
+		printf("This directory does not exist\n");
 		return ;
 	}
 	else

@@ -6,16 +6,16 @@
 /*   By: oliradet <oliradet@42student.perpignan.f>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 13:50:43 by oliradet          #+#    #+#             */
-/*   Updated: 2024/06/10 13:50:43 by oliradet         ###   ########.fr       */
+/*   Updated: 2024/07/01 03:10:43 by oliradet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int find_env(t_data *data, char *name)
+int	find_env(t_data *data, char *name)
 {
-	int i;
-	int y;
+	int	i;
+	int	y;
 
 	i = 0;
 	while (data->env[i])
@@ -30,10 +30,10 @@ int find_env(t_data *data, char *name)
 	return (-1);
 }
 
-int edit_env(t_data *data, char *name, char *value)
+int	edit_env(t_data *data, char *name, char *value)
 {
-	int i;
-	int y;
+	int	i;
+	int	y;
 
 	i = 0;
 	while (data->env[i])
@@ -44,7 +44,7 @@ int edit_env(t_data *data, char *name, char *value)
 		if (ft_strncmp(data->env[i], name, y) == 0)
 		{
 			free(data->env[i]);
-			data->env[i] = ft_strjoin(name, value,0,0);
+			data->env[i] = ft_strjoin(name, value, 0, 0);
 			return (1);
 		}
 		i++;
@@ -52,23 +52,23 @@ int edit_env(t_data *data, char *name, char *value)
 	return (0);
 }
 
-int ft_isalpha(int c)
+int	ft_isalpha(int c)
 {
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
 		return (1);
 	return (0);
 }
 
-int ft_isalnum(int c)
+int	ft_isalnum(int c)
 {
 	if (ft_isalpha(c) || (c >= '0' && c <= '9'))
 		return (1);
 	return (0);
 }
 
-int valid_env_name(char *name)
+int	valid_env_name(char *name)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!ft_isalpha(name[i]) && name[i] != '_')
@@ -83,9 +83,9 @@ int valid_env_name(char *name)
 	return (1);
 }
 
-int valid_env_name_export(char *name)
+int	valid_env_name_export(char *name)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!ft_isalpha(name[i]) && name[i] != '_')
@@ -100,9 +100,9 @@ int valid_env_name_export(char *name)
 	return (1);
 }
 
-char 	*value_env(char *str)
+char	*value_env(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] && str[i] != '=')
@@ -112,10 +112,10 @@ char 	*value_env(char *str)
 	return (NULL);
 }
 
-char **ft_realloc_tab(char **tab, char *str)
+char	**ft_realloc_tab(char **tab, char *str)
 {
-	int i;
-	char **new_tab;
+	char	**new_tab;
+	int		i;
 
 	i = 0;
 	while (tab[i])
@@ -124,20 +124,21 @@ char **ft_realloc_tab(char **tab, char *str)
 	i = 0;
 	while (tab[i])
 	{
-		new_tab[i] = ft_strdup(tab[i]);
+		new_tab[i] = ft_strdup_v2(tab[i]);
 		free(tab[i]);
 		i++;
 	}
-	new_tab[i] = ft_strdup(str);
+	new_tab[i] = ft_strdup_v2(str);
 	new_tab[i + 1] = NULL;
 	free(tab);
+	tab = NULL;
 	return (new_tab);
 }
 
-int ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	unsigned char *str1;
-	unsigned char *str2;
+	unsigned char	*str1;
+	unsigned char	*str2;
 
 	str1 = (unsigned char *)s1;
 	str2 = (unsigned char *)s2;
@@ -151,9 +152,9 @@ int ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
-int get_env_index(t_data *data, char *name)
+int	get_env_index(t_data *data, char *name)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (data->env[i])
@@ -165,9 +166,9 @@ int get_env_index(t_data *data, char *name)
 	return (-1);
 }
 
-int ft_ispresent(char *str, char c)
+int	ft_ispresent(char *str, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
