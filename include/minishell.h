@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 16:53:58 by smarty            #+#    #+#             */
-/*   Updated: 2024/07/02 21:26:23 by oliradet         ###   ########.fr       */
+/*   Updated: 2024/06/08 22:09:31 by smarty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_data
 	char *line;
 	int stdin;
 	t_list *line_lst;
+	int 	ret;
 }		t_data;
 
 
@@ -122,15 +123,15 @@ void 	compute_operator(t_data *data, t_list *lst);
 void    redirect_output(t_data *data, t_list *lst, int append);
 void    redirect_input(t_data *data, t_list *lst);
 void    limiter(t_data *data, t_list *lst);
-void	pipes(t_data *data, t_list *order);
+void	pipes(t_data *data, t_list *order, int i);
 
 
 //builtins
 void	ft_pwd();
-int		echo(char *str, int arg);
-int		ft_cd(t_data *data, char *str);
+void	echo(char *str, int arg);
+int	ft_cd(t_data *data, char *str);
 void	ft_env(t_data *data);
-void	ft_unset(t_data *data, char *args);
+void	unset(t_data *data, ...);
 int 	find_env(t_data *data, char *name);
 int 	edit_env(t_data *data, char *name, char *value);
 int 	ft_isalpha(int c);
@@ -142,6 +143,6 @@ char 	**ft_realloc_tab(char **tab, char *str);
 int 	ft_ispresent(char *str, char c);
 int 	get_env_index(t_data *data, char *name);
 int 	ft_strncmp(const char *s1, const char *s2, size_t n);
-int		export_env(t_data *data, char *str);
+int export_env(t_data *data, char *str);
 
 #endif

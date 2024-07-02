@@ -18,7 +18,28 @@ void free_exec(char **path, char **cmd, t_data *data)
 	free_cmd(cmd);
 	perror_process(data, "error cmd");
 }
+char *build_arg_path(char **cmd, char **path, int i)
+{
+	if (cmd[0][0] != '/')
+	{
+		path[i] = ft_strjoin(path[i], "/", 1, 0);
+		path[i] = ft_strjoin(path[i], cmd[0], 1, 0);
+	}
+	else
+		path[i] = ft_strdup_v2(cmd[0]);
+	return (path[i]);
+}
 
+void is_not_found(t_data * data, char **cmd, char **path, int i)
+{
+	if (path[i] == NULL)
+	{
+		free(path);
+		order_not_found(data, cmd[0]);
+		free_tab(cmd);
+		exit(127);
+	}
+}
 void execute(t_data *data, t_list *lst)
 {
 	int		i;
@@ -30,13 +51,7 @@ void execute(t_data *data, t_list *lst)
 	i = 0;
 	while (path[i])
 	{
-		if (cmd[0][0] != '/')
-		{
-			path[i] = ft_strjoin(path[i], "/", 1, 0);
-			path[i] = ft_strjoin(path[i], cmd[0], 1, 0);
-		}
-		else
-			path[i] = ft_strdup_v2(cmd[0]);
+		path[i] = build_arg_path(cmd, path, i);
 		if (access(path[i], F_OK | X_OK) == 0)
 		{
 			if (execve(path[i], cmd, data->env) == -1)
@@ -49,65 +64,64 @@ void execute(t_data *data, t_list *lst)
 		free(path[i]);
 		i++;
 	}
-	if (path[i] == NULL)
-	{
-		free(path);
-		order_not_found(data, cmd[0]);
-		free_tab(cmd);
-		exit(127);
-	}
+	is_not_found(data, cmd, path, i);
 	exit (0);
 }
+int check_built_in_2(t_data *data, t_list *lst)
+{
+	if (ft_strmcmp(lst->content, "export", 6) == 1)
+	{
+		lst->content = delete_quotes(lst->content);
+		//export_env();
+		return (1);
+	}
+	else if (ft_strmcmp(lst->content, "unset", 5) == 1)
+	{
+		lst->content = delete_quotes(lst->content);
+		//ft_unset(data, );
+		return (1);
+	}
+	else if (ft_strcmp(lst->content, "env") == 1)
+	{
+		ft_env(data);
+		return (1);
+	}
+	else if (ft_strcmp(lst->content, "exit") == 1)
+	{
+		lst->content = delete_quotes(lst->content);
+		//ft_exit();
+		return (1);
+	}
+	return (0);
+}
+
 int	check_built_in(t_data *data, t_list *lst)
 {
 	if (ft_strmcmp(lst->content, "echo -n", 7) == 1)
 	{
 		lst->content = delete_quotes(lst->content);
 		echo(&lst->content[8], 1);
-		return 1;
+		return (1);
 	}
 	else if (ft_strmcmp(lst->content, "echo", 4) == 1)
 	{
 		lst->content = delete_quotes(lst->content);
 		echo(&lst->content[5], 0);
-		return 1;
+		return (1);
 	}
 	else if (ft_strmcmp(lst->content, "cd", 2) == 1)
 	{
 		lst->content = delete_quotes(lst->content);
 		ft_cd(data, &lst->content[3]);
-		return 1;
+		return (1);
 	}
 	else if (ft_strcmp(lst->content, "pwd") == 1)
 	{
 		lst->content = delete_quotes(lst->content);
 		ft_pwd();
-		return 1;
+		return (1);
 	}
-	else if (ft_strmcmp(lst->content, "export", 6) == 1)
-	{
-		lst->content = delete_quotes(lst->content);
-		export_env(data, &lst->content[7]);
-		return 1;
-	}
-	else if (ft_strmcmp(lst->content, "unset", 5) == 1)
-	{
-		lst->content = delete_quotes(lst->content);
-		ft_unset(data, &lst->content[6]);
-		return 1;
-	}
-	else if (ft_strcmp(lst->content, "env") == 1)
-	{
-		ft_env(data);
-		return 1;
-	}
-	else if (ft_strcmp(lst->content, "exit") == 1)
-	{
-		lst->content = delete_quotes(lst->content);
-		//ft_exit();
-		return 1;
-	}
-	return 0;
+	return (check_built_in_2(data, lst));
 }
 
 

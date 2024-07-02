@@ -11,15 +11,20 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+void	child_pipes(int fd[2], t_data *data)
+{
+    close(fd[0]);
+    if (data->o == 0)
+	    dup2(fd[1], STDOUT_FILENO);
+    close(fd[1]);
+}
 
-void	pipes(t_data *data, t_list *order)
+void	pipes(t_data *data, t_list *order, int i)
 {
 	pid_t	childpid;
 	int		fd[2];
 	int 	status;
-	int		i;
 
-	i = 0;
 	if (pipe(fd) == -1)
 		exit(EXIT_FAILURE);
 	childpid = fork();
@@ -27,10 +32,7 @@ void	pipes(t_data *data, t_list *order)
 		return (perror_process(data, "fork"));
 	if (childpid == 0)
 	{
-        close(fd[0]);
-        if (data->o == 0)
-		    dup2(fd[1], STDOUT_FILENO);
-        close(fd[1]);
+		child_pipes(fd, data);
 		execute(data, order);
 	}
 	else

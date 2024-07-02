@@ -12,6 +12,39 @@
 
 #include "../include/minishell.h"
 
+char *is_interogation(t_data *data, char *str, char *var)
+{
+	int i;
+
+	i = 0;
+	while (str[i] != '$')
+	i++;
+	free (var);
+	var = ft_itoa(data->return_value);
+	var = ft_strjoin(var, &str[i + 2], 1, 0);
+	return (str);
+}
+
+char *is_var(t_data *data, char *str, char *var)
+{
+	int	i;
+	int	y;
+
+	var = find_var(data->env, var);
+	if (var == NULL)
+		return (str);
+	i = 0;
+	y = 0;
+	while (str[i] != '$')
+		i++;
+	while (str[i + y] != ' ' && is_verif_quotes(str, i + y) == 0 && str[i + y] != '"' && str[i + y] != '\'' && str[i + y])
+		y++;
+	var = ft_strjoin(var, &str[i + y], 0, 0);
+	str[i] = 0;
+	str = ft_strjoin(str, var, 1, 1);
+	return (str);
+}
+
 char *replace_var(t_data *data, char *str)
 {
 	int		i;
@@ -33,29 +66,9 @@ char *replace_var(t_data *data, char *str)
 				var[y++] = str[i++];
 			var[y] = 0;
 			if (ft_strcmp("?", var) == 1)
-			{
-				i = 0;
-				while (str[i] != '$')
-				i++;
-				free (var);
-				var = ft_itoa(data->return_value);
-				var = ft_strjoin(var, &str[i + 2], 1, 0);
-			}
+				str = is_interogation(data, str, var);
 			else
-			{
-				var = find_var(data->env, var);
-				if (var == NULL)
-					return (str);
-				i = 0;
-				y = 0;
-				while (str[i] != '$')
-				i++;
-				while (str[i + y] != ' ' && is_verif_quotes(str, i + y) == 0 && str[i + y] != '"' && str[i + y] != '\'' && str[i + y])
-					y++;
-				var = ft_strjoin(var, &str[i + y], 0, 0);
-			}
-			str[i] = 0;
-			str = ft_strjoin(str, var, 1, 1);
+				str = is_var(data, str, var);
 		}
 	}
 	return (str);

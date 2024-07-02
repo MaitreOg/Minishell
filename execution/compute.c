@@ -17,7 +17,7 @@ void link_io(t_data *data,t_list *order, t_list *tmp)
 	if (tmp->content_type == TYPE_PIPE)
 	{
 		data->execute = 1;
-		pipes(data, order);
+		pipes(data, order, 0);
 		return ;
 	}
 	if (tmp->next == NULL || (tmp->next->content_type > 0 && tmp->next->content_type < 6))
@@ -58,6 +58,27 @@ void backup_fd(t_data *data, int fdi, int fdo)
 		dup2(fdi, STDIN_FILENO);
 	data->o = 0;
 }
+
+void compute_brain(t_data *data, t_list *lst, int stdin_backup, int stdout_backup)
+{
+	while (lst && data->in_progress == 1)
+	{
+		data->fdo = stdout_backup;
+		if(lst->content_type == TYPE_ORDER)
+		{
+			data->execute = 0;
+			compute_operator(data, lst);
+			if (data->execute == 0 && data->in_progress == 1)
+				fork_order(data, lst);
+			backup_fd(data, stdin_backup, stdout_backup);
+		}
+		if (data->in_progress == 1)
+			lst = lst->next;
+	}
+	close(stdout_backup);
+	close(stdin_backup);
+}
+
 void compute(t_data *data)
 {
 	t_list *lst;
@@ -75,22 +96,7 @@ void compute(t_data *data)
 		redirect_error(data, "unexpected token ", lst);
 	if (lst->content_type == 5)
 		redirect_error(data, "unexpected token ", lst);
-	while (lst && data->in_progress == 1)
-	{
-		data->fdo = stdout_backup;
-		if(lst->content_type == TYPE_ORDER)
-		{
-			data->execute = 0;
-			compute_operator(data, lst);
-			if (data->execute == 0 && data->in_progress == 1)
-				fork_order(data, lst);
-			backup_fd(data, stdin_backup, stdout_backup);
-		}
-		if (data->in_progress == 1)
-			lst = lst->next;
-	}
-	close(stdout_backup);
-	close(stdin_backup);
+	compute_brain(data, lst, stdin_backup, stdout_backup);
 	if (data->in_progress == 1)
 	{
 		while (++i < nb_order(data))

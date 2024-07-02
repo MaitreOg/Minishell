@@ -112,9 +112,10 @@ char *copy_word(char *operator, char *str, int i)
 	y = 0;
 	while (check_operator(str, (i + y), operator) == 0 && str[i + y])
 		y++;
-	split = (char *)malloc (sizeof(char) * (y + 1));
+	if (y > 0)
+		split = (char *)malloc (sizeof(char) * (y + 1));
 	y = 0;
-   while (check_operator(str, i, operator) == 0 && str[i])
+	while (check_operator(str, i, operator) == 0 && str[i])
 	{
 		split[y] = str[i];
 		y++;
@@ -124,62 +125,59 @@ char *copy_word(char *operator, char *str, int i)
 	return (split);
 }
 
+char *copy_sep(char *operator, char *str, int i)
+{
+	int y;
+	char *split;
 
-char **ft_split2(char *str, char*operator)
+	while (check_operator(str, (i + y), operator) == 1 && str[i + y])
+		y++;
+	split = (char *)malloc (sizeof(char) * (y + 1));
+	y = 0;
+	while (check_operator(str, i, operator) == 1 && str[i])
+		split[y++] = str[i++];
+	split[y] = 0;
+	while ( str[i] == ' ')
+		i++;
+	return (split);
+}
+
+char	**cut_split_2(char *str, char **split, char *operator)
+{
+	int word;
+	int	i;
+
+	i = 0;
+	word = 0;
+	while (str[i])
+	{
+		split[word] = copy_word(operator, str, i);
+		word++;
+		while (check_operator(str, i, operator) == 0 && str[i])
+			i++;
+		if (str[i] == 0)
+		{
+			split[word] = NULL;
+			return (split);
+		}
+		split[word] = copy_sep(operator, str, i);
+		while (check_operator(str, i, operator) == 1 && str[i])
+			i++;
+		word++;
+	}
+	split[word] = NULL;
+	return (split);
+}
+char	**ft_split2(char *str, char*operator)
 {
 	int nb;
-	int i;
-	int y;
-	int word;
 	char **split;
 
 	nb = count_word2(str, operator);
 	split = (char **)malloc(sizeof(char *) * (nb + 1));
 	if (!split)
 		return (NULL);
-	word = 0;
-	i = 0;
-	while (str[i])
-	{
-		y = 0;
-		while (check_operator(str, (i + y), operator) == 0 && str[i + y])
-			y++;
-		if (y > 0)
-		{
-			split[word] = (char *)malloc (sizeof(char) * (y + 1));
-			y = 0;
-   			while (check_operator(str, i, operator) == 0 && str[i])
-			{
-				split[word][y] = str[i];
-				y++;
-				i++;
-			}
-			split[word][y] = '\0'; 
-			word++;
-		}
-		y = 0;
-		if (str[i] == 0)
-		{
-			split[word] = NULL;
-			return (split);
-		}
-		while (check_operator(str, (i + y), operator) == 1 && str[i + y])
-			y++;
-		split[word] = (char *)malloc (sizeof(char) * (y + 1));
-		y = 0;
-		while (check_operator(str, i, operator) == 1 && str[i])
-		{
-			split[word][y] = str[i];
-			y++;
-			i++;
-		}
-		split[word][y] = 0;
-		while ( str[i] == ' ')
-			i++;
-		word++;;
-	}
-	split[word] = NULL;
-	return 	(split);
+	return 	(cut_split_2(str, split, operator));
 }
 
 int	count_word_arg(char *s, char c)
@@ -206,11 +204,10 @@ char	**cpyword_arg(char **str, char *s, char c)
 	int	y;
 	int	word;
 
-	i = 0;
+	i = -1;
 	y = 0;
 	word = 0;
-	while (s[i] == c && s[i])
-		i++;
+	while (s[++i] == c && s[i]);
 	while (s[i])
 	{
 		while ((s[i + y] != c || is_verif(s, i + y) == 1) && s[i + y])

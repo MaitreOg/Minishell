@@ -24,18 +24,12 @@ int is_verif(char *str, int i)
 	while(y < i)
 	{
 		if (str[y] == '\'' && simple_open == 0)
-		{
 			simple_open = 1;
-			y++;
-		}
-		if (str[y] == '"' && double_open == 0)
-		{
-			y++;
+		else if (str[y] == '"' && double_open == 0)
 			double_open = 1;
-		}
-		if (str[y] == '\'' && simple_open == 1)
+		else if (str[y] == '\'' && simple_open == 1)
 			simple_open = 0;
-		if (str[y] == '"' && double_open == 1)
+		else if (str[y] == '"' && double_open == 1)
 			double_open = 0;
 		y++;
 	}

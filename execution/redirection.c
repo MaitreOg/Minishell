@@ -35,6 +35,7 @@ void	create_file_doc(t_list *lst, int *fd)
 	char	*line;
 	char	*limiter;
 
+	close(fd[0]);
 	dup2(fd[1], STDOUT_FILENO);
 	limiter = ft_strjoin(lst->content, "\n", 0, 0);
 	write(2, "> ", 2);
@@ -72,10 +73,7 @@ void    limiter(t_data *data, t_list *lst)
 		return ;
 	}
 	if (childpid == 0)
-	{
-		close(fd[0]);
 		create_file_doc(lst, fd);
-	}
 	else
 	{
 		close(fd[1]);
