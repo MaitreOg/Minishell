@@ -73,21 +73,23 @@ void delete_space(t_list *lst)
 {
 	int i;
 	int	y;
+	char *tmp;
 
 	i = 0;
 	while (lst->content[i] == ' ')
 		i++;
-	lst->content = ft_strdup(&lst->content[i]);
+	tmp = ft_strdup_v2(&lst->content[i]);
+	free(lst->content);
 	i = 0;
 	y = 0;
-	while (lst->content[i])
+	while (tmp[i])
 	{
-		if (lst->content[i] == ' ')
+		if (tmp[i] == ' ')
 			y++;
 		else
 			y = 0;
 		i++;
 	}
-	lst->content[i - y] = 0;
-	lst->content = ft_strdup(lst->content);
+	tmp[i - y] = 0;
+	lst->content = ft_strdup(tmp);
 }

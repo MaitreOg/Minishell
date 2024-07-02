@@ -181,3 +181,63 @@ char **ft_split2(char *str, char*operator)
 	split[word] = NULL;
 	return 	(split);
 }
+
+int	count_word_arg(char *s, char c)
+{
+	int	i;
+	int	nb;
+
+	i = 0;
+	nb = 0;
+	if (s[0] != c && s[0])
+		nb++;
+	while (s[i])
+	{
+		if (is_verif(s, i) == 0 && s[i] == c && s[i + 1] != c && s[i + 1])
+			nb++;
+		i++;
+	}
+	return (nb);
+}
+
+char	**cpyword_arg(char **str, char *s, char c)
+{
+	int	i;
+	int	y;
+	int	word;
+
+	i = 0;
+	y = 0;
+	word = 0;
+	while (s[i] == c && s[i])
+		i++;
+	while (s[i])
+	{
+		while ((s[i + y] != c || is_verif(s, i + y) == 1) && s[i + y])
+			y++;
+		str[word] = (char *)malloc (sizeof(char) * y + 1);
+		y = 0;
+		while ((s[i] != c || is_verif(s, i) == 1) && s[i])
+			str[word][y++] = s[i++];
+		str[word][y] = '\0';
+		y = 0;
+		while ((s[i] == c || s[i] == ' ') && s[i])
+			i++;
+		str[word] = delete_quotes(str[word]);
+		word++;
+	}
+	str[word] = NULL;
+	return (str);
+}
+
+char	**ft_split_arg(char *str, char c)
+{
+	int		nb;
+	char	**ss;
+
+	nb = count_word_arg(str, c);
+	ss = (char **)malloc(sizeof(char *) * (nb + 1));
+	if (!ss)
+		return (NULL);
+	return (cpyword_arg(ss, str, c));
+}
