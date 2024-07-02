@@ -128,7 +128,7 @@ void	pipes(t_data *data, t_list *order, int i);
 
 //builtins
 void	ft_pwd();
-void	echo(char *str, int arg);
+int	echo(char *str, int arg);
 int	ft_cd(t_data *data, char *str);
 void	ft_env(t_data *data);
 void	unset(t_data *data, ...);
