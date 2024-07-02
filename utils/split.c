@@ -130,6 +130,7 @@ char	*copy_sep(char *operator, char *str, int i)
 	int		y;
 	char	*split;
 
+	y = 0;
 	while (check_operator(str, (i + y), operator) == 1 && str[i + y])
 		y++;
 	split = (char *)malloc (sizeof(char) * (y + 1));
