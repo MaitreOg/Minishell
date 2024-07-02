@@ -89,7 +89,7 @@ int check_built_in_2(t_data *data, t_list *lst)
 	else if (ft_strcmp(lst->content, "exit") == 1)
 	{
 		lst->content = delete_quotes(lst->content);
-		ft_exit(data);
+//		ft_exit(data);
 		return (1);
 	}
 	return (0);
