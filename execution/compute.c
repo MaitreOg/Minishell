@@ -64,7 +64,7 @@ void	compute_brain(t_data *data, t_list *lst, int in, int out)
 {
 	while (lst && data->in_progress == 1)
 	{
-		data->fdo = stdout_backup;
+		data->fdo = out;
 		if (lst->content_type == TYPE_ORDER)
 		{
 			data->execute = 0;

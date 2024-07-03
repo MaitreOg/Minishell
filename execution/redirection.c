@@ -91,7 +91,10 @@ void	redirect_output(t_data *data, t_list *lst, int append)
 	int	flags;
 
 	data->o = 1;
-	flags = O_RDWR | O_CREAT | (append ? O_APPEND : O_TRUNC);
+	if (append == 1)
+		flags = O_RDWR | O_CREAT | O_APPEND;
+	else
+		flags = O_RDWR | O_CREAT | O_TRUNC;
 	fd = open(lst->content, flags, 0644);
 	if (fd == -1)
 	{

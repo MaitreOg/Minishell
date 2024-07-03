@@ -66,6 +66,7 @@ void    minishell(t_data *data, char **env);
 
 //free && error
 void	free_cmd(char **cmd);
+void	free_exec(char **path, char **cmd, t_data *data);
 void	free_path(char **path);
 void	free_all(t_data *data);
 void	perror_process(t_data *data, char *error);
@@ -86,7 +87,7 @@ int		*ft_lstprint(t_list *lst);
 char	*find_var(char **env, char *var);
 int		is_verif_double(char *str, int i);
 int 	is_verif_quotes(char *str, int i);
-char 	*replace_var(t_data *data, char *str);
+char 	*replace_var(t_data *data, char *str, int i);
 char	*delete_quotes(char *str);
 void	token_to_lst(char **tab, t_data *data);
 void    line_to_token(t_data *data);
@@ -94,6 +95,8 @@ char	**find_path(char **env);
 
 
 //utils
+void	is_not_found(t_data *data, char **cmd, char **path, int i);
+char	*build_arg_path(char **cmd, char **path, int i);
 int		ft_strlen(char *str);
 int		ft_strcmp(char *s1, char *s2);
 void	delete_space(t_list *lst);
@@ -102,6 +105,10 @@ char	*ft_strjoin(char *s1, char *s2, int z, int y);
 char	*ft_strdup(char *s);
 char	**ft_split(char *str, char c);
 char	**ft_split2(char *str, char*operator);
+int		count_word_arg(char *s, char c);
+int		count_word2(char *str, char *operator);
+char	**cut_split_2(char *str, char **split, char *operator);
+char	**cpyword_arg(char **str, char *s, char c);
 char	**ft_split_arg(char *str, char c);
 void    get_env(t_data *data, char **env);
 int 	is_verif(char *str, int i);

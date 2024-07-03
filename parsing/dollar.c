@@ -46,24 +46,24 @@ char	*is_var(t_data *data, char *str, char *var)
 	return (str);
 }
 
-char	*replace_var(t_data *data, char *str)
+char	*replace_var(t_data *data, char *str, int i)
 {
-	int		i;
 	int		y;
 	char	*var;
 
-	i = -1;
 	while (str[++i])
 	{
 		y = 1;
 		if (str[i] == '$' && is_verif_quotes(str, i + y) == 0)
 		{
-			while (str[i + y] != ' ' && is_verif_quotes(str, i + y) == 0 && str[i + y] != '"' && str[i + y] != '\'' && str[i + y])
+			while (str[i + y] != ' ' && is_verif_quotes(str, i + y) == 0
+				&& str[i + y] != '"' && str[i + y] != '\'' && str[i + y])
 				y++;
 			var = malloc (y + 1);
 			y = 0;
 			i++;
-			while (str[i] != ' ' && is_verif_quotes(str, i) == 0 && str[i] != '"' && str[i] != '\'' && str[i])
+			while (str[i] != ' ' && is_verif_quotes(str, i) == 0
+				&& str[i] != '"' && str[i] != '\'' && str[i])
 				var[y++] = str[i++];
 			var[y] = 0;
 			if (ft_strcmp("?", var) == 1)

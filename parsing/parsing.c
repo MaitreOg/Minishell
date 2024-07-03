@@ -54,7 +54,7 @@ void	add_necessary(t_data *data)
 	while (tmp)
 	{
 		add_type(tmp, data->line_lst);
-		tmp->content = replace_var(data, tmp->content);
+		tmp->content = replace_var(data, tmp->content, -1);
 		delete_space(tmp);
 		tmp = tmp->next;
 	}
