@@ -18,15 +18,16 @@ int	*ft_lstprint(t_list *lst)
 
 	tmp = lst;
 	if (!tmp)
-		return 0;
+		return (0);
 	while (tmp)
 	{
 		printf("%s -> type = %d\n", tmp->content, tmp->content_type);
 		tmp = tmp->next;
 	}
 	printf("\n");
-	return 0;
+	return (0);
 }
+
 t_list	*lst_add(t_list *lst, char *data)
 {
 	t_list	*node;
@@ -48,19 +49,19 @@ t_list	*lst_add(t_list *lst, char *data)
 
 t_list	*lst_prev(t_list *lst, t_list *original)
 {
-    t_list *tmp;
+	t_list	*tmp;
 
-    tmp = original;
-    if (ft_strcmp(tmp->content, lst->content))
-        return NULL;
-    while (tmp->next != lst)
-        tmp = tmp->next;
-    return tmp;
+	tmp = original;
+	if (ft_strcmp(tmp->content, lst->content))
+		return (NULL);
+	while (tmp->next != lst)
+		tmp = tmp->next;
+	return (tmp);
 }
 
-t_list *next_order(t_list *lst)
+t_list	*next_order(t_list *lst)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = lst;
 	while (tmp && tmp->content_type != 0)
@@ -69,11 +70,11 @@ t_list *next_order(t_list *lst)
 }
 
 //todo : delete space in the begining of the string
-void delete_space(t_list *lst)
+void	delete_space(t_list *lst)
 {
-	int i;
-	int	y;
-	char *tmp;
+	int		i;
+	int		y;
+	char	*tmp;
 
 	i = 0;
 	while (lst->content[i] == ' ')

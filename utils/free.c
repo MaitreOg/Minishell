@@ -12,21 +12,21 @@
 
 #include "../include/minishell.h"
 
-void free_tab(char **tab)
+void	free_tab(char **tab)
 {
-    int i;
+	int	i;
 
-    if (!tab)
+	if (!tab)
 		return ;
 	i = -1;
-    while(tab[++i])
-    	free(tab[i]);
-    free(tab);
+	while (tab[++i])
+		free(tab[i]);
+	free(tab);
 }
 
-void    free_lst(t_list *lst)
+void	free_lst(t_list *lst)
 {
-    t_list	*tmp;
+	t_list	*tmp;
 
 	while (lst)
 	{
@@ -39,11 +39,11 @@ void    free_lst(t_list *lst)
 	lst = NULL;
 }
 
-void ft_lstclear(t_list **lst, void (*del)(void*))
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	t_list *tmp;
+	t_list	*tmp;
 
-	while(lst)
+	while (lst)
 	{
 		tmp = (*lst)->next;
 		del((*lst)->content);
@@ -53,7 +53,7 @@ void ft_lstclear(t_list **lst, void (*del)(void*))
 	*lst = NULL;
 }
 
-void free_compute(t_data *data)
+void	free_compute(t_data *data)
 {
 	if (data->line)
 	{
@@ -71,9 +71,9 @@ void free_compute(t_data *data)
 	}
 }
 
-void free_all(t_data *data)
+void	free_all(t_data *data)
 {
-    if (data->line)
+	if (data->line)
 	{
 		free(data->line);
 		data->line = NULL;

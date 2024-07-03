@@ -12,40 +12,13 @@
 
 #include "../include/minishell.h"
 
-void free_exec(char **path, char **cmd, t_data *data)
-{
-	free_path(path);
-	free_cmd(cmd);
-	perror_process(data, "error cmd");
-}
-char *build_arg_path(char **cmd, char **path, int i)
-{
-	if (cmd[0][0] != '/')
-	{
-		path[i] = ft_strjoin(path[i], "/", 1, 0);
-		path[i] = ft_strjoin(path[i], cmd[0], 1, 0);
-	}
-	else
-		path[i] = ft_strdup_v2(cmd[0]);
-	return (path[i]);
-}
-
-void is_not_found(t_data * data, char **cmd, char **path, int i)
-{
-	if (path[i] == NULL)
-	{
-		free(path);
-		order_not_found(data, cmd[0]);
-		free_tab(cmd);
-		exit(127);
-	}
-}
-void execute(t_data *data, t_list *lst)
+void	execute(t_data *data, t_list *lst)
 {
 	int		i;
 	char	**cmd;
 	char	**path;
 
+	//g_status = 2;
 	cmd = ft_split_arg(lst->content, ' ');
 	path = find_path(data->env);
 	i = 0;
@@ -67,7 +40,8 @@ void execute(t_data *data, t_list *lst)
 	is_not_found(data, cmd, path, i);
 	exit (0);
 }
-int check_built_in_2(t_data *data, t_list *lst)
+
+int	check_built_in_2(t_data *data, t_list *lst)
 {
 	if (ft_strmcmp(lst->content, "export", 6) == 1)
 	{
@@ -124,15 +98,15 @@ int	check_built_in(t_data *data, t_list *lst)
 	return (check_built_in_2(data, lst));
 }
 
-
-void fork_order(t_data *data, t_list *lst)
+void	fork_order(t_data *data, t_list *lst)
 {
+	pid_t	pid;
+	int		status;
+	int		i;
+
 	if (check_built_in(data, lst) == 1)
 		return ;
-	pid_t pid = fork();
-	int status;
-	int i;
-
+	pid = fork();
 	i = 0;
 	if (pid == -1)
 	{
@@ -145,7 +119,7 @@ void fork_order(t_data *data, t_list *lst)
 	}
 	else
 	{
-		while(data->childpid[i] != -2)
+		while (data->childpid[i] != -2)
 			i++;
 		data->childpid[i] = pid;
 		data->return_value = WEXITSTATUS(status);
