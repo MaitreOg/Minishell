@@ -24,6 +24,10 @@ int	ft_cd(t_data *data, char *str)
 	pwd = getcwd(NULL, 0);
 	if (chdir(str) == -1)
 	{
+		if (!str)
+		{
+			printf("cd: Need input\n", str);
+		}
 		printf("cd: %s: No such file or directory\n", str);
 		free(pwd);
 		return (-1);

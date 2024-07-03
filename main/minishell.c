@@ -29,13 +29,17 @@ void    minishell(t_data *data, char **env)
 		data->line_lst = NULL;
 		data->o = 0;
 		data->line = readline("\033[0;35mminishell \033[0m ");
-		if (ft_strcmp(data->line, "exit"))
+		if (!data->line)
+		{
+			ft_exit(data);
+		}
+		else if (ft_strcmp(data->line, "exit"))
 		{
 			free_tab(data->env);
 			free(data->line);
 			return ;
 		}
-		if (is_only_space(data->line) == 1)
+		else if (is_only_space(data->line) == 1)
 			free(data->line);
 		else if (data->line[0] && is_only_space(data->line) == 0)
 		{

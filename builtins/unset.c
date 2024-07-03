@@ -27,7 +27,7 @@ int	ft_size_tab(char **tab)
  * @param data
  * @param args the table of variable to unset
  */
-void	ft_unset(t_data *data, char *args)
+int	ft_unset(t_data *data, char *args)
 {
 	int		i;
 	int		y;
@@ -52,4 +52,5 @@ void	ft_unset(t_data *data, char *args)
 		i++;
 	}
 	free(tab);
+	return (0);
 }

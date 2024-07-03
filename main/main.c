@@ -12,27 +12,45 @@
 
 #include "../include/minishell.h"
 
-void	handler(int signum)
+void	ctrlc(int signum)
 {
 	(void)signum;
-//	rl_on_new_line();
-	//todo new line
+
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
-void quittt(int signum)
+void ft_bzero(void *s, size_t n)
 {
-	(void) signum;
+	unsigned char	*str;
+	size_t			i;
 
-//	free_tab(data->env);
-//	free(data->line);
-	return ;
+	i = 0;
+	str = (unsigned char *)s;
+	while (i < n)
+	{
+		str[i] = 0;
+		i++;
+	}
+}
+
+void ctrlback(void)
+{
+	struct sigaction	ouais;
+
+	ft_bzero(&ouais, sizeof(ouais));
+	ouais.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &ouais, NULL);
 }
 
 int	main(int ac, char **av, char **env)
 {
 	t_data	*data;
-	signal(SIGINT, handler);
-	signal(SIGQUIT, quittt);
+	signal(SIGINT, ctrlc);
+	//sigaction sigquit vers sigin
+	ctrlback();
 	if (ac != 1 ||av[0][0] != '.')
 		return(printf("please enter valid argument\n"));
 	data = malloc(sizeof(t_data));

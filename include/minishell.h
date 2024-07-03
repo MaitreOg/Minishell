@@ -25,7 +25,6 @@
 #include <sys/wait.h>
 #include "../utils/get_next_line/get_next_line.h"
 
-
 enum Type
 {
 	TYPE_ORDER,     //0
@@ -58,8 +57,6 @@ typedef struct s_data
 	t_list *line_lst;
 	int 	ret;
 }		t_data;
-
-
 
 void    minishell(t_data *data, char **env);
 
@@ -131,7 +128,7 @@ void	ft_pwd();
 int	echo(char *str, int arg);
 int	ft_cd(t_data *data, char *str);
 void	ft_env(t_data *data);
-void	unset(t_data *data, ...);
+int	ft_unset(t_data *data, char *args);
 int 	find_env(t_data *data, char *name);
 int 	edit_env(t_data *data, char *name, char *value);
 int 	ft_isalpha(int c);
@@ -145,4 +142,5 @@ int 	get_env_index(t_data *data, char *name);
 int 	ft_strncmp(const char *s1, const char *s2, size_t n);
 int export_env(t_data *data, char *str);
 int	ft_exit(t_data *data);
+
 #endif
