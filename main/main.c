@@ -51,7 +51,7 @@ int	main(int ac, char **av, char **env)
 	signal(SIGINT, ctrlc);
 	//sigaction sigquit vers sigin
 	ctrlback();
-	if (ac != 1 ||av[0][0] != '.')
+	if (ac != 1 ||av[0][0] == '!')
 		return(printf("please enter valid argument\n"));
 	data = malloc(sizeof(t_data));
 	if (!data)

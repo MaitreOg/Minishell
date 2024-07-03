@@ -21,7 +21,13 @@ char	*build_arg_path(char **cmd, char **path, int i)
 
 void	is_not_found(t_data *data, char **cmd, char **path, int i)
 {
-	if (path[i] == NULL)
+    if (!path)
+    {
+        order_not_found(data, cmd[0]);
+		free_tab(cmd);
+		exit(127);
+    }
+	else if (path[i] == NULL)
 	{
 		free(path);
 		order_not_found(data, cmd[0]);

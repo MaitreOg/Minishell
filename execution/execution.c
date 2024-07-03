@@ -22,7 +22,7 @@ void	execute(t_data *data, t_list *lst)
 	cmd = ft_split_arg(lst->content, ' ');
 	path = find_path(data->env);
 	i = 0;
-	while (path[i])
+	while (path && path[i])
 	{
 		path[i] = build_arg_path(cmd, path, i);
 		if (access(path[i], F_OK | X_OK) == 0)

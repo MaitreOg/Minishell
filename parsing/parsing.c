@@ -72,19 +72,25 @@ void	replace_path(t_data *data, t_list *lst)
 		return;
 	if (lst->content[0] == '.' && lst->content[1] == '/')
 	{
-		printf("before : %s\n", lst->content);
 		tmp = find_var2(data->env, "PWD");
 		tmp = ft_strjoin(tmp, &lst->content[1], 0, 0);
 		free (lst->content);
 		lst->content = ft_strdup_v2(tmp);
-		printf("after : %s\n", lst->content);
 	}
 }
 void	add_necessary(t_data *data)
 {
 	t_list	*tmp;
-
+	char *absolute;
+	
 	tmp = data->line_lst;
+	absolute = find_var2(data->env, "PWD");
+	absolute = ft_strjoin(absolute, &tmp->content[1], 0, 0);
+	if (ft_strcmp(tmp->content, "./minishell") == 1 && tmp->next == NULL)
+		shell_lvl_incr(data);
+	if (ft_strcmp(tmp->content, absolute) == 1 && tmp->next == NULL)
+		shell_lvl_incr(data);
+	free (absolute);
 	while (tmp)
 	{
 		add_type(tmp, data->line_lst);
