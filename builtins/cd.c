@@ -26,7 +26,7 @@ int	ft_cd(t_data *data, char *str)
 	{
 		if (!str)
 		{
-			printf("cd: Need input\n", str);
+			printf("cd: Need input\n");
 		}
 		printf("cd: %s: No such file or directory\n", str);
 		free(pwd);

@@ -25,6 +25,7 @@ int	ft_exit(t_data *data)
 //	free(data->env);
 //	free(data->line);
 	free_all(data);
+
 	exit(0);
 	return (0);
 }

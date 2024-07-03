@@ -86,7 +86,10 @@ int	check_built_in(t_data *data, t_list *lst)
 	else if (ft_strmcmp(lst->content, "cd", 2) == 1)
 	{
 		lst->content = delete_quotes(lst->content);
-		ft_cd(data, &lst->content[3]);
+		if (ft_strlen(&lst->content[0]) <= 3)
+			ft_cd(data, value_env(data->env[get_env_index(data, "HOME=")]) + 1);
+		else
+			ft_cd(data, &lst->content[3]);
 		return (1);
 	}
 	else if (ft_strcmp(lst->content, "pwd") == 1)

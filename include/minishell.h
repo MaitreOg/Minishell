@@ -149,5 +149,9 @@ int 	get_env_index(t_data *data, char *name);
 int 	ft_strncmp(const char *s1, const char *s2, size_t n);
 int export_env(t_data *data, char *str);
 int	ft_exit(t_data *data);
+int ft_atoi(const char *str);
+void shell_lvl_decr(t_data *data);
+void shell_lvl_incr(t_data *data);
+
 
 #endif

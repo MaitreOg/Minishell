@@ -179,3 +179,37 @@ int	ft_ispresent(char *str, char c)
 	}
 	return (0);
 }
+
+int ft_atoi(const char *str)
+{
+	int	i;
+	int	neg;
+	int	nb;
+
+	i = 0;
+	neg = 1;
+	nb = 0;
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'
+		|| str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
+		i++;
+	if (str[i] == '-')
+		neg = -1;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		nb = nb * 10 + str[i] - '0';
+		i++;
+	}
+	return (nb * neg);
+}
+
+void shell_lvl_decr(t_data *data)
+{
+	edit_env(data, "SHLVL=", ft_itoa(ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")]) - 1)));
+}
+
+void shell_lvl_incr(t_data *data)
+{
+	edit_env(data, "SHLVL=", ft_itoa(ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")]) + 1)));
+}
