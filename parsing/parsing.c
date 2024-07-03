@@ -46,6 +46,40 @@ void	token_to_lst(char **tab, t_data *data)
 	}
 }
 
+char	*find_var2(char **env, char *var)
+{
+	char	*str;
+	int		i;
+
+	var = ft_strjoin(var, "=", 0, 0);
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strstr(env[i], var))
+			break ;
+		i++;
+	}
+	if (env[i] == NULL)
+		return (NULL);
+	str = ft_strstr(env[i], var);
+	free (var);
+	return (str);
+}
+void	replace_path(t_data *data, t_list *lst)
+{
+	char *tmp;
+	if (lst->content_type != 0)
+		return;
+	if (lst->content[0] == '.' && lst->content[1] == '/')
+	{
+		printf("before : %s\n", lst->content);
+		tmp = find_var2(data->env, "PWD");
+		tmp = ft_strjoin(tmp, &lst->content[1], 0, 0);
+		free (lst->content);
+		lst->content = ft_strdup_v2(tmp);
+		printf("after : %s\n", lst->content);
+	}
+}
 void	add_necessary(t_data *data)
 {
 	t_list	*tmp;
@@ -55,6 +89,7 @@ void	add_necessary(t_data *data)
 	{
 		add_type(tmp, data->line_lst);
 		tmp->content = replace_var(data, tmp->content, -1);
+		replace_path(data, tmp);
 		delete_space(tmp);
 		tmp = tmp->next;
 	}
