@@ -76,12 +76,12 @@ char	**find_path(char **env)
 	i = 0;
 	while (env[i] && ft_strstr(env[i], "PATH=") == 0)
 	{
-    	i++;
-    }
-    if (env[i] == NULL)
-    {
-        return (NULL);
-    }
+		i++;
+	}
+	if (env[i] == NULL)
+	{
+		return (NULL);
+	}
 	env_path = ft_strstr(env[i], "PATH=");
 	path = ft_split(env_path, ':');
 	return (path);
