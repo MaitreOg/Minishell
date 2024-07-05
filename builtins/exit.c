@@ -22,10 +22,9 @@ int	ft_exit(t_data *data)
 		free(data->env[i]);
 		i++;
 	}
-//	free(data->env);
-//	free(data->line);
+//	if (ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")])) > 1)
+//		shell_lvl_incr(data);
 	free_all(data);
-
 	exit(0);
 	return (0);
 }

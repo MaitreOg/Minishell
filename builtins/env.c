@@ -23,7 +23,8 @@ void	ft_env(t_data *data)
 	i = 0;
 	while (data->env[i])
 	{
-		printf("%s\n", data->env[i]);
+		if (data->keys_env[i] == 1)
+			printf("%s\n", data->env[i]);
 		i++;
 	}
 }

@@ -190,7 +190,7 @@ int ft_atoi(const char *str)
 	neg = 1;
 	nb = 0;
 	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'
-		|| str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
+        || str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
 		i++;
 	if (str[i] == '-')
 		neg = -1;
@@ -204,6 +204,7 @@ int ft_atoi(const char *str)
 	return (nb * neg);
 }
 
+
 void shell_lvl_decr(t_data *data)
 {
 	edit_env(data, "SHLVL=", ft_itoa(ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")]) - 1)));
@@ -211,5 +212,19 @@ void shell_lvl_decr(t_data *data)
 
 void shell_lvl_incr(t_data *data)
 {
-	edit_env(data, "SHLVL=", ft_itoa(ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")]) + 1)));
+	edit_env(data, "SHLVL=", ft_itoa(ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")]))+1));
+}
+
+int env_has_value(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
 }

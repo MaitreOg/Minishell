@@ -74,7 +74,14 @@ int	check_built_in(t_data *data, t_list *lst)
 	if (ft_strmcmp(lst->content, "echo -n", 7) == 1)
 	{
 		lst->content = delete_quotes(lst->content);
-		echo(&lst->content[8], 1);
+		if (lst->content[6] != 'n')
+		{
+			echo(&lst->content[5], 1);
+		}
+		else
+		{
+			echo(&lst->content[8], 0);
+		}
 		return (1);
 	}
 	else if (ft_strmcmp(lst->content, "echo", 4) == 1)

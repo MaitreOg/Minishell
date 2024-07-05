@@ -52,6 +52,7 @@ typedef struct s_data
 	int in_progress;
 	int execute;
 	char **env;
+	int *keys_env;
 	char *line;
 	int stdin;
 	t_list *line_lst;
@@ -131,7 +132,7 @@ void	pipes(t_data *data, t_list *order, int i);
 
 
 //builtins
-void	ft_pwd();
+int	ft_pwd(void);
 int	echo(char *str, int arg);
 int	ft_cd(t_data *data, char *str);
 void	ft_env(t_data *data);
@@ -152,6 +153,7 @@ int	ft_exit(t_data *data);
 int ft_atoi(const char *str);
 void shell_lvl_decr(t_data *data);
 void shell_lvl_incr(t_data *data);
+int env_has_value(char *str);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: oliradet <oliradet@42student.perpignan.f>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 01:35:28 by oliradet          #+#    #+#             */
-/*   Updated: 2024/05/25 01:35:28 by oliradet         ###   ########.fr       */
+/*   Updated: 2024/07/03 19:26:55 by oliradet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ int	export_env(t_data *data, char *str)
 	char	*value;
 	int		i;
 
+	if (str == NULL)
+	{
+		//print env in alphabetical order
+	}
 	if (!valid_env_name_export(str))
 	{
 		printf("export: `%s': not a valid identifier\n", str);
@@ -35,5 +39,13 @@ int	export_env(t_data *data, char *str)
 		i++;
 	}
 	data->env = ft_realloc_tab(data->env, str);
+	i = 0;
+	while (data->env[i])
+	{
+		if (env_has_value(data->env[i]))
+			data->keys_env[i] = 1;
+		else
+			data->keys_env[i] = 0;
+	}
 	return (0);
 }

@@ -23,6 +23,8 @@ void    minishell(t_data *data, char **env)
 	stdout_backup = dup(STDOUT_FILENO);
 	get_env(data, env);
 	data->childpid = NULL;
+//	shell_lvl_incr(data);
+//	shell_lvl_incr(data);
 	while (1)
 	{
 		data->in_progress = 1;

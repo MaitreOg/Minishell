@@ -15,7 +15,7 @@
 /**
  * pwd
  */
-void	ft_pwd(void)
+int	ft_pwd(void)
 {
 	char	*pwd;
 
@@ -23,10 +23,11 @@ void	ft_pwd(void)
 	if (getcwd(NULL, 0) == NULL)
 	{
 		printf("This directory does not exist\n");
-		return ;
+		return (1);
 	}
 	else
 		pwd = getcwd(NULL, 0);
 	printf("%s\n", pwd);
 	free(pwd);
+	return (0);
 }
