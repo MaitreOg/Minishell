@@ -35,7 +35,8 @@ int	nb_order(t_data *data)
 	tmp = data->line_lst;
 	while (tmp)
 	{
-		if (tmp && tmp->content_type == TYPE_ORDER)
+		
+		if (tmp->content_type == TYPE_ORDER)
 			i++;
 		tmp = tmp->next;
 	}
