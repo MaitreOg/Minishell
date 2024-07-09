@@ -89,16 +89,16 @@ int	count_word_arg(char *s, char c)
 	return (nb);
 }
 
-char	**cpyword_arg(char **str, char *s, char c)
+char	**cpyword_arg(char **str, char *s, char c, int i)
 {
-	int	i;
 	int	y;
 	int	word;
 
 	i = -1;
 	y = 0;
 	word = 0;
-	while (s[++i] == c && s[i]);
+	while (s[i] == c && s[i])
+		i++;
 	while (s[i])
 	{
 		while ((s[i + y] != c || is_verif(s, i + y) == 1) && s[i + y])

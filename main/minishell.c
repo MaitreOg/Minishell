@@ -12,29 +12,34 @@
 
 #include "../include/minishell.h"
 
-void    minishell(t_data *data, char **env)
+void	preset_minishell(t_data *data)
 {
-	int stdout_backup;
-	int stdin_backup;
-
+	data->return_value = 0;
 	data->line_lst = NULL;
 	data->stdin = dup(STDIN_FILENO);
+	data->childpid = NULL;
+}
+
+void	preset_struct(t_data *data)
+{
+	data->in_progress = 1;
+	data->line_lst = NULL;
+	data->o = 0;
+}
+
+void	minishell(t_data *data)
+{
+	int	stdout_backup;
+	int	stdin_backup;
+
+	preset_minishell(data);
 	stdin_backup = dup(STDIN_FILENO);
 	stdout_backup = dup(STDOUT_FILENO);
-//	get_env(data, env);
-	(void) env;
-	data->childpid = NULL;
-//	shell_lvl_incr(data);
 	while (1)
 	{
-		data->in_progress = 1;
-		data->line_lst = NULL;
-		data->o = 0;
 		data->line = readline("\033[0;35mminishell \033[0m ");
 		if (!data->line)
-		{
 			ft_exit(data);
-		}
 		else if (is_only_space(data->line) == 1)
 			free(data->line);
 		else if (data->line[0] && is_only_space(data->line) == 0)
@@ -45,6 +50,5 @@ void    minishell(t_data *data, char **env)
 			dup2(stdout_backup, STDOUT_FILENO);
 			dup2(stdin_backup, STDIN_FILENO);
 		}
-
 	}
 }

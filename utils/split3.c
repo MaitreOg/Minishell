@@ -21,5 +21,5 @@ char	**ft_split_arg(char *str, char c)
 	ss = (char **)malloc(sizeof(char *) * (nb + 1));
 	if (!ss)
 		return (NULL);
-	return (cpyword_arg(ss, str, c));
+	return (cpyword_arg(ss, str, c, 0));
 }

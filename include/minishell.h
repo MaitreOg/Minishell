@@ -59,7 +59,7 @@ typedef struct s_data
 	int 	ret;
 }		t_data;
 
-void    minishell(t_data *data, char **env);
+void    minishell(t_data *data);
 
 
 //free && error
@@ -84,6 +84,7 @@ int		last_order(t_list *lst);
 
 //parsing
 char	*find_var(char **env, char *var);
+char	*find_var2(char **env, char *var);
 int		is_verif_double(char *str, int i);
 int 	is_verif_quotes(char *str, int i);
 char 	*replace_var(t_data *data, char *str, int i, int y);
@@ -107,7 +108,7 @@ char	** ft_split2(char *str, char*operator);
 int		count_word_arg(char *s, char c);
 int		count_word2(char *str, char *operator);
 char	**cut_split_2(char *str, char **split, char *operator);
-char	**cpyword_arg(char **str, char *s, char c);
+char	**cpyword_arg(char **str, char *s, char c, int i);
 char	**ft_split_arg(char *str, char c);
 void    get_env(t_data *data, char **env);
 int 	is_verif(char *str, int i);

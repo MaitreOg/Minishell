@@ -36,11 +36,11 @@ void	is_not_found(t_data *data, char **cmd, char **path, int i)
 	}
 }
 
-int last_order(t_list *lst)
+int	last_order(t_list *lst)
 {
-	t_list *tmp;
-	t_list *tmp2;
-	
+	t_list	*tmp;
+	t_list	*tmp2;
+
 	tmp = lst;
 	while (tmp)
 	{
@@ -61,4 +61,24 @@ int last_order(t_list *lst)
 	if (ft_strmcmp(tmp2->content, "echo", 4) == 1)
 		return (0);
 	return (1);
+}
+
+char	*find_var2(char **env, char *var)
+{
+	char	*str;
+	int		i;
+
+	var = ft_strjoin(var, "=", 0, 0);
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strstr(env[i], var))
+			break ;
+		i++;
+	}
+	if (env[i] == NULL)
+		return (NULL);
+	str = ft_strstr(env[i], var);
+	free (var);
+	return (str);
 }

@@ -40,6 +40,22 @@ void	execute(t_data *data, t_list *lst)
 	exit (0);
 }
 
+int	check_built_in_3(t_data *data, t_list *lst)
+{
+	if (ft_strcmp("exit", lst->content) == 1)
+	{
+		lst->content = delete_quotes(lst->content);
+		ft_exit(data);
+		return (1);
+	}
+	else if (ft_strmcmp(lst->content, "pwd ", 4) == 1)
+	{
+		lst->content = delete_quotes(lst->content);
+		ft_pwd();
+		return (1);
+	}
+}
+
 int	check_built_in_2(t_data *data, t_list *lst)
 {
 	if (ft_strmcmp(lst->content, "export", 6) == 1)
@@ -62,13 +78,7 @@ int	check_built_in_2(t_data *data, t_list *lst)
 		ft_env(data);
 		return (1);
 	}
-	else if (ft_strcmp("exit", lst->content) == 1)
-	{
-		lst->content = delete_quotes(lst->content);
-		ft_exit(data);
-		return (1);
-	}
-	return (0);
+	return (check_built_in_3(data, lst));
 }
 
 int	check_built_in(t_data *data, t_list *lst)
@@ -95,12 +105,6 @@ int	check_built_in(t_data *data, t_list *lst)
 			ft_cd(data, value_env(data->env[get_env_index(data, "HOME=")]) + 1);
 		else
 			ft_cd(data, &lst->content[3]);
-		return (1);
-	}
-	else if (ft_strmcmp(lst->content, "pwd ",4) == 1)
-	{
-		lst->content = delete_quotes(lst->content);
-		ft_pwd();
 		return (1);
 	}
 	return (check_built_in_2(data, lst));
