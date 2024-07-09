@@ -41,8 +41,8 @@ void print_sorted_env(t_data *data)
 	char **env;
 
 	env= ft_copy_tab(data->env);
-	i = 0;
-	while (env[i])
+	i = -1;
+	while (env[++i])
 	{
 		j = i + 1;
 		while (env[j])
@@ -55,14 +55,10 @@ void print_sorted_env(t_data *data)
 			}
 			j++;
 		}
-		i++;
 	}
-	i = 0;
-	while (env[i])
-	{
+	i = -1;
+	while (env[++i])
 		printf("declare -x %s\n", env[i]);
-		i++;
-	}
 	free_tab(env);
 }
 int ft_strlen_special(char *str)

@@ -15,14 +15,13 @@
 void	ctrlc(int signum)
 {
 	(void)signum;
-
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
-void ft_bzero(void *s, size_t n)
+void	ft_bzero(void *s, size_t n)
 {
 	unsigned char	*str;
 	size_t			i;
@@ -36,7 +35,7 @@ void ft_bzero(void *s, size_t n)
 	}
 }
 
-void ctrlback(void)
+void	ctrlback(void)
 {
 	struct sigaction	ouais;
 
@@ -48,20 +47,21 @@ void ctrlback(void)
 int	main(int ac, char **av, char **env)
 {
 	t_data	*data;
+	char	*str;
+
 	signal(SIGINT, ctrlc);
-	//sigaction sigquit vers sigin
 	ctrlback();
-	if (ac != 1 ||av[0][0] == '!')
-		return(printf("please enter valid argument\n"));
+	if (ac != 1 || av[0][0] == '!')
+		return (printf("please enter valid argument\n"));
 	data = malloc(sizeof(t_data));
 	if (!data)
+	{
 		return (printf("alloc fail\n"));
+	}
 	get_env(data, env);
-	int value;
-
-	value = ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")]) + 1);
-	if (value == 1)
-		export_env(data, ft_strjoin("SHLVL=", "1", 0, 0));
+	str = "SHELL=/bin/minishell";
+	if (ft_strcmp(data->env[get_env_index(data, "SHELL=")], str) != 1)
+		export_env(data, ft_strjoin("SHELL=", "/bin/minishell", 0, 0));
 	else
 		shell_lvl_incr(data);
 	minishell(data, env);
