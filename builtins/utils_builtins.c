@@ -32,9 +32,9 @@ int	find_env(t_data *data, char *name)
 
 int	edit_env(t_data *data, char *name, char *value)
 {
-	int	i;
-	int	y;
-	char  *new_value;
+	char	*new_value;
+	int		y;
+	int		i;
 
 	i = 0;
 	while (data->env[i])
@@ -45,7 +45,7 @@ int	edit_env(t_data *data, char *name, char *value)
 		if (ft_strncmp(data->env[i], name, y) == 0)
 		{
 			free(data->env[i]);
-			new_value = malloc(ft_strlen(name) + ft_strlen(value) + 2); // +2 for '=' and '\0'
+			new_value = malloc(ft_strlen(name) + ft_strlen(value) + 2);
 			strcpy(new_value, name);
 			data->env[i] = new_value;
 			return (1);
@@ -183,7 +183,7 @@ int	ft_ispresent(char *str, char c)
 	return (0);
 }
 
-int ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	int	i;
 	int	neg;
@@ -193,7 +193,7 @@ int ft_atoi(const char *str)
 	neg = 1;
 	nb = 0;
 	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'
-        || str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
+		|| str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
 		i++;
 	if (str[i] == '-')
 		neg = -1;
@@ -207,32 +207,32 @@ int ft_atoi(const char *str)
 	return (nb * neg);
 }
 
-void shell_lvl_decr(t_data *data)
+void	shell_lvl_decr(t_data *data)
 {
-		int value;
+	int	value;
 
-		value = ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")]) + 1);
-		if (value > 1) {
-			printf("value = %d\n", value);
-			value--;
-			printf("value = %d\n", value);
-//			export_env(data, ft_strjoin("SHLVL=", ft_itoa(value), 0, 0));
-			printf("UPDATE");
-			printf("env : %s\n", ft_strjoin("SHLVL=", ft_itoa(value), 0, 0));
-			edit_env(data, "SHLVL=", ft_itoa(value));
-		}
-
+	value = ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")]) + 1);
+	if (value > 1)
+	{
+		printf("value = %d\n", value);
+		value--;
+		printf("value = %d\n", value);
+		printf("UPDATE");
+		printf("env : %s\n", ft_strjoin("SHLVL=", ft_itoa(value), 0, 0));
+		edit_env(data, "SHLVL=", ft_itoa(value));
+	}
 }
 
-void shell_lvl_incr(t_data *data)
+void	shell_lvl_incr(t_data *data)
 {
-	int value;
+	int	value;
+
 	value = ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")]) + 1);
 	value++;
-	export_env(data, ft_strjoin("SHLVL=", ft_itoa(value),0,0));
+	export_env(data, ft_strjoin("SHLVL=", ft_itoa(value), 0, 0));
 }
 
-int env_has_value(char *str)
+int	env_has_value(char *str)
 {
 	int	i;
 

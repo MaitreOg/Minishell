@@ -33,14 +33,14 @@ char	**ft_copy_tab(char **tab)
 	return (new_tab);
 }
 
-void print_sorted_env(t_data *data)
+void	print_sorted_env(t_data *data)
 {
-	int i;
-	int j;
-	char *tmp;
-	char **env;
+	char	**env;
+	char	*tmp;
+	int		i;
+	int		j;
 
-	env= ft_copy_tab(data->env);
+	env = ft_copy_tab(data->env);
 	i = -1;
 	while (env[++i])
 	{
@@ -61,9 +61,10 @@ void print_sorted_env(t_data *data)
 		printf("declare -x %s\n", env[i]);
 	free_tab(env);
 }
-int ft_strlen_special(char *str)
+
+int	ft_strlen_special(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] && str[i] != '=')
@@ -71,7 +72,6 @@ int ft_strlen_special(char *str)
 		i++;
 	}
 	return (i);
-
 }
 
 int	export_env(t_data *data, char *str)
@@ -80,35 +80,24 @@ int	export_env(t_data *data, char *str)
 	int		i;
 
 	if (str == NULL)
-	{
-		print_sorted_env(data);
-		return (0);
-	}
+		return (print_sorted_env(data), 0);
 	if (!valid_env_name_export(str))
-	{
-		printf("export: `%s': not a valid identifier\n", str);
-		return (-1);
-	}
-	i = 0;
+		return (printf("export: `%s': not a valid identifier\n", str), -1);
+	i = -1;
 	value = value_env(str);
-	while (data->env[i])
+	while (data->env[++i])
 	{
 		if (ft_strncmp(data->env[i], str, ft_strlen_special(str)) == 0)
 		{
 			if (ft_strcmp(data->env[i], str))
-			{
-
 				printf("export: `%s': already in the env\n", str);
-			}
 			edit_env(data, str, value);
 			return (1);
 		}
-		i++;
 	}
 	data->env = ft_realloc_tab(data->env, str);
+	data->keys_env[i] = 0;
 	if (value_env(str))
 		data->keys_env[i] = 1;
-	else
-		data->keys_env[i] = 0;
 	return (0);
 }

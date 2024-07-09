@@ -18,12 +18,12 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-#include <signal.h>
+# include <signal.h>
 # include <stdarg.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include "../utils/get_next_line/get_next_line.h"
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include "../utils/get_next_line/get_next_line.h"
 
 enum Type
 {
@@ -156,7 +156,7 @@ int ft_atoi(const char *str);
 void shell_lvl_decr(t_data *data);
 void shell_lvl_incr(t_data *data);
 int env_has_value(char *str);
-void print_sorted_env(t_data *data);;
+void print_sorted_env(t_data *data);
 
 
 #endif

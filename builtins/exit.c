@@ -15,13 +15,9 @@
 int	ft_exit(t_data *data)
 {
 	int	i;
-//	int value;
-//
-//	value = ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")]) + 1);
 
 	i = 0;
 	shell_lvl_decr(data);
-
 	while (data->env[i])
 	{
 		free(data->env[i]);
