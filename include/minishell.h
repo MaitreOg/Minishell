@@ -154,6 +154,7 @@ int ft_atoi(const char *str);
 void shell_lvl_decr(t_data *data);
 void shell_lvl_incr(t_data *data);
 int env_has_value(char *str);
+void print_sorted_env(t_data *data);;
 
 
 #endif

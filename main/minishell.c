@@ -23,23 +23,16 @@ void    minishell(t_data *data, char **env)
 	stdout_backup = dup(STDOUT_FILENO);
 	get_env(data, env);
 	data->childpid = NULL;
-//	shell_lvl_incr(data);
-//	shell_lvl_incr(data);
+//	shell_lvl_incr(data);//todo uncommante this
 	while (1)
 	{
 		data->in_progress = 1;
 		data->line_lst = NULL;
 		data->o = 0;
 		data->line = readline("\033[0;35mminishell \033[0m ");
-		/*if (!data->line)
+		if (!data->line)
 		{
 			ft_exit(data);
-		}*/
-		if (ft_strcmp(data->line, "exit"))
-		{
-			free_tab(data->env);
-			free(data->line);
-			return ;
 		}
 		else if (is_only_space(data->line) == 1)
 			free(data->line);

@@ -46,21 +46,24 @@ int	check_built_in_2(t_data *data, t_list *lst)
 	if (ft_strmcmp(lst->content, "export", 6) == 1)
 	{
 		lst->content = delete_quotes(lst->content);
-		export_env(data, &lst->content[7]);
+		if (lst->content[6] == '\0')
+			export_env(data, NULL);
+		else if (lst->content[6] == ' ')
+			export_env(data, &lst->content[7]);
 		return (1);
 	}
-	else if (ft_strmcmp(lst->content, "unset", 5) == 1)
+	else if (ft_strmcmp(lst->content, "unset ", 6) == 1)
 	{
 		lst->content = delete_quotes(lst->content);
 		ft_unset(data, &lst->content[6]);
 		return (1);
 	}
-	else if (ft_strcmp(lst->content, "env") == 1)
+	else if (ft_strcmp("env", lst->content) == 1)
 	{
 		ft_env(data);
 		return (1);
 	}
-	else if (ft_strcmp(lst->content, "exit") == 1)
+	else if (ft_strcmp("exit", lst->content) == 1)
 	{
 		lst->content = delete_quotes(lst->content);
 		ft_exit(data);
@@ -71,24 +74,20 @@ int	check_built_in_2(t_data *data, t_list *lst)
 
 int	check_built_in(t_data *data, t_list *lst)
 {
-	if (ft_strmcmp(lst->content, "echo -n", 7) == 1)
+	if (ft_strmcmp(lst->content, "echo -n ", 8) == 1)
 	{
 		lst->content = delete_quotes(lst->content);
-		if (lst->content[6] != 'n')
-		{
-			echo(&lst->content[5], 1);
-		}
-		else
-		{
-			echo(&lst->content[8], 0);
-		}
+		echo(&lst->content[8], 1);
 		return (1);
 	}
-	else if (ft_strmcmp(lst->content, "echo", 4) == 1)
+	else if (ft_strmcmp(lst->content, "echo ", 5) == 1)
 	{
-		lst->content = delete_quotes(lst->content);
-		echo(&lst->content[5], 0);
-		return (1);
+		if (ft_strmcmp(lst->content, "echo -", 6) == 0)
+		{
+			lst->content = delete_quotes(lst->content);
+			echo(&lst->content[5], 0);
+			return (1);
+		}
 	}
 	else if (ft_strmcmp(lst->content, "cd", 2) == 1)
 	{
@@ -99,7 +98,7 @@ int	check_built_in(t_data *data, t_list *lst)
 			ft_cd(data, &lst->content[3]);
 		return (1);
 	}
-	else if (ft_strcmp(lst->content, "pwd") == 1)
+	else if (ft_strmcmp(lst->content, "pwd ",4) == 1)
 	{
 		lst->content = delete_quotes(lst->content);
 		ft_pwd();

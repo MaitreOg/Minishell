@@ -6,7 +6,7 @@
 /*   By: oliradet <oliradet@42student.perpignan.f>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 13:50:43 by oliradet          #+#    #+#             */
-/*   Updated: 2024/07/01 03:10:43 by oliradet         ###   ########.fr       */
+/*   Updated: 2024/07/09 05:48:21 by oliradet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,10 +209,11 @@ void shell_lvl_decr(t_data *data)
 {
 	edit_env(data, "SHLVL=", ft_itoa(ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")]) - 1)));
 }
-
+//todo ouais
 void shell_lvl_incr(t_data *data)
 {
-	edit_env(data, "SHLVL=", ft_itoa(ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")]))+1));
+	export_env(data, ft_strjoin("SHLVL=", ft_itoa(ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")]))+1),0,0));
+//	printf("SHLVL=%s\n", value_env(data->env[get_env_index(data, "SHLVL=")]));
 }
 
 int env_has_value(char *str)
