@@ -31,9 +31,7 @@ void	get_env(t_data *data, char **env)
 		data->env[i] = malloc(y + 1);
 		y = -1;
 		while (env[i][++y])
-		{
 			data->env[i][y] = env[i][y];
-		}
 		if (env_has_value(env[i]))
 			data->keys_env[i] = 1;
 		else

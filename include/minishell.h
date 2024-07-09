@@ -102,7 +102,7 @@ char	*ft_strstr(char *str, char *to_find);
 char	*ft_strjoin(char *s1, char *s2, int z, int y);
 char	*ft_strdup(char *s);
 char	**ft_split(char *str, char c);
-char	**ft_split2(char *str, char*operator);
+char	** ft_split2(char *str, char*operator);
 int		count_word_arg(char *s, char c);
 int		count_word2(char *str, char *operator);
 char	**cut_split_2(char *str, char **split, char *operator);

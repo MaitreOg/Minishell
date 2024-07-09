@@ -25,7 +25,7 @@ void	add_type(t_list *lst, t_list *original)
 	else if (ft_strcmp(">>", lst->content) == 1)
 		lst->content_type = TYPE_ROUT_APP;
 	else if (lst_prev(lst, original)
-		&& (lst_prev(lst, original)->content_type == TYPE_ROUT
+        && (lst_prev(lst, original)->content_type == TYPE_ROUT
 			|| lst_prev(lst, original)->content_type == TYPE_ROUT_APP
 			|| lst_prev(lst, original)->content_type == TYPE_RIN
 			|| lst_prev(lst, original)->content_type == TYPE_LIMITER))
@@ -86,10 +86,10 @@ void	add_necessary(t_data *data)
 	tmp = data->line_lst;
 	absolute = find_var2(data->env, "PWD");
 	absolute = ft_strjoin(absolute, &tmp->content[1], 0, 0);
-	if (ft_strcmp(tmp->content, "./minishell") == 1 && tmp->next == NULL)
-		shell_lvl_incr(data);
-	if (ft_strcmp(tmp->content, absolute) == 1 && tmp->next == NULL)
-		shell_lvl_incr(data);
+//	if (ft_strcmp(tmp->content, "./minishell") == 1 && tmp->next == NULL)
+//		shell_lvl_incr(data);
+//	else if (ft_strcmp(tmp->content, absolute) == 1 && tmp->next == NULL)
+//		shell_lvl_incr(data);
 	free (absolute);
 	while (tmp)
 	{

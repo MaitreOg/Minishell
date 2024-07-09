@@ -65,6 +65,18 @@ void print_sorted_env(t_data *data)
 	}
 	free_tab(env);
 }
+int ft_strlen_special(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] && str[i] != '=')
+	{
+		i++;
+	}
+	return (i);
+
+}
 
 int	export_env(t_data *data, char *str)
 {
@@ -85,9 +97,13 @@ int	export_env(t_data *data, char *str)
 	value = value_env(str);
 	while (data->env[i])
 	{
-		if (ft_strncmp(data->env[i], str, ft_strlen(str)) == 0)//todo jusquau =
+		if (ft_strncmp(data->env[i], str, ft_strlen_special(str)) == 0)
 		{
-			printf("export: `%s': already in the env\n", str);
+			if (ft_strcmp(data->env[i], str))
+			{
+
+				printf("export: `%s': already in the env\n", str);
+			}
 			edit_env(data, str, value);
 			return (1);
 		}

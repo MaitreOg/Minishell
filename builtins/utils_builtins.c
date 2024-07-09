@@ -34,6 +34,7 @@ int	edit_env(t_data *data, char *name, char *value)
 {
 	int	i;
 	int	y;
+	char  *new_value;
 
 	i = 0;
 	while (data->env[i])
@@ -44,7 +45,9 @@ int	edit_env(t_data *data, char *name, char *value)
 		if (ft_strncmp(data->env[i], name, y) == 0)
 		{
 			free(data->env[i]);
-			data->env[i] = ft_strjoin(name, value, 0, 0);
+			new_value = malloc(ft_strlen(name) + ft_strlen(value) + 2); // +2 for '=' and '\0'
+			strcpy(new_value, name);
+			data->env[i] = new_value;
 			return (1);
 		}
 		i++;
@@ -204,16 +207,29 @@ int ft_atoi(const char *str)
 	return (nb * neg);
 }
 
-
 void shell_lvl_decr(t_data *data)
 {
-	edit_env(data, "SHLVL=", ft_itoa(ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")]) - 1)));
+		int value;
+
+		value = ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")]) + 1);
+		if (value > 1) {
+			printf("value = %d\n", value);
+			value--;
+			printf("value = %d\n", value);
+//			export_env(data, ft_strjoin("SHLVL=", ft_itoa(value), 0, 0));
+			printf("UPDATE");
+			printf("env : %s\n", ft_strjoin("SHLVL=", ft_itoa(value), 0, 0));
+			edit_env(data, "SHLVL=", ft_itoa(value));
+		}
+
 }
-//todo ouais
+
 void shell_lvl_incr(t_data *data)
 {
-	export_env(data, ft_strjoin("SHLVL=", ft_itoa(ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")]))+1),0,0));
-//	printf("SHLVL=%s\n", value_env(data->env[get_env_index(data, "SHLVL=")]));
+	int value;
+	value = ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")]) + 1);
+	value++;
+	export_env(data, ft_strjoin("SHLVL=", ft_itoa(value),0,0));
 }
 
 int env_has_value(char *str)

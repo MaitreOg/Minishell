@@ -21,9 +21,10 @@ void    minishell(t_data *data, char **env)
 	data->stdin = dup(STDIN_FILENO);
 	stdin_backup = dup(STDIN_FILENO);
 	stdout_backup = dup(STDOUT_FILENO);
-	get_env(data, env);
+//	get_env(data, env);
+	(void) env;
 	data->childpid = NULL;
-//	shell_lvl_incr(data);//todo uncommante this
+//	shell_lvl_incr(data);
 	while (1)
 	{
 		data->in_progress = 1;

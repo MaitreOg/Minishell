@@ -18,7 +18,6 @@ void	execute(t_data *data, t_list *lst)
 	char	**cmd;
 	char	**path;
 
-	//g_status = 2;
 	cmd = ft_split_arg(lst->content, ' ');
 	path = find_path(data->env);
 	i = 0;

@@ -56,6 +56,14 @@ int	main(int ac, char **av, char **env)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (printf("alloc fail\n"));
+	get_env(data, env);
+	int value;
+
+	value = ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")]) + 1);
+	if (value == 1)
+		export_env(data, ft_strjoin("SHLVL=", "1", 0, 0));
+	else
+		shell_lvl_incr(data);
 	minishell(data, env);
 	free(data);
 }
