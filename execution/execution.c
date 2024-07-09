@@ -109,7 +109,6 @@ int	check_built_in(t_data *data, t_list *lst)
 void	fork_order(t_data *data, t_list *lst)
 {
 	pid_t	pid;
-	int		status;
 	int		i;
 
 	if (check_built_in(data, lst) == 1)
@@ -130,6 +129,5 @@ void	fork_order(t_data *data, t_list *lst)
 		while (data->childpid[i] != -2)
 			i++;
 		data->childpid[i] = pid;
-		data->return_value = WEXITSTATUS(status);
 	}
 }

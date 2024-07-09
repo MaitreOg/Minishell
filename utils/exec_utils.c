@@ -35,3 +35,30 @@ void	is_not_found(t_data *data, char **cmd, char **path, int i)
 		exit(127);
 	}
 }
+
+int last_order(t_list *lst)
+{
+	t_list *tmp;
+	t_list *tmp2;
+	
+	tmp = lst;
+	while (tmp)
+	{
+		if (tmp->content_type == 0)
+			tmp2 = tmp;
+		tmp = tmp->next;
+	}
+	if (ft_strmcmp(tmp2->content, "pwd", 3) == 1)
+		return (0);
+	if (ft_strmcmp(tmp2->content, "cd", 2) == 1)
+		return (0);
+	if (ft_strmcmp(tmp2->content, "env", 3) == 1)
+		return (0);
+	if (ft_strmcmp(tmp2->content, "export", 6) == 1)
+		return (0);
+	if (ft_strmcmp(tmp2->content, "unset", 5) == 1)
+		return (0);
+	if (ft_strmcmp(tmp2->content, "echo", 4) == 1)
+		return (0);
+	return (1);
+}

@@ -79,13 +79,14 @@ t_list	*lst_prev(t_list *lst, t_list *original);
 t_list	*lst_add(t_list *lst, char *data);
 t_list	*next_order(t_list *lst);
 int		*ft_lstprint(t_list *lst);
+int		last_order(t_list *lst);
 
 
 //parsing
 char	*find_var(char **env, char *var);
 int		is_verif_double(char *str, int i);
 int 	is_verif_quotes(char *str, int i);
-char 	*replace_var(t_data *data, char *str, int i);
+char 	*replace_var(t_data *data, char *str, int i, int y);
 char	*delete_quotes(char *str);
 void	token_to_lst(char **tab, t_data *data);
 void    line_to_token(t_data *data);

@@ -103,7 +103,8 @@ void	compute(t_data *data)
 	{
 		while (++i < nb_order(data))
 			waitpid(data->childpid[i], &status, 0);
-		data->return_value = WEXITSTATUS(status);
+		if (last_order(data->line_lst) == 1)
+			data->return_value = WEXITSTATUS(status);
 		free_all(data);
 	}
 }

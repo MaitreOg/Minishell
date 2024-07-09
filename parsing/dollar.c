@@ -19,9 +19,11 @@ char	*is_interogation(t_data *data, char *str, char *var)
 	i = 0;
 	while (str[i] != '$')
 		i++;
+	str[i] = 0;
 	free (var);
 	var = ft_itoa(data->return_value);
 	var = ft_strjoin(var, &str[i + 2], 1, 0);
+	str = ft_strjoin(str, var, 1, 1);
 	return (str);
 }
 
@@ -46,9 +48,8 @@ char	*is_var(t_data *data, char *str, char *var)
 	return (str);
 }
 
-char	*replace_var(t_data *data, char *str, int i)
+char	*replace_var(t_data *data, char *str, int i, int y)
 {
-	int		y;
 	char	*var;
 
 	while (str[++i])
@@ -70,6 +71,7 @@ char	*replace_var(t_data *data, char *str, int i)
 				str = is_interogation(data, str, var);
 			else
 				str = is_var(data, str, var);
+			i = 0;
 		}
 	}
 	return (str);
