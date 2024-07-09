@@ -23,8 +23,10 @@ int	ft_exit(t_data *data)
 		free(data->env[i]);
 		i++;
 	}
+	free(data->env);
 	free(data->keys_env);
 	free_all(data);
+	free(data);
 	exit(0);
 	return (0);
 }

@@ -66,7 +66,7 @@ int	main(int ac, char **av, char **env)
 		export_env(data, tmp);
 	else
 		shell_lvl_incr(data);
+	free(tmp);
 	minishell(data);
 	free(data);
-	free(tmp);
 }
