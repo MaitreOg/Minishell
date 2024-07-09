@@ -17,7 +17,7 @@ void	execute(t_data *data, t_list *lst)
 	int		i;
 	char	**cmd;
 	char	**path;
-
+	
 	cmd = ft_split_arg(lst->content, ' ');
 	path = find_path(data->env);
 	i = 0;
@@ -54,6 +54,7 @@ int	check_built_in_3(t_data *data, t_list *lst)
 		ft_pwd();
 		return (1);
 	}
+	return (0);
 }
 
 int	check_built_in_2(t_data *data, t_list *lst)
@@ -62,20 +63,20 @@ int	check_built_in_2(t_data *data, t_list *lst)
 	{
 		lst->content = delete_quotes(lst->content);
 		if (lst->content[6] == '\0')
-			export_env(data, NULL);
+			data->return_value = export_env(data, NULL);
 		else if (lst->content[6] == ' ')
-			export_env(data, &lst->content[7]);
+			data->return_value = export_env(data, &lst->content[7]);
 		return (1);
 	}
 	else if (ft_strmcmp(lst->content, "unset ", 6) == 1)
 	{
 		lst->content = delete_quotes(lst->content);
-		ft_unset(data, &lst->content[6]);
+		data->return_value = ft_unset(data, &lst->content[6]);
 		return (1);
 	}
 	else if (ft_strcmp("env", lst->content) == 1)
 	{
-		ft_env(data);
+		data->return_value = ft_env(data);
 		return (1);
 	}
 	return (check_built_in_3(data, lst));
@@ -86,7 +87,7 @@ int	check_built_in(t_data *data, t_list *lst)
 	if (ft_strmcmp(lst->content, "echo -n ", 8) == 1)
 	{
 		lst->content = delete_quotes(lst->content);
-		echo(&lst->content[8], 1);
+		data->return_value = echo(&lst->content[8], 1);
 		return (1);
 	}
 	else if (ft_strmcmp(lst->content, "echo ", 5) == 1)
@@ -94,7 +95,7 @@ int	check_built_in(t_data *data, t_list *lst)
 		if (ft_strmcmp(lst->content, "echo -", 6) == 0)
 		{
 			lst->content = delete_quotes(lst->content);
-			echo(&lst->content[5], 0);
+			data->return_value = echo(&lst->content[5], 0);
 			return (1);
 		}
 	}
@@ -102,9 +103,9 @@ int	check_built_in(t_data *data, t_list *lst)
 	{
 		lst->content = delete_quotes(lst->content);
 		if (ft_strlen(&lst->content[0]) <= 3)
-			ft_cd(data, value_env(data->env[get_env_index(data, "HOME=")]) + 1);
+			data->return_value = ft_cd(data, value_env(data->env[get_env_index(data, "HOME=")]) + 1);
 		else
-			ft_cd(data, &lst->content[3]);
+			data->return_value = ft_cd(data, &lst->content[3]);
 		return (1);
 	}
 	return (check_built_in_2(data, lst));

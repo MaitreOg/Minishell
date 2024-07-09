@@ -48,6 +48,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_data	*data;
 	char	*str;
+	char	*tmp;
 
 	signal(SIGINT, ctrlc);
 	ctrlback();
@@ -59,11 +60,13 @@ int	main(int ac, char **av, char **env)
 		return (printf("alloc fail\n"));
 	}
 	get_env(data, env);
+	tmp = ft_strjoin("SHELL=", "/bin/minishell", 0, 0);
 	str = "SHELL=/bin/minishell";
 	if (ft_strcmp(data->env[get_env_index(data, "SHELL=")], str) != 1)
-		export_env(data, ft_strjoin("SHELL=", "/bin/minishell", 0, 0));
+		export_env(data, tmp);
 	else
 		shell_lvl_incr(data);
-	minishell(data, env);
+	minishell(data);
 	free(data);
+	free(tmp);
 }

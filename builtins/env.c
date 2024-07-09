@@ -16,7 +16,7 @@
  * print the env
  * @param data the struct for get the emv variable
  */
-void	ft_env(t_data *data)
+int	ft_env(t_data *data)
 {
 	int	i;
 
@@ -27,4 +27,5 @@ void	ft_env(t_data *data)
 			printf("%s\n", data->env[i]);
 		i++;
 	}
+	return (0);
 }

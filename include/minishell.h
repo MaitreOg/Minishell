@@ -134,11 +134,11 @@ void	pipes(t_data *data, t_list *order, int i);
 
 
 //builtins
-int	ft_pwd(void);
-int	echo(char *str, int arg);
-int	ft_cd(t_data *data, char *str);
-void	ft_env(t_data *data);
-int	ft_unset(t_data *data, char *args);
+int		ft_pwd(void);
+int		echo(char *str, int arg);
+int		ft_cd(t_data *data, char *str);
+int		ft_env(t_data *data);
+int		ft_unset(t_data *data, char *args);
 int 	find_env(t_data *data, char *name);
 int 	edit_env(t_data *data, char *name, char *value);
 int 	ft_isalpha(int c);
@@ -150,13 +150,12 @@ char 	**ft_realloc_tab(char **tab, char *str);
 int 	ft_ispresent(char *str, char c);
 int 	get_env_index(t_data *data, char *name);
 int 	ft_strncmp(const char *s1, const char *s2, size_t n);
-int export_env(t_data *data, char *str);
-int	ft_exit(t_data *data);
-int ft_atoi(const char *str);
-void shell_lvl_decr(t_data *data);
-void shell_lvl_incr(t_data *data);
-int env_has_value(char *str);
-void print_sorted_env(t_data *data);
-
+int 	export_env(t_data *data, char *str);
+int		ft_exit(t_data *data);
+int 	ft_atoi(const char *str);
+void	shell_lvl_decr(t_data *data);
+void	shell_lvl_incr(t_data *data);
+int		env_has_value(char *str);
+void	print_sorted_env(t_data *data);
 
 #endif

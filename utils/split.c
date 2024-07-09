@@ -94,7 +94,7 @@ char	**cpyword_arg(char **str, char *s, char c, int i)
 	int	y;
 	int	word;
 
-	i = -1;
+	i = 0;
 	y = 0;
 	word = 0;
 	while (s[i] == c && s[i])
