@@ -17,7 +17,7 @@ void	execute(t_data *data, t_list *lst)
 	int		i;
 	char	**cmd;
 	char	**path;
-	
+
 	cmd = ft_split_arg(lst->content, ' ');
 	path = find_path(data->env);
 	i = 0;
@@ -90,20 +90,19 @@ int	check_built_in(t_data *data, t_list *lst)
 		data->return_value = echo(&lst->content[8], 1);
 		return (1);
 	}
-	else if (ft_strmcmp(lst->content, "echo ", 5) == 1)
+	else if (ft_strmcmp(lst->content, "echo ", 5) == 1
+		&& ft_strmcmp(lst->content, "echo -", 6) == 0)
 	{
-		if (ft_strmcmp(lst->content, "echo -", 6) == 0)
-		{
-			lst->content = delete_quotes(lst->content);
-			data->return_value = echo(&lst->content[5], 0);
-			return (1);
-		}
+		lst->content = delete_quotes(lst->content);
+		data->return_value = echo(&lst->content[5], 0);
+		return (1);
 	}
 	else if (ft_strmcmp(lst->content, "cd", 2) == 1)
 	{
 		lst->content = delete_quotes(lst->content);
 		if (ft_strlen(&lst->content[0]) <= 3)
-			data->return_value = ft_cd(data, value_env(data->env[get_env_index(data, "HOME=")]) + 1);
+			data->return_value = ft_cd(data, value_env(
+						data->env[get_env_index(data, "HOME=")]) + 1);
 		else
 			data->return_value = ft_cd(data, &lst->content[3]);
 		return (1);
