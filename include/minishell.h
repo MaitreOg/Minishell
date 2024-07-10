@@ -79,7 +79,7 @@ t_list	*lst_prev(t_list *lst, t_list *original);
 t_list	*lst_add(t_list *lst, char *data);
 t_list	*next_order(t_list *lst);
 int		*ft_lstprint(t_list *lst);
-int		last_order(t_list *lst);
+int		last_order(t_data *data, t_list *lst);
 
 
 //parsing

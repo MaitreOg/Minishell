@@ -64,12 +64,9 @@ void	replace_path(t_data *data, t_list *lst)
 void	add_necessary(t_data *data)
 {
 	t_list	*tmp;
-	char	*absolute;
+
 
 	tmp = data->line_lst;
-	absolute = find_var2(data->env, "PWD");
-	absolute = ft_strjoin(absolute, &tmp->content[1], 0, 0);
-	free (absolute);
 	while (tmp)
 	{
 		add_type(tmp, data->line_lst);

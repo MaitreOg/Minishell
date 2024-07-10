@@ -25,6 +25,7 @@ void	preset_struct(t_data *data)
 	data->in_progress = 1;
 	data->line_lst = NULL;
 	data->o = 0;
+	data->execute = 0;
 }
 
 void	minishell(t_data *data)

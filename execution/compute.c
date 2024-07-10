@@ -35,6 +35,23 @@ void	link_io(t_data *data, t_list *order, t_list *tmp)
 	else if (tmp->content_type == TYPE_RIN)
 		redirect_input(data, tmp->next);
 }
+void	link_io2(t_data *data, t_list *tmp)
+{
+	if (tmp->next == NULL || (tmp->next->content_type > 0
+			&& tmp->next->content_type < 6))
+	{
+		redirect_error(data, "unexpected token ", tmp);
+		return ;
+	}
+	else if (tmp->content_type == TYPE_LIMITER)
+		limiter(data, tmp->next);
+	else if (tmp->content_type == TYPE_ROUT)
+		redirect_output(data, tmp->next, 0);
+	else if (tmp->content_type == TYPE_ROUT_APP)
+		redirect_output(data, tmp->next, 1);
+	else if (tmp->content_type == TYPE_RIN)
+		redirect_input(data, tmp->next);
+}
 
 void	compute_operator(t_data *data, t_list *lst)
 {
@@ -62,6 +79,11 @@ void	backup_fd(t_data *data, int fdi, int fdo)
 
 void	compute_brain(t_data *data, t_list *lst, int in, int out)
 {
+	if (nb_order(data) == 0)
+	{
+		link_io2(data, lst);
+		backup_fd(data, in, out);
+	}
 	while (lst && data->in_progress == 1)
 	{
 		data->fdo = out;
@@ -94,7 +116,7 @@ void	compute(t_data *data)
 	alloc_pid(data);
 	lst = data->line_lst;
 	if (lst->content_type > 0 && lst->content_type < 5 && (lst->next == NULL
-			|| (lst->next->content_type > 0 && lst->next->content_type < 6)))
+			|| (lst->next && lst->next->content_type > 0 && lst->next->content_type < 6)))
 		redirect_error(data, "unexpected token ", lst);
 	if (lst->content_type == 5)
 		redirect_error(data, "unexpected token ", lst);
@@ -103,7 +125,7 @@ void	compute(t_data *data)
 	{
 		while (++i < nb_order(data))
 			waitpid(data->childpid[i], &status, 0);
-		if (last_order(data->line_lst) == 1)
+		if (last_order(data, data->line_lst) == 1)
 			data->return_value = WEXITSTATUS(status);
 		free_all(data);
 	}

@@ -97,8 +97,10 @@ char	**cut_split_2(char *str, char **split, char *operator)
 	word = 0;
 	while (str[i])
 	{
-		split[word] = copy_word(operator, str, i);
-		word++;
+		if (check_operator(str, i, operator) == 0)
+			split[word] = copy_word(operator, str, i);
+		if (check_operator(str, i, operator) == 0)
+			word++;
 		while (check_operator(str, i, operator) == 0 && str[i])
 			i++;
 		if (str[i] == 0)

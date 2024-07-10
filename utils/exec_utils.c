@@ -48,12 +48,14 @@ void	is_not_found(t_data *data, char **cmd, char **path, int i)
 	}
 }
 
-int	last_order(t_list *lst)
+int	last_order(t_data *data, t_list *lst)
 {
 	t_list	*tmp;
 	t_list	*tmp2;
 
 	tmp = lst;
+	if (nb_order(data) == 0)
+		return (0);
 	while (tmp)
 	{
 		if (tmp->content_type == 0)
