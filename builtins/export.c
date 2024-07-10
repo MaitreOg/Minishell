@@ -74,15 +74,13 @@ int	ft_strlen_special(char *str)
 	return (i);
 }
 
-int	export_env(t_data *data, char *str)
+int	export_export(t_data *data, char *str)
 {
 	char	*value;
 	int		i;
 
-	if (str == NULL)
-		return (print_sorted_env(data), 0);
 	if (!valid_env_name_export(str))
-		return (printf("export: `%s': not a valid identifier\n", str), -1);
+		return (printf("export: `%s': not a valid identifier\n", str), 1);
 	i = -1;
 	value = value_env(str);
 	while (data->env[++i])
@@ -90,9 +88,9 @@ int	export_env(t_data *data, char *str)
 		if (ft_strncmp(data->env[i], str, ft_strlen_special(str)) == 0)
 		{
 			if (ft_strcmp(data->env[i], str))
-				printf("export: `%s': already in the env\n", str);
+				return (printf("export: `%s': already in the env\n", str), 1);
 			edit_env(data, str, value);
-			return (1);
+			return (0);
 		}
 	}
 	data->env = ft_realloc_tab(data->env, str);
@@ -100,4 +98,26 @@ int	export_env(t_data *data, char *str)
 	if (value_env(str))
 		data->keys_env[i] = 1;
 	return (0);
+}
+
+int	export_env(t_data *data, char *str)
+{
+	char	**tab;
+	int		size;
+	int		i;
+	int		ret;
+
+	ret = 0;
+	if (str == NULL)
+		return (print_sorted_env(data), 0);
+	tab = ft_split(str, ' ');
+	size = ft_size_tab(tab);
+	i = 0;
+	while (i < size)
+	{
+		ret ^= export_export(data, tab[i]);
+		i++;
+	}
+	free_tab(tab);
+	return (ret);
 }

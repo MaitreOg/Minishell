@@ -51,6 +51,6 @@ int	ft_unset(t_data *data, char *args)
 		}
 		i++;
 	}
-	free(tab);
+	free_tab(tab);
 	return (0);
 }
