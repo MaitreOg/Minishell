@@ -119,6 +119,8 @@ char	*ft_strdup_v2(char *s);
 char	*ft_itoa(int n);
 int		is_only_space(char *str);
 void 	ft_close(int in, int out);
+void	backup_fd(t_data *data, int fdi, int fdo);
+
 
 
 //execution
