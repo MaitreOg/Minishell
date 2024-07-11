@@ -47,3 +47,17 @@ void	order_not_found(t_data *data, char *order)
 	free_all(data);
 	data->in_progress = 0;
 }
+
+void	backup_fd(t_data *data, int fdi, int fdo)
+{
+	dup2(fdo, STDOUT_FILENO);
+	if (data->execute == 0)
+		dup2(fdi, STDIN_FILENO);
+	data->o = 0;
+}
+
+void	ft_close(int in, int out)
+{
+	close(out);
+	close(in);
+}

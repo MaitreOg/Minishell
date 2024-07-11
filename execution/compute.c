@@ -35,6 +35,7 @@ void	link_io(t_data *data, t_list *order, t_list *tmp)
 	else if (tmp->content_type == TYPE_RIN)
 		redirect_input(data, tmp->next);
 }
+
 void	link_io2(t_data *data, t_list *tmp)
 {
 	if (tmp->next == NULL || (tmp->next->content_type > 0
@@ -69,14 +70,6 @@ void	compute_operator(t_data *data, t_list *lst)
 	}
 }
 
-void	backup_fd(t_data *data, int fdi, int fdo)
-{
-	dup2(fdo, STDOUT_FILENO);
-	if (data->execute == 0)
-		dup2(fdi, STDIN_FILENO);
-	data->o = 0;
-}
-
 void	compute_brain(t_data *data, t_list *lst, int in, int out)
 {
 	if (nb_order(data) == 0)
@@ -103,8 +96,7 @@ void	compute_brain(t_data *data, t_list *lst, int in, int out)
 		if (data->in_progress == 1)
 			lst = lst->next;
 	}
-	close(out);
-	close(in);
+	ft_close(in, out);
 }
 
 void	compute(t_data *data)
@@ -121,7 +113,7 @@ void	compute(t_data *data)
 	alloc_pid(data);
 	lst = data->line_lst;
 	if (lst->content_type > 0 && lst->content_type < 5 && (lst->next == NULL
-			|| (lst->next && lst->next->content_type > 0 && lst->next->content_type < 6)))
+			|| (lst->next && lst->next->content_type < 6)))
 		redirect_error(data, "unexpected token ", lst);
 	if (lst->content_type == 5)
 		redirect_error(data, "unexpected token ", lst);

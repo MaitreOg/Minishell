@@ -118,6 +118,8 @@ int 	nb_order(t_data *data);
 char	*ft_strdup_v2(char *s);
 char	*ft_itoa(int n);
 int		is_only_space(char *str);
+void 	ft_close(int in, int out);
+
 
 //execution
 void	compute(t_data *data);

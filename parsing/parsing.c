@@ -65,7 +65,6 @@ void	add_necessary(t_data *data)
 {
 	t_list	*tmp;
 
-
 	tmp = data->line_lst;
 	while (tmp)
 	{
