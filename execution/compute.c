@@ -81,7 +81,12 @@ void	compute_brain(t_data *data, t_list *lst, int in, int out)
 {
 	if (nb_order(data) == 0)
 	{
-		link_io2(data, lst);
+		while (lst)
+		{
+			if (lst->content_type != TYPE_FILE)
+				link_io2(data, lst);
+			lst = lst->next;
+		}
 		backup_fd(data, in, out);
 	}
 	while (lst && data->in_progress == 1)
