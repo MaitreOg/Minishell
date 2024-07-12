@@ -16,7 +16,9 @@ char	*find_var(char **env, char *var)
 {
 	char	*str;
 	int		i;
+	char 	*not_exist;
 
+	not_exist = ft_strjoin("$", var, 0, 0);
 	var = ft_strjoin(var, "=", 1, 0);
 	i = 0;
 	while (env[i])
@@ -26,8 +28,12 @@ char	*find_var(char **env, char *var)
 		i++;
 	}
 	if (env[i] == NULL)
-		return (NULL);
+	{
+		printf("env not found\n");
+		return (not_exist);
+	}
 	str = ft_strstr(env[i], var);
+	free(not_exist);
 	free (var);
 	return (str);
 }
