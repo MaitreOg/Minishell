@@ -16,7 +16,7 @@ char	*find_var(char **env, char *var)
 {
 	char	*str;
 	int		i;
-	char 	*not_exist;
+	char	*not_exist;
 
 	not_exist = ft_strjoin("$", var, 0, 0);
 	var = ft_strjoin(var, "=", 1, 0);

@@ -26,16 +26,19 @@ char	*is_interogation(t_data *data, char *str, char *var)
 	str = ft_strjoin(str, var, 1, 1);
 	return (str);
 }
-int cv(t_data *data, char *str, char *backup, int y)
+
+int	cv(t_data *data, char *str, char *backup, int y)
 {
 	int		i;
 	char	*var;
 
 	i = 0;
 	var = ft_strdup_v2(&str[1]);
-	while  (var[i] != ' ' && is_verif_quotes(backup, i + y) == 0
-				&& var[i] != '"' && var[i] != '\'' && var[i] && var[i] != '$')
-			i++;
+	while (var[i] != '$' && var[i] != ' '
+		&& is_verif_quotes(backup, i + y) == 0
+		&& var[i] != '"' && var[i] != '\'' && var[i])
+		i++;
+	var[i] = 0;
 	var = ft_strjoin(var, "=", 1, 0);
 	i = 0;
 	while (data->env[i])
@@ -66,11 +69,21 @@ char	*is_var(t_data *data, char *str, char *var)
 	}
 	var = find_var(data->env, var);
 	while (str[i + y] != ' ' && is_verif_quotes(str, i + y) == 0
-		&& str[i + y] != '"' && str[i + y] != '\'' && str[i + y] && str[i + y] != '$')
+		&& str[i + y] != '"' && str[i + y] != '\'' && str[i + y]
+		&& str[i + y] != '$')
 		y++;
 	var = ft_strjoin(var, &str[i + y], 0, 0);
 	str[i] = 0;
 	str = ft_strjoin(str, var, 1, 1);
+	return (str);
+}
+
+char	*lunch_var(t_data *data, char *str, char *var)
+{
+	if (ft_strcmp("?", var) == 1)
+		str = is_interogation(data, str, var);
+	else
+		str = is_var(data, str, var);
 	return (str);
 }
 
@@ -81,10 +94,12 @@ char	*replace_var(t_data *data, char *str, int i, int y)
 	while (str[++i])
 	{
 		y = 1;
-		if (str[i] == '$' && is_verif_quotes(str, i + y) == 0 && cv(data, &str[i], str, i) == 1)
+		if (str[i] == '$' && is_verif_quotes(str, i + y) == 0
+			&& cv(data, &str[i], str, i) == 1)
 		{
 			while (str[i + y] != ' ' && is_verif_quotes(str, i + y) == 0
-				&& str[i + y] != '"' && str[i + y] != '\'' && str[i + y] && str[i + y] != '$')
+				&& str[i + y] != '"' && str[i + y] != '\'' && str[i + y]
+				&& str[i + y] != '$')
 				y++;
 			var = malloc (y + 1);
 			y = 0;
@@ -93,11 +108,7 @@ char	*replace_var(t_data *data, char *str, int i, int y)
 				&& str[i] != '"' && str[i] != '\'' && str[i] && str[i] != '$')
 				var[y++] = str[i++];
 			var[y] = 0;
-			if (ft_strcmp("?", var) == 1)
-				str = is_interogation(data, str, var);
-			else
-				str = is_var(data, str, var);
-			//i = 0;
+			str = lunch_var(data, str, var);
 		}
 	}
 	return (str);
