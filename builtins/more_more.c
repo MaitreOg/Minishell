@@ -57,11 +57,7 @@ void	shell_lvl_decr(t_data *data)
 	value = ft_atoi(value_env(data->env[get_env_index(data, "SHLVL=")]) + 1);
 	if (value > 1)
 	{
-		printf("value = %d\n", value);
 		value--;
-		printf("value = %d\n", value);
-		printf("UPDATE");
-		printf("env : %s\n", ft_strjoin("SHLVL=", ft_itoa(value), 0, 0));
 		edit_env(data, "SHLVL=", ft_itoa(value));
 	}
 }

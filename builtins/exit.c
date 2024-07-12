@@ -12,6 +12,25 @@
 
 #include "../include/minishell.h"
 
+int	ft_exit_param(t_data *data, int ret)
+{
+	int	i;
+
+	i = 0;
+	shell_lvl_decr(data);
+	while (data->env[i])
+	{
+		free(data->env[i]);
+		i++;
+	}
+	free(data->env);
+	free(data->keys_env);
+	free_all(data);
+	free(data);
+	exit(ret);
+	return (0);
+}
+
 int	ft_exit(t_data *data)
 {
 	int	i;

@@ -27,5 +27,5 @@ int	echo(char *str, int arg)
 			printf("%s", str);
 		return (0);
 	}
-	return (2);
+	return (1);
 }

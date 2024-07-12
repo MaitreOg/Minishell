@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 16:53:58 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/08 22:09:31 by smarty           ###   ########.fr       */
+/*   Updated: 2024/07/10 17:06:26 by oliradet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include "../utils/get_next_line/get_next_line.h"
+
+extern
+int g_statt;
 
 enum Type
 {
@@ -162,5 +165,7 @@ void	shell_lvl_incr(t_data *data);
 int		env_has_value(char *str);
 void	print_sorted_env(t_data *data);
 int		ft_size_tab(char **tab);
+int	ft_exit_param(t_data *data, int ret);
+void	ctrlc(int signum);
 
 #endif

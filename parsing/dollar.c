@@ -6,7 +6,7 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 20:16:31 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/01 23:23:28 by smarty           ###   ########.fr       */
+/*   Updated: 2024/07/12 23:54:20 by oliradet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	cv(t_data *data, char *str, char *backup, int y)
 	i = 0;
 	var = ft_strdup_v2(&str[1]);
 	while (var[i] != '$' && var[i] != ' '
-		&& is_verif_quotes(backup, i + y) == 0
-		&& var[i] != '"' && var[i] != '\'' && var[i])
+		   && is_verif_quotes(backup, i + y) == 0
+		   && var[i] != '"' && var[i] != '\'' && var[i])
 		i++;
 	var[i] = 0;
 	var = ft_strjoin(var, "=", 1, 0);
@@ -69,8 +69,8 @@ char	*is_var(t_data *data, char *str, char *var)
 	}
 	var = find_var(data->env, var);
 	while (str[i + y] != ' ' && is_verif_quotes(str, i + y) == 0
-		&& str[i + y] != '"' && str[i + y] != '\'' && str[i + y]
-		&& str[i + y] != '$')
+		   && str[i + y] != '"' && str[i + y] != '\'' && str[i + y]
+		   && str[i + y] != '$')
 		y++;
 	var = ft_strjoin(var, &str[i + y], 0, 0);
 	str[i] = 0;
@@ -98,14 +98,14 @@ char	*replace_var(t_data *data, char *str, int i, int y)
 			&& cv(data, &str[i], str, i) == 1)
 		{
 			while (str[i + y] != ' ' && is_verif_quotes(str, i + y) == 0
-				&& str[i + y] != '"' && str[i + y] != '\'' && str[i + y]
-				&& str[i + y] != '$')
+				   && str[i + y] != '"' && str[i + y] != '\'' && str[i + y]
+				   && str[i + y] != '$')
 				y++;
 			var = malloc (y + 1);
 			y = 0;
 			i++;
 			while (str[i] != ' ' && is_verif_quotes(str, i) == 0
-				&& str[i] != '"' && str[i] != '\'' && str[i] && str[i] != '$')
+				   && str[i] != '"' && str[i] != '\'' && str[i] && str[i] != '$')
 				var[y++] = str[i++];
 			var[y] = 0;
 			str = lunch_var(data, str, var);

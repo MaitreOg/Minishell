@@ -6,20 +6,11 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:07:02 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/07 21:47:57 by smarty           ###   ########.fr       */
+/*   Updated: 2024/07/12 13:32:36 by oliradet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	ctrlc(int signum)
-{
-	(void)signum;
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
 
 void	ft_bzero(void *s, size_t n)
 {
@@ -42,6 +33,15 @@ void	ctrlback(void)
 	ft_bzero(&ouais, sizeof(ouais));
 	ouais.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &ouais, NULL);
+}
+
+void	ctrlc(int signum)
+{
+	(void)signum;
+	printf("\n");
+	rl_replace_line("\0", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
 int	main(int ac, char **av, char **env)

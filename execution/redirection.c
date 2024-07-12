@@ -6,11 +6,22 @@
 /*   By: smarty <smarty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:41:49 by smarty            #+#    #+#             */
-/*   Updated: 2024/06/01 23:15:04 by smarty           ###   ########.fr       */
+/*   Updated: 2024/07/11 16:43:14 by oliradet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	ctrlc_heredoc(int signum)
+{
+	(void) signum;
+	rl_replace_line("\0", 0);
+	rl_replace_line("\0", 0);
+	printf("\n");
+	rl_on_new_line();
+	rl_redisplay();
+	exit(1);
+}
 
 void	redirect_input(t_data *data, t_list *lst)
 {
@@ -31,16 +42,18 @@ void	redirect_input(t_data *data, t_list *lst)
 	close(fd);
 }
 
-void	create_file_doc(t_list *lst, int *fd)
+void	create_file_doc(t_data *data, t_list *lst, int *fd)
 {
 	char	*line;
 	char	*limiter;
 
+	signal(SIGINT, ctrlc_heredoc);
 	close(fd[0]);
 	dup2(fd[1], STDOUT_FILENO);
 	limiter = ft_strjoin(lst->content, "\n", 0, 0);
 	write(2, "> ", 2);
 	line = get_next_line(STDIN_FILENO);
+	(void) data;
 	while (line)
 	{
 		if (ft_strcmp(limiter, line))
@@ -74,7 +87,7 @@ void	limiter(t_data *data, t_list *lst)
 		return ;
 	}
 	if (childpid == 0)
-		create_file_doc(lst, fd);
+		create_file_doc(data, lst, fd);
 	else
 	{
 		close(fd[1]);

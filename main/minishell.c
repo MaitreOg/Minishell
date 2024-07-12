@@ -38,6 +38,7 @@ void	minishell(t_data *data)
 	stdout_backup = dup(STDOUT_FILENO);
 	while (1)
 	{
+		signal(SIGINT, ctrlc);
 		preset_struct(data);
 		data->line = readline("\033[0;35mminishell \033[0m ");
 		if (!data->line)
